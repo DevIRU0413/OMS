@@ -24,8 +24,8 @@ Unity 기반의 협업 프로젝트입니다. 본 문서는 팀원 간 일관된
 ```
 feature/[본인 이름 이니셜]_[용도(파스칼 표기법 사용)]
 예시) 
-feature/Monster_YSJ
-feature/Network_YSJ
+feature/YSJ_Monster
+feature/YSJ_Network
 ```
 
 ## 커밋 메시지 컨벤션
@@ -52,7 +52,7 @@ feature/Network_YSJ
 **예시**
 
 ```
-feat: 팝업 UI 시스템 추가
+[feat]: 팝업 UI 시스템 추가
 
 - YJH_UIManager 구현
 - YSJ_PopupController와 연결
