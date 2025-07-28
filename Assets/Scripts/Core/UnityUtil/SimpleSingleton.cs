@@ -4,53 +4,55 @@ namespace Core.UnityUtil
 {
     public abstract class SimpleSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private static T m_instance;
-        [SerializeField, HideInInspector] private bool m_isDontDestroyOnLoad = true;
+        private static T _instance;
+        [SerializeField, HideInInspector] private bool _isDontDestroyOnLoad = true;
 
         public static T Instance
         {
             get
             {
-                if (m_instance == null)
+                if (_instance == null)
                 {
-                    m_instance = FindObjectOfType<T>();
-                    if (m_instance == null)
+                    _instance = FindObjectOfType<T>();
+                    if (_instance == null)
                     {
 #if UNITY_EDITOR
                         Debug.LogWarning($"[SimpleSingleton] {typeof(T)} 인스턴스가 없어 에디터에서 자동 생성됨.");
 #endif
-                        GameObject go = new GameObject($"@{typeof(T)}");
-                        m_instance = go.AddComponent<T>();
+                        GameObject go = new GameObject($"@SimpleSingleton_{typeof(T)}");
+                        _instance = go.AddComponent<T>();
 
-                        if ((m_instance as SimpleSingleton<T>).IsDontDestroyOnLoad)
+                        if ((_instance as SimpleSingleton<T>)._isDontDestroyOnLoad)
                             DontDestroyOnLoad(go);
                     }
                 }
-                return m_instance;
+                return _instance;
             }
         }
 
-        protected virtual bool IsDontDestroyOnLoad => m_isDontDestroyOnLoad;
+        private void Awake() => Init();
+        private void OnDestroy() => Destroy();
 
-        protected virtual void Awake()
+        protected virtual void Init()
         {
-            if (m_instance == null)
             {
-                m_instance = this as T;
-                if (IsDontDestroyOnLoad)
-                    DontDestroyOnLoad(gameObject);
-            }
-            else if (m_instance != this)
-            {
-                Destroy(gameObject);
+                if (_instance == null)
+                {
+                    _instance = this as T;
+                    if (_isDontDestroyOnLoad)
+                        DontDestroyOnLoad(gameObject);
+                }
+                else if (_instance != this)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
-
-        protected virtual void OnDestroy()
+        protected virtual void Destroy()
         {
-            if (m_instance == this)
+            if (_instance == this)
             {
-                m_instance = null;
+                _instance = null;
             }
         }
     }
