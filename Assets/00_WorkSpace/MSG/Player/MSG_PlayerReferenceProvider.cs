@@ -38,6 +38,7 @@ namespace MSG
             return _playerData;
         }
 
+        // 이건 필요 없을 듯??
         public Transform GetPlayerTransform()
         {
             return _playerLogic.transform;
