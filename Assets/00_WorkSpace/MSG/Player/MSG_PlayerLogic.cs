@@ -11,11 +11,13 @@ namespace MSG
         [SerializeField] private MSG_PlayerData _playerData;
         [SerializeField] private Animator _animator;
         [SerializeField] private CapsuleCollider2D _capsuleCollider2D;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         private bool _isWornBreadBag = false;
         private bool _isFever = false;
 
         public MSG_PlayerData PlayerData => _playerData;
+        public SpriteRenderer PlayerSpriteRenderer => _spriteRenderer;
         public bool IsFever => _isFever;
 
         public event Action OnPlayerFeverStarted;
