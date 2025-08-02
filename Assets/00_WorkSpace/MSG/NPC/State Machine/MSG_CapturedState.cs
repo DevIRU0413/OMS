@@ -18,6 +18,7 @@ namespace MSG
             _npc.MarkAsCaptured();
             _npc.PlayCaptureEffect();
             _npc.DisableInteraction();
+            _npc.SpawnHeart();
         }
         public void Update()
         {
