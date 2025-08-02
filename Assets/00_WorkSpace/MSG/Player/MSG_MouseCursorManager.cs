@@ -7,18 +7,29 @@ namespace MSG
 {
     public class MSG_MouseCursorManager : MonoBehaviour
     {
+        [SerializeField] private MSG_UIInstaller _uiInstaller;
         [SerializeField] private LayerMask _npcLayerMask;
 
         private MSG_PlayerLogic _playerLogic;
         private MSG_PlayerData _playerData;
         private SpriteRenderer _spriteRenderer;
         private MSG_ICatchable _currentHoverTarget;
+        private MSG_ICatchable _pressedTarget;
 
         private void Start()
         {
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
             _playerData = MSG_PlayerReferenceProvider.Instance.GetPlayerData();
             _spriteRenderer = _playerLogic.PlayerSpriteRenderer;
+
+            if (_uiInstaller == null)
+            {
+                Debug.LogError("_uiInstaller is NULL");
+            }
+            else if (_uiInstaller.UIPresenter == null)
+            {
+                Debug.LogError("_uiInstaller.UIPresenter is NULL");
+            }
         }
 
         private void Update()
@@ -71,15 +82,20 @@ namespace MSG
             {
                 if (MSG_NPCProvider.TryGetCatchable(hit, out var catchable))
                 {
+                    _uiInstaller.UIPresenter.SetTarget(catchable); // UI 호출
+
                     if ((object)_currentHoverTarget != catchable)
                     {
                         _currentHoverTarget?.OnHoverExit();  // 이전 대상 해제
                         _currentHoverTarget = catchable;
                         _currentHoverTarget.OnHoverEnter();  // 새 대상 진입
                     }
+
                     return;
                 }
             }
+
+            _uiInstaller.UIPresenter.SetTarget(null); // UI 숨김
 
             // 아무것도 안 가리키고 있을 때
             if (_currentHoverTarget != null)
@@ -91,18 +107,27 @@ namespace MSG
 
         private void HandleClick()
         {
-            if (_currentHoverTarget == null) return;
+            //if (_pressedTarget == null) return;
 
             // 마우스 버튼 다운
             if (Input.GetMouseButtonDown(0))
             {
-                _currentHoverTarget.OnCatchPressed();
+                if (_currentHoverTarget != null)
+                {
+                    _pressedTarget = _currentHoverTarget;
+                    _pressedTarget.OnCatchPressed();
+                }
             }
 
             // 마우스 버튼 업
             if (Input.GetMouseButtonUp(0))
             {
-                _currentHoverTarget.OnCatchReleased();
+                if (_pressedTarget != null)
+                {
+                    // 마우스를 뗀 시점이 HoverExit일 수도 있어 _currentHoverTarget이 null일 가능성이 있어 따로 _pressedTarget를 호출
+                    _pressedTarget.OnCatchReleased();
+                    _pressedTarget = null;
+                }
             }
         }
 
