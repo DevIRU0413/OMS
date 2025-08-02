@@ -12,10 +12,12 @@ namespace MSG
         private float _currentTime;
         private bool _isMoving;
         private Vector2 _moveDirection;
+        private MSG_NPCMoveController _moveController;
 
         public MSG_WanderingState(MSG_CatchableNPC npc)
         {
             _npc = npc;
+            _moveController = _npc.NPCMoveController;
         }
 
         #region State Methods
@@ -27,17 +29,7 @@ namespace MSG
 
         public void Update()
         {
-            _currentTime += Time.deltaTime;
-
-            if (_currentTime >= _stateTime)
-            {
-                SetNewWanderState();
-            }
-
-            if (_isMoving)
-            {
-                _npc.transform.Translate(_moveDirection * Time.deltaTime * _npc.NPCData.CharWalkSpeed);
-            }
+            _moveController.Tick();
         }
 
         public void Exit()
@@ -51,28 +43,6 @@ namespace MSG
         #endregion
 
         #region Private Methods
-
-        private void SetNewWanderState()
-        {
-            _isMoving = Random.value > _npc.Settings.MoveProbability; // MoveProbability * 100 % 확률로 이동 결정
-            _stateTime = Random.Range(_npc.Settings.MinDuration, _npc.Settings.MaxDuration); // MinDuration ~ MaxDuration 사이의 행동 시간 설정
-            _currentTime = 0f;
-
-            if (_isMoving)
-            {
-                _moveDirection = Random.Range(0, 2) == 0 ? Vector2.right : Vector2.left; // 좌우로 랜덤하게 이동
-
-                if (_moveDirection == Vector2.left)
-                {
-                    _npc.FlipX(true);
-                }
-            }
-            else
-            {
-                _moveDirection = Vector2.zero;
-            }
-        }
-
         #endregion
 
         #region Unused Methods
