@@ -10,13 +10,16 @@ namespace MSG
         private void Start()
         {
             MSG_NPCProvider.RegisterRival(this, _collider);
+        }
 
+        private void Update()
+        {
+            _moveController.Tick();
         }
 
         private void OnDestroy()
         {
             MSG_NPCProvider.UnregisterRival(this, _collider);
         }
-
     }
 }
