@@ -14,18 +14,30 @@ namespace MSG
         public const int MinHP = 0;
 
         [SerializeField] private int _startHP;
-        public int CurrentHP { get; private set; }
+        private int _currentHP;
+        public int CurrentHP
+        {
+            get
+            {
+                return _currentHP;
+            }
+            set
+            {
+                _currentHP = value;
+                OnCurrentHPChanged?.Invoke(_currentHP);
+            }
+        }
         [field: SerializeField] public float RunSpeed { get; private set; }
         [field: SerializeField] public float WalkMoveSpeed { get; private set; }
         [field: SerializeField] public float DebuffedMoveSpeed { get; private set; }
-        [field: SerializeField] public float HPDecreasePerSecond { get; private set; }
+        //[field: SerializeField] public float HPDecreasePerSecond { get; private set; }
 
         public event Action<int> OnCurrentHPChanged;
 
         public void Init()
         {
-            CurrentHP = _startHP;
-            OnCurrentHPChanged?.Invoke(CurrentHP);
+            _currentHP = _startHP;
+            OnCurrentHPChanged?.Invoke(_currentHP);
         }
     }
 }
