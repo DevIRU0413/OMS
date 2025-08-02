@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,7 +41,17 @@ namespace MSG
         public          float                   CurrentCharHealth;
 
         public          float                   CharMaxCatchGauge;
-        public          float                   CurrentCharCatchGauge;
+        [SerializeField]
+        private         float                   _currentCharCatchGauge;
+        public          float                   CurrentCharCatchGauge
+        {
+            get => _currentCharCatchGauge;
+            set
+            {
+                _currentCharCatchGauge = value;
+                OnGaugeChanged?.Invoke(value);
+            }
+        }
 
         public          float                   CharCatchGaugeHealValue;
 
@@ -51,6 +62,9 @@ namespace MSG
         public          int                     CatchScore;
         public          int                     ClickScore;
         public          int                     FollowScore;
+
+
+        public event Action<float> OnGaugeChanged;
 
 
         public void Init()
