@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.UnityUtil.PoolTool;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,16 +11,27 @@ namespace MSG
     {
         #region Fields and Properties
 
-        private MSG_INpcState _currentState;
-
-        private float _totalHealPointPerSecond;
-        public float TotalHealPointPerSecond => _totalHealPointPerSecond;
-
+        [SerializeField] private GameObject _aimObject;
         [SerializeField] private LayerMask _rivalLayer;
 
         [Header("NPC 설정값")]
         [SerializeField] private MSG_NPCSettings _settings;
         public MSG_NPCSettings Settings => _settings;
+
+        private MSG_INpcState _currentState;
+
+        private int _rivalCount;
+        private float _totalHealPointPerSecond;
+        public float TotalHealPointPerSecond => _totalHealPointPerSecond;
+
+        #endregion
+
+        #region Actions
+        // UI 활성화 및 비활성화용 Action
+        public event Action OnCaptureStarted;   // 경쟁 중이지 않은, 포획 시작 시
+        public event Action OnCaptureEnded;     // 경쟁 중이지 않은, 포획 종료 시
+        public event Action OnCompeteStarted;   // 경쟁 중일 때,     포획 시작 시
+        public event Action OnCompeteEnded;     // 경쟁 중일 때,     포획 종료 시
 
         #endregion
 
@@ -30,8 +42,7 @@ namespace MSG
         {
             base.OnEnable();
 
-            if (_collider == null)
-                _collider = GetComponent<CapsuleCollider2D>();
+            _aimObject.SetActive(false);
         }
 
         private void Start()
@@ -110,6 +121,7 @@ namespace MSG
         public void StartCaptureGauge()
         {
             // 게이지 UI 시작, 애니메이션 등
+            OnCaptureStarted?.Invoke();
             Debug.Log("게이지 증가 시작");
         }
 
@@ -120,6 +132,7 @@ namespace MSG
         public void StopCaptureGauge()
         {
             // 게이지 UI 종료
+            OnCaptureEnded?.Invoke();
             Debug.Log("게이지 증가 종료");
         }
 
@@ -130,11 +143,13 @@ namespace MSG
         {
             _totalHealPointPerSecond = CalculateRivalPressure();
             Debug.Log($"경쟁 시작: 초당 감소량 {_totalHealPointPerSecond}");
+
+            OnCompeteStarted?.Invoke();
         }
 
         public void EndCompete()
         {
-            // 필요 없을 수도?
+            OnCompeteEnded?.Invoke();
             Debug.Log("경쟁 종료");
         }
 
@@ -165,12 +180,28 @@ namespace MSG
 
         public void ShowAimUI(bool isActive)
         {
-            Debug.Log($"에임 {(isActive ? "표시" : "숨김")}");
+            _aimObject.SetActive(isActive);
         }
 
         public void StopMovement(bool isStopped)
         {
             // idle 애니메이션
+        }
+
+        public void SpawnHeart()
+        {
+            if (_rivalCount >= _settings.LargeHeartDropStartRivalCount)
+            {
+                PoolManager.Instance.Spawn("LargeHeartPool", transform.position, Quaternion.identity);
+            }
+            else if (_rivalCount >= _settings.MediumHeartDropStartRivalCount)
+            {
+                PoolManager.Instance.Spawn("MediumHeartPool", transform.position, Quaternion.identity);
+            }
+            else if (_rivalCount >= _settings.SmallHeartDropStartRivalCount)
+            {
+                PoolManager.Instance.Spawn("SmallHeartPool", transform.position, Quaternion.identity);
+            }
         }
 
         /// <summary>
@@ -204,6 +235,7 @@ namespace MSG
         /// </summary>
         private float CalculateRivalPressure()
         {
+            _rivalCount = 0;
             float total = 0f;
             Vector2 center = transform.position;
             Collider2D[] hits = Physics2D.OverlapBoxAll(center, _settings.DetectionSize, 0f, _rivalLayer);
@@ -214,6 +246,7 @@ namespace MSG
                 {
                     if (MSG_NPCProvider.TryGetRival(capsuleCol, out var rival))
                     {
+                        _rivalCount++;
                         total += rival.NPCData.CharCatchGaugeHealValue;
                     }
                 }
