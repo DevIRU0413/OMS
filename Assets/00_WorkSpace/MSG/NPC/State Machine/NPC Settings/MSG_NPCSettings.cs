@@ -25,6 +25,11 @@ namespace MSG
         public float CaptureGaugeIncreasePerSecond = 50f;       // 초당 포획 게이지 증가 양
         public float CaptureGaugeIncreasePerClick = 10f;        // 클릭당 포획 게이지 증가 양
 
+        [Header("하트 드랍 관련 설정")]
+        [Min(0)] public int SmallHeartDropStartRivalCount = 0;  // 작은 하트를 드랍하기 위해 필요한 최소 라이벌 수
+        public int MediumHeartDropStartRivalCount = 2;          // 중간 하트를 드랍하기 위해 필요한 최소 라이벌 수
+        public int LargeHeartDropStartRivalCount = 3;           // 큰   하트를 드랍하기 위해 필요한 최소 라이벌 수
+
         //[Header("포획 완료 설정")]
         //public float CaptureDistance = 1.5f;                    // 포획 완료 시 NPC 간의 거리
     }
