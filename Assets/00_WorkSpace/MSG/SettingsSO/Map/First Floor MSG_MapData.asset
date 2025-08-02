@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88d9a9e67487db642970dc8b2e910076, type: 3}
+  m_Name: First Floor MSG_MapData
+  m_EditorClassIdentifier: 
+  Name: 1
+  MapType: 0
+  LeftSpawnPoint: {x: -7.5, y: 0}
+  RightSpawnPoint: {x: 7.5, y: 0}
+  HandsomeNPCSpawnCount: 1
+  NormalNPCSpawnCount: 1
+  UglyNPCSpawnCount: 1
+  RivalNPCSpawnCount: 1
+  DisturbNPCSpawnCount: 1
+  BossNPCSpawnCount: 0
+  LeftMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
+  RightMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
