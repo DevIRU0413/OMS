@@ -77,6 +77,8 @@ namespace MSG
             {
                 Debug.Log("방문해서 스폰 안함");
             }
+
+            _visitedMaps.Add(_currentMap.MapType);
         }
 
 
