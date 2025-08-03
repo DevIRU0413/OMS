@@ -13,10 +13,12 @@ namespace MSG
 
         [SerializeField] private GameObject _aimObject;
         [SerializeField] private LayerMask _rivalLayer;
+        [SerializeField] private MSG_FollowController _followController;
 
         [Header("NPC 설정값")]
         [SerializeField] private MSG_NPCSettings _settings;
         public MSG_NPCSettings Settings => _settings;
+        public MSG_FollowController FollowController => _followController;
 
         private MSG_INpcState _currentState;
 
@@ -254,12 +256,6 @@ namespace MSG
 
             Debug.Log($"경쟁 Rival의 총 포획 게이지 힐 값: {total}");
             return total;
-        }
-
-
-        public void FlipX(bool isLeft)
-        {
-            _spriteRenderer.flipX = isLeft;
         }
 
         #endregion
