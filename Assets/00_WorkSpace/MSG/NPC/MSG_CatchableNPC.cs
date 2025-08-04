@@ -177,6 +177,8 @@ namespace MSG
         public void MarkAsCaptured()
         {
             // 점수 지급
+
+            MSG_FollowManager.Instance.AddCapturedNPC(this);
             Debug.Log("NPC 상태: Captured 처리됨");
         }
 
