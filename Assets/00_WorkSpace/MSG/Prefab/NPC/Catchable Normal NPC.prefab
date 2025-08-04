@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 8837550141760391753}
   - component: {fileID: 3873612402280701050}
   - component: {fileID: 3693123644553436864}
+  - component: {fileID: -4911751741612007481}
   m_Layer: 9
   m_Name: Catchable Normal NPC
   m_TagString: Untagged
@@ -381,6 +382,7 @@ MonoBehaviour:
   _rivalLayer:
     serializedVersion: 2
     m_Bits: 1024
+  _followController: {fileID: -4911751741612007481}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
 --- !u!114 &3693123644553436864
 MonoBehaviour:
@@ -397,6 +399,19 @@ MonoBehaviour:
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _spriteRenderer: {fileID: 4033749473611099395}
   _dataSO: {fileID: 11400000, guid: 7a4cea916224dfb4b9ccf65efc77c20e, type: 2}
+--- !u!114 &-4911751741612007481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8217090538878939720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6b3c342a5628e4a8a6ae587d633c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spriteRenderer: {fileID: 4033749473611099395}
 --- !u!1 &8854373082470826125
 GameObject:
   m_ObjectHideFlags: 0
