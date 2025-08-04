@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82b2d820d01265d41a15587490ff1ffb, type: 3}
+  m_Name: Catchable Normal NPCDataSO
+  m_EditorClassIdentifier: 
+  ID: 1
+  Name: 1
+  CharType: 0
+  CatchableNPCtype: 1
+  CharAttackDamage: 0
+  CharMaxHealth: 0
+  CurrentCharHealth: 0
+  CharMaxCatchGauge: 100
+  CurrentCharCatchGauge: 0
+  CharCatchGaugeHealValue: 0
+  CharWalkSpeed: 1
+  CharRunSpeed: 0
+  CurrentScore: 0
+  CatchScore: 0
+  ClickScore: 0
+  FollowScore: 0

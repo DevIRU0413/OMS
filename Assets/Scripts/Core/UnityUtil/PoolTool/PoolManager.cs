@@ -63,6 +63,17 @@ namespace Core.UnityUtil.PoolTool
                 Destroy(obj);
             }
         }
+        [ContextMenu("DebugPool")]
+        public void DebugPool()
+        {
+            if (pools.Count == 0)
+                Debug.Log("pools.Count == 0");
+
+            foreach (var pool in pools)
+            {
+                Debug.Log($"{pool.Key}");
+            }
+        }
 
         public bool HasPool(string key) => pools.ContainsKey(key);
     }
