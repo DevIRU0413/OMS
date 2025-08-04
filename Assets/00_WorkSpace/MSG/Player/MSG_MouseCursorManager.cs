@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,11 @@ namespace MSG
         private SpriteRenderer _spriteRenderer;
         private MSG_ICatchable _currentHoverTarget;
         private MSG_ICatchable _pressedTarget;
+
+        private float _moveDir;
+        public float MoveDir => _moveDir;
+        public event Action OnDirectionChanged;
+
 
         private void Start()
         {
@@ -63,10 +69,15 @@ namespace MSG
                 speed = _playerData.RunSpeed;
             }
 
-            float moveDir = Mathf.Sign(deltaX);
-            FlipSprite(moveDir);
+            if (_moveDir != Mathf.Sign(deltaX))
+            {
+                OnDirectionChanged?.Invoke();
+            }
 
-            Vector3 move = new Vector3(moveDir * speed, 0f, 0f);
+            _moveDir = Mathf.Sign(deltaX);
+            FlipSprite(_moveDir);
+
+            Vector3 move = new Vector3(_moveDir * speed, 0f, 0f);
             _playerLogic.transform.position += move * Time.deltaTime;
         }
 
