@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 3
   MapType: 2
-  LeftSpawnPoint: {x: 7.5, y: 40}
-  RightSpawnPoint: {x: -7.5, y: 40}
+  LeftSpawnPoint: {x: -7.5, y: 40}
+  RightSpawnPoint: {x: 7.5, y: 40}
   HandsomeNPCSpawnCount: 3
   NormalNPCSpawnCount: 3
   UglyNPCSpawnCount: 3
