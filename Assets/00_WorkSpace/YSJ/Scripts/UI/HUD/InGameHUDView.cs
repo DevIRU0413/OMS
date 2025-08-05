@@ -35,7 +35,7 @@ public class InGameHUDView : YSJ_HUDBaseUI
 
     public void UpdateFollowerCount(int count)
     {
-        uiBinder.Get<TextMeshProUGUI>(InGameHUDType.ScoreCount_Text).text = count.ToString();
+        uiBinder.Get<TextMeshProUGUI>(InGameHUDType.FollwerCount_Text).text = count.ToString();
     }
 
     public void UpdateHealth(int health)
