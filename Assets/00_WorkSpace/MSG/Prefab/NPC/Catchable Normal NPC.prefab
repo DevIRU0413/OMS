@@ -411,7 +411,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6b3c342a5628e4a8a6ae587d633c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 4033749473611099395}
+  _catchableNPC: {fileID: 3873612402280701050}
+  _moveWeight: 1
+  _smoothSpeed: 5
+  _distance: 2
+  _attachSpeed: 1
+  _slideOffset: 0.2
+  _slideDuration: 0.05
 --- !u!1 &8854373082470826125
 GameObject:
   m_ObjectHideFlags: 0
