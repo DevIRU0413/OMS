@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +17,8 @@ namespace MSG
         {
             if (((1 << collision.gameObject.layer) & _playerLayer) != 0)
             {
+                YSJ_GameManager.Instance?.ReachedFloorEnd();
+
                 _arrowButton.SetActive(true);
             }
         }
@@ -25,6 +27,8 @@ namespace MSG
         {
             if (((1 << collision.gameObject.layer & _playerLayer) != 0))
             {
+                YSJ_GameManager.Instance?.ReachedFloorNotEnd();
+
                 _arrowButton.SetActive(false);
             }
         }

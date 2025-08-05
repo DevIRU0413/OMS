@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -25,6 +25,7 @@ namespace MSG
             {
                 _currentHP = value;
                 OnCurrentHPChanged?.Invoke(_currentHP);
+                YSJ_GameManager.Instance.ChangeHealth(_currentHP);
             }
         }
         [field: SerializeField] public float RunSpeed { get; private set; }
@@ -32,7 +33,7 @@ namespace MSG
         [field: SerializeField] public float DebuffedMoveSpeed { get; private set; }
         //[field: SerializeField] public float HPDecreasePerSecond { get; private set; }
 
-        public event Action<int> OnCurrentHPChanged;
+        public event Action<int> OnCurrentHPChanged; // TODO: 필요 없을 수도 있음
 
         public void Init()
         {
