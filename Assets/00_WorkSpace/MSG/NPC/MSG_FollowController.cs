@@ -42,11 +42,8 @@ namespace MSG
             Vector3 offset = new Vector3(_dir * _distance * _index, 0f, 0f);
             Vector3 targetPos = _targetTransform.position + offset;
             //transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * _index * _moveWeight);
+
             if (Vector3.Distance(transform.position, targetPos) > 0.01f)
-            {
-                transform.position = Vector3.MoveTowards(transform.position, targetPos, Time.deltaTime * _attachSpeed);
-            }
-            else
             {
                 transform.position = targetPos;
             }
@@ -73,7 +70,7 @@ namespace MSG
         {
             while (true)
             {
-                Vector3 end = _targetTransform.position + new Vector3(-_dir * _distance * _index, 0f, 0f);
+                Vector3 end = _targetTransform.position + new Vector3(_dir * _distance * _index, 0f, 0f);
                 transform.position = Vector3.Lerp(transform.position, end, Time.deltaTime * _attachSpeed);
 
                 if (Vector3.Distance(transform.position, end) < 0.1f) break;
