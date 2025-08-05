@@ -1,13 +1,22 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using UnityEngine;
 
 namespace Core.UnityUtil.PoolTool
 {
-    public class PoolManager : SimpleSingleton<PoolManager>
+    public class PoolManager : YSJ_SimpleSingleton<PoolManager>, IManager
     {
         private Dictionary<string, Pool> pools = new Dictionary<string, Pool>();
         private Dictionary<GameObject, string> objectToKeyMap = new Dictionary<GameObject, string>(); // 추가
+
+        public bool IsDontDestroy => isDontDestroyOnLoad ;
+
+        public void Initialize() { }
+
+        public void Cleanup() { }
+
+        public GameObject GetGameObject() => this.gameObject;
+
 
         public void CreatePool(string key, GameObject prefab, int initialSize = 10)
         {
@@ -76,5 +85,7 @@ namespace Core.UnityUtil.PoolTool
         }
 
         public bool HasPool(string key) => pools.ContainsKey(key);
+
+        
     }
 }
