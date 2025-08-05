@@ -1,0 +1,52 @@
+# Unity에 최적화된 .editorconfig
+root = true
+
+# 모든 파일 공통 설정
+[*]
+charset = utf-8
+end_of_line = crlf
+insert_final_newline = true
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+
+# C# 파일에 대한 설정
+[*.cs]
+dotnet_sort_system_directives_first = true
+dotnet_separate_import_directive_groups = true
+
+# this 사용 여부
+dotnet_style_qualification_for_field = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+dotnet_style_qualification_for_method = false:suggestion
+dotnet_style_qualification_for_event = false:suggestion
+
+# var 사용 여부
+csharp_style_var_for_built_in_types = true:suggestion
+csharp_style_var_when_type_is_apparent = true:suggestion
+csharp_style_var_elsewhere = false:suggestion
+
+# 중괄호 항상 사용
+csharp_prefer_braces = true:suggestion
+
+# 람다, 식 본문 등의 표현 스타일
+csharp_style_expression_bodied_methods = false:suggestion
+csharp_style_expression_bodied_properties = true:suggestion
+
+# null 조건 연산자 사용 권장
+csharp_style_conditional_delegate_call = true:suggestion
+
+# Unity의 .meta, .unity, .prefab 파일은 예외 처리
+[*.meta]
+indent_style = unset
+trim_trailing_whitespace = false
+
+[*.unity]
+indent_style = unset
+trim_trailing_whitespace = false
+
+[*.prefab]
+indent_style = unset
+trim_trailing_whitespace = false
+
+# 쉘스크립트 등 다른 확장자 파일은 기본 설정 유지
