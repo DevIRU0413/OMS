@@ -43,8 +43,6 @@ namespace MSG
 
             npc.FollowController.Init(followTarget, _captured.Count, _mouseCursorManager.MoveDir);
             _captured.Add(npc);
-
-            YSJ_GameManager.Instance.AddFollower();
         }
 
         private void BroadcastDirectionChanged()
