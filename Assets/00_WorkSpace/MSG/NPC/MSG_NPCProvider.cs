@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +20,7 @@ namespace MSG
         {
             _rivalNpcMap.Remove(col);
         }
-        public static bool TryGetRival(CapsuleCollider2D col, out MSG_RivalNPC npc)
+        public static bool TryGetRival(Collider2D col, out MSG_RivalNPC npc)
         {
             return _rivalNpcMap.TryGetValue(col, out npc);
         }
