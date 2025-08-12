@@ -1,4 +1,4 @@
-﻿using Core.UnityUtil.PoolTool;
+using Core.UnityUtil.PoolTool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,12 +19,16 @@ namespace MSG
 
         private HashSet<MapType> _visitedMaps = new();
         private MSG_MapData _currentMap;
+        private MSG_PlayerLogic _playerLogic;
         private Transform _playerTransform;
 
         private void Start()
         {
             _playerTransform = MSG_PlayerReferenceProvider.Instance.GetPlayerTransform();
+            _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+
             _currentMap = _startMap;
+            _playerLogic.ChangeCurrentMap(_currentMap);
 
             Coroutine wait;
             wait = StartCoroutine(Wait()); // 생각한 구조는 시작 씬에서 풀링을 해서 문제가 없어야 되지만 현재는 씬이 하나라 대기 후 NPC 스폰함
@@ -51,6 +55,7 @@ namespace MSG
             }
 
             ApplyMap(direction);
+            _playerLogic.ChangeCurrentMap(_currentMap);
         }
 
         private void ApplyMap(Direction direction)
@@ -100,7 +105,8 @@ namespace MSG
         private Vector2 GetRandomSpawnPointForDisturb()
         {
             float randomX = Random.Range(_leftX, _rightX);
-            return new Vector2(randomX, _middleY + GetFloorHeight());
+            //return new Vector2(randomX, _middleY + GetFloorHeight());
+            return new Vector2(randomX, _middleY + _currentMap.YPos); // GetFloorHeight 대신 YPos 그대로 사용
         }
 
         /// <summary>
@@ -120,11 +126,13 @@ namespace MSG
             else
                 randomY = _bottomY;
 
-            return new Vector2(randomX, randomY + GetFloorHeight());
+            //return new Vector2(randomX, randomY + GetFloorHeight());
+            return new Vector2(randomX, randomY + _currentMap.YPos); // GetFloorHeight 대신 YPos 그대로 사용
         }
 
         // 이 방식이 괜찮은지 확인 필요
         // 현재는 한 층이 Y좌표 20만큼 차이나서 이 값을 스폰포인트에 더하는데, 연동되지 않고 하드코딩 느낌이 나서 좋은 것 같지는 않음
+        // 이거 쓰지 말고 차라리 MapData에 Y좌표 필드를 넣는게 좋을 듯
         private float GetFloorHeight()
         {
             float hieght = 0;
