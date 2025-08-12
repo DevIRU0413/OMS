@@ -142,12 +142,13 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _collider: {fileID: 4403317412794873340}
   _spriteRenderer: {fileID: 3947984423278589331}
+  _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _aimObject: {fileID: 7260838405337038018}
   _rivalLayer:
     serializedVersion: 2
     m_Bits: 1024
   _followController: {fileID: -2097392430537649303}
-  _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
+  _dialogueSO: {fileID: 11400000, guid: a4edf9891179d0b4196fff9796ebf21c, type: 2}
 --- !u!114 &6760645398979423416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +164,7 @@ MonoBehaviour:
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _spriteRenderer: {fileID: 3947984423278589331}
   _dataSO: {fileID: 11400000, guid: 7a4cea916224dfb4b9ccf65efc77c20e, type: 2}
+  _npcBase: {fileID: 591620360104251437}
 --- !u!114 &-2097392430537649303
 MonoBehaviour:
   m_ObjectHideFlags: 0
