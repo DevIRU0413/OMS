@@ -2,6 +2,13 @@ using System;
 
 using UnityEngine;
 
+public enum GameStateType
+{
+    Init,
+    Playing,
+    Over,
+}
+
 public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
 {
     #region IManager
@@ -9,16 +16,21 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
 
     public void Cleanup() { }
     public GameObject GetGameObject() => this.gameObject;
-    public void Initialize() { }
+    public void Initialize()
+    {
+        StateType = GameStateType.Init;
+    }
 
     #endregion
 
+    public GameStateType StateType { get; private set; } = GameStateType.Init;
+
     [field: Header("플레이어 상태")]
     [field: SerializeField] private int maxHealth = 100;
-    [field: SerializeField] public int PlayerHealth { get; private set; } = 100;
+    public int CurrentPlayerHealth { get; private set; } = 100;
     [field: SerializeField] public float BatteryPercent { get; private set; } = 100f;
     [field: SerializeField] public float batteryDrainRate { get; private set; } = 1f; // 초당 1% 감소
-   
+
     [field: Header("게임 진행 상태")]
     [field: SerializeField] public int Score { get; private set; } = 0;
     [field: SerializeField] public int FollowerCount { get; private set; } = 0;
@@ -46,13 +58,19 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
         BatteryPercent -= batteryDrainRate * Time.deltaTime;
         BatteryPercent = Mathf.Clamp(BatteryPercent, 0f, 100f);
         OnBatteryChanged?.Invoke(BatteryPercent);
+
+        if (BatteryPercent == 0)
+            StateType = GameStateType.Over;
     }
 
     // 체력 감소/회복
     public void ChangeHealth(int amount)
     {
-        PlayerHealth = Mathf.Clamp(PlayerHealth + amount, 0, maxHealth);
-        OnHealthChanged?.Invoke(PlayerHealth);
+        CurrentPlayerHealth = Mathf.Clamp(amount, 0, maxHealth);
+        OnHealthChanged?.Invoke(CurrentPlayerHealth);
+
+        if (CurrentPlayerHealth == 0)
+            StateType = GameStateType.Over;
     }
 
     // 점수 증가
@@ -90,5 +108,10 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     {
         IsFloorEndReached = false;
         OnChangedReachedFloorEnd.Invoke(IsFloorEndReached);
+    }
+
+    public void GameStart()
+    {
+        StateType = GameStateType.Playing;
     }
 }
