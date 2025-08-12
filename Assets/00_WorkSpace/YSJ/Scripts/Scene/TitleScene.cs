@@ -8,11 +8,12 @@ namespace Scripts.Scene
 
         [Header("UI View")]
         [SerializeField] private TitleHUDView titleHUDView;
-
+        [SerializeField] private TutorialPanelView tutorialPanelView;
 
         protected override void Initialize()
         {
-
+            titleHUDView.InitBaseUI();
+            tutorialPanelView.InitBaseUI();
         }
     }
 }
