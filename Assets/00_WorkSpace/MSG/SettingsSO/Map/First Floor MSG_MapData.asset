@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: First Floor MSG_MapData
   m_EditorClassIdentifier: 
   Name: 1
+  CurrentFloor: 1
   MapType: 0
   LeftSpawnPoint: {x: -7.5, y: 0}
   RightSpawnPoint: {x: 7.5, y: 0}
@@ -24,3 +25,5 @@ MonoBehaviour:
   BossNPCSpawnCount: 0
   LeftMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
   RightMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
+  LeftEndPoint: -9
+  RightEndPoint: 9

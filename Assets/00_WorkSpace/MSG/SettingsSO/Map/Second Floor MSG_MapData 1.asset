@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Second Floor MSG_MapData 1
   m_EditorClassIdentifier: 
   Name: 2
+  CurrentFloor: 2
   MapType: 1
+  YPos: 20
   LeftSpawnPoint: {x: -7.5, y: 20}
   RightSpawnPoint: {x: 7.5, y: 20}
   HandsomeNPCSpawnCount: 2
@@ -24,3 +26,5 @@ MonoBehaviour:
   BossNPCSpawnCount: 0
   LeftMap: {fileID: 11400000, guid: 94d66420bfc4fb34a9f88bfa4c80bbc3, type: 2}
   RightMap: {fileID: 11400000, guid: 3c017b7c594238f4d9831bc28928aa8d, type: 2}
+  LeftEndPoint: -9
+  RightEndPoint: 9

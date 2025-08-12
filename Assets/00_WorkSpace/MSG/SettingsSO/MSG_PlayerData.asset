@@ -15,4 +15,4 @@ MonoBehaviour:
   _startHP: 60
   <RunSpeed>k__BackingField: 2
   <WalkMoveSpeed>k__BackingField: 1
-  <DebuffedMoveSpeed>k__BackingField: 0.5
+  <DebuffedMoveSpeed>k__BackingField: 0

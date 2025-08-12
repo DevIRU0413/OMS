@@ -19,3 +19,9 @@ MonoBehaviour:
   MoveProbability: 0.5
   CaptureGaugeIncreasePerSecond: 20
   CaptureGaugeIncreasePerClick: 10
+  SmallHeartDropStartRivalCount: 0
+  MediumHeartDropStartRivalCount: 1
+  LargeHeartDropStartRivalCount: 2
+  ForceMoveCount: 3
+  ForcedMoveDuration: 2
+  ForcedMoveSpeedMultiplier: 2
