@@ -379,6 +379,9 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _npcLayer:
+    serializedVersion: 2
+    m_Bits: 3584
   _arrowButton: {fileID: 738089554}
 --- !u!50 &249154384
 Rigidbody2D:
@@ -575,6 +578,9 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _npcLayer:
+    serializedVersion: 2
+    m_Bits: 3584
   _arrowButton: {fileID: 1010510077}
 --- !u!1 &380900505
 GameObject:
@@ -674,6 +680,9 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _npcLayer:
+    serializedVersion: 2
+    m_Bits: 3584
   _arrowButton: {fileID: 1494520161}
 --- !u!50 &436684668
 Rigidbody2D:
@@ -1637,6 +1646,9 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _npcLayer:
+    serializedVersion: 2
+    m_Bits: 3584
   _arrowButton: {fileID: 1248516227}
 --- !u!50 &817659930
 Rigidbody2D:
@@ -3111,6 +3123,9 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _npcLayer:
+    serializedVersion: 2
+    m_Bits: 3584
   _arrowButton: {fileID: 700218358}
 --- !u!50 &1287989140
 Rigidbody2D:
@@ -3249,6 +3264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: 976c9e6ff70901a4aa1af0a32a7a15e8, type: 2}
+  _playerSettings: {fileID: 11400000, guid: 24e08a57daca23d48bf2ac42ef358d4b, type: 2}
   _animator: {fileID: 1325481437}
   _capsuleCollider2D: {fileID: 1325481436}
   _spriteRenderer: {fileID: 1325481434}
@@ -3261,7 +3277,6 @@ MonoBehaviour:
   _breadBoxLayer:
     serializedVersion: 2
     m_Bits: 8192
-  _playerSettings: {fileID: 11400000, guid: 24e08a57daca23d48bf2ac42ef358d4b, type: 2}
   _breadBag: {fileID: 1348887984}
 --- !u!212 &1325481434
 SpriteRenderer:
@@ -3622,6 +3637,9 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _npcLayer:
+    serializedVersion: 2
+    m_Bits: 3584
   _arrowButton: {fileID: 1432639948}
 --- !u!1 &1432639948
 GameObject:
@@ -4143,6 +4161,7 @@ MonoBehaviour:
   _npcLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  _playerSettings: {fileID: 11400000, guid: 24e08a57daca23d48bf2ac42ef358d4b, type: 2}
 --- !u!4 &1649012347
 Transform:
   m_ObjectHideFlags: 0
