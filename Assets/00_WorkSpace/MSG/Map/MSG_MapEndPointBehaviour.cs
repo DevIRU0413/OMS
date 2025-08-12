@@ -10,6 +10,7 @@ namespace MSG
         [SerializeField] private MSG_MapChanger _mapChanger;
         [SerializeField] private Direction _direction; // 어느 방향에 있는 끝 지점인지 설정
         [SerializeField] private LayerMask _playerLayer;
+        [SerializeField] private LayerMask _npcLayer;
         [SerializeField] private GameObject _arrowButton;
 
 
@@ -20,6 +21,22 @@ namespace MSG
                 YSJ_GameManager.Instance?.ReachedFloorEnd();
 
                 _arrowButton.SetActive(true);
+            }
+
+            if (((1 << collision.gameObject.layer) & _npcLayer) != 0)
+            {
+                if (MSG_NPCProvider.TryGetCatchable(collision, out var catchable))
+                {
+                    catchable.NPCMoveController.ReachEnd(_direction);
+                }
+                else if (MSG_NPCProvider.TryGetRival(collision, out var rival))
+                {
+                    rival.NPCMoveController.ReachEnd(_direction);
+                }
+                else if (MSG_NPCProvider.TryGetDisturb(collision, out var disturb))
+                {
+                    disturb.NPCMoveController.ReachEnd(_direction);
+                }
             }
         }
 
