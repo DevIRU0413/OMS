@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +7,8 @@ namespace MSG
 {
     public class MSG_CatchingState : MSG_INpcState
     {
+        private MSG_PlayerLogic _playerLogic;
         private MSG_CatchableNPC _npc;
-
         private Coroutine _waitForCheckRivalCO;
 
         public MSG_CatchingState(MSG_CatchableNPC npc)
@@ -19,7 +19,10 @@ namespace MSG
 
         public void Enter()
         {
+            _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+
             _npc.StartCaptureGauge();
+            _npc.PrintLaughDialogue();
 
             if (_waitForCheckRivalCO != null)
             {
@@ -30,7 +33,9 @@ namespace MSG
 
         public void Update()
         {
-            _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerSecond * Time.deltaTime);
+            _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerSecond * Time.deltaTime); // 포획 중 초당 포획 게이지 증가
+
+            _playerLogic.TakeDamage(_playerLogic.PlayerSettings.HPDecreasePerSecond * Time.deltaTime);  // 포획 중 초당 체력 감소
 
             if (_npc.IsGaugeFull())
             {
