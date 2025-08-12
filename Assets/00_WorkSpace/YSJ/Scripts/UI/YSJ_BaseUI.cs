@@ -13,7 +13,7 @@ public abstract class YSJ_BaseUI : MonoBehaviour
     public Action OnOpenAction;
     public Action OnCloseAction;
 
-    private void Awake() => InitBaseUI();
+    // private void Awake() => InitBaseUI();
     private void OnDestroy() => YSJ_UIManager.Instance.UnRegisterUI(this);
 
     public virtual void InitBaseUI()
@@ -23,6 +23,7 @@ public abstract class YSJ_BaseUI : MonoBehaviour
 
         YSJ_UIManager.Instance?.RegisterUI(this);
     }
+
     private void InitRectObject()
     {
         RectTransform[] recTrans = GetComponentsInChildren<RectTransform>(true);
@@ -73,8 +74,18 @@ public abstract class YSJ_BaseUI : MonoBehaviour
 
     public YSJ_PointerHandler GetEvent(in string objName)
     {
-        YSJ_PointerHandler obj = GetUI(objName).GetOrAddComponent<YSJ_PointerHandler>();
-        return obj;
+        GameObject obj = GetUI(objName);
+        if (obj == null)
+        {
+            Debug.LogWarning($"[YSJ_BaseUI] '{objName}' GameObject not found.");
+            return null;
+        }
+
+        var handler = obj.GetComponent<YSJ_PointerHandler>();
+        if (handler == null)
+            handler = obj.AddComponent<YSJ_PointerHandler>();
+
+        return handler;
     }
 
     public virtual void Open() { OnOpenAction?.Invoke(); }

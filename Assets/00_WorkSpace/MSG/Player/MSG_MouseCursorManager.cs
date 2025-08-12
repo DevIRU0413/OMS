@@ -1,26 +1,77 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 
 namespace MSG
 {
+    public enum LookDirection
+    {
+        // 플레이어가 바라볼 방향
+        UpRight, Right, DownRight,
+        DownLeft, Left, UpLeft
+    }
+
+    /// <summary>
+    /// 마우스 커서를 통해 플레이어를 이동시키고 포획하는 클래스입니다.
+    /// </summary>
     public class MSG_MouseCursorManager : MonoBehaviour
     {
-        [SerializeField] private MSG_UIInstaller _uiInstaller;
+        #region Fields and Properties
+        [SerializeField] private MSG_UIInstaller _uiInstaller; // 현재는 타겟 UI를 위해서만 남겨져 있음. 이관해야될 듯
         [SerializeField] private LayerMask _npcLayerMask;
+        [SerializeField] private MSG_PlayerSettings _playerSettings;
 
         private MSG_PlayerLogic _playerLogic;
         private MSG_PlayerData _playerData;
         private SpriteRenderer _spriteRenderer;
-        private MSG_ICatchable _currentHoverTarget;
-        private MSG_ICatchable _pressedTarget;
+        private bool _isMoving = false;
+
+        private MSG_ICatchable _currentHoverTarget; // 현재 올려져있는 타겟,
+                                                    // 타겟 UI를 표기하기 위해 사용
+        private MSG_ICatchable _pressedTarget;      // 현재 누르고 있는 타겟,
+                                                    // _currentHoverTarget만 사용하면 누르고 있다가 마우스가 벗어난 후 마우스 클릭을 떼면 _currentHoverTarget가 null이 되어 따로 사용
+        private MSG_ICatchable _recentTarget;       // 가장 최근 눌렀던 타겟,
+                                                    // 해당 타겟이 경쟁 중인지를 기억하고 경쟁 중이라면 마우스 이동을 금지하기 위해 기억해야 돼서 따로 사용,
+                                                    // 마우스 클릭도 안하고 올려져있지도 않으면 위 변수들이 null이 되기에 따로 사용
+
+        /// <summary>
+        /// 포획 중인 타겟,
+        /// 경쟁 중이지 않을 때에는 마우스 클릭 중에는 HoverExit이 일어나도 타겟이 변하지 않도록, 경쟁 중일 때에는 경쟁이 끝날 때까지 타겟이 변하지 않도록 고정하기 위해 별도로 사용
+        /// 현재 누르고 있는 타겟이 있다면 해당 타겟 반환(비경쟁 포획). 없다면, 가장 최근 눌렀던 타겟이 있고, 경쟁 중이라면 해당 타겟을 반환(경쟁 포획)
+        /// </summary>
+        private MSG_ICatchable CatchingTarget
+        {
+            get
+            {
+                if (_pressedTarget != null && (UnityEngine.Object)_pressedTarget != null)
+                {
+                    return _pressedTarget;
+                }
+
+                if (_recentTarget is MSG_CatchableNPC recent &&
+                    recent != null &&
+                    recent.IsCompeting
+                    )
+                {
+                    return _recentTarget;
+                }
+
+                return null;
+            }
+        }
+        private bool IsCatching => CatchingTarget != null; // 경쟁 유무와 상관없이 포획 중이라면 true 반환
 
         private float _moveDir;
         public float MoveDir => _moveDir;
         public event Action OnDirectionChanged;
 
+        #endregion
+
+
+        #region Unity Methods
 
         private void Start()
         {
@@ -40,13 +91,33 @@ namespace MSG
 
         private void Update()
         {
-            MoveByMousePos();
             CheckHoverTarget();
+            MoveByMousePos();
+            LookByMouseDirection();
             HandleClick();
         }
 
+        #endregion
+
+
+        #region Private Methods
+
+        /// <summary>
+        /// ScreenToWorldPoint의 마우스 위치를 통해 플레이어를 좌우로 이동
+        /// </summary>
         private void MoveByMousePos()
         {
+            if (_playerLogic.IsFallen) return; // 플레이어가 넘어져있다면 움직임 정지
+            if (IsCatching) return;
+            // 가장 최근 타겟이 경쟁 중이라면 플레이어 움직임 정지
+            if (_recentTarget != null)
+            {
+                if (_recentTarget is MSG_CatchableNPC catchble && catchble.IsCompeting)
+                {
+                    return;
+                }
+            }
+
             if (_currentHoverTarget != null) return; // 마우스가 포획 가능한 NPC 위에 있을 때는 이동하지 않음
 
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -69,21 +140,43 @@ namespace MSG
                 speed = _playerData.RunSpeed;
             }
 
+            _isMoving = speed > 0f;
+
             if (_moveDir != Mathf.Sign(deltaX))
             {
                 OnDirectionChanged?.Invoke();
             }
 
             _moveDir = Mathf.Sign(deltaX);
-            FlipSprite(_moveDir);
 
             Vector3 move = new Vector3(_moveDir * speed, 0f, 0f);
-            _playerLogic.transform.position += move * Time.deltaTime;
+            float nextX = playerPos.x + move.x * Time.deltaTime; // 다음 움직일 장소 계산
+            float clampedX = Mathf.Clamp(nextX, _playerLogic.CurrentMap.LeftEndPoint, _playerLogic.CurrentMap.RightEndPoint); // 맵의 끝 지점을 벗어나지 못하도록 Clamp
+
+            _playerLogic.transform.position = new Vector3(clampedX, playerPos.y, playerPos.z);
         }
 
-
+        /// <summary>
+        /// 마우스가 포획 가능 NPC 위에 있는지 확인 후 해당 NPC에게 알림 및 타겟 UI 호출
+        /// </summary>
         private void CheckHoverTarget()
         {
+            if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 타겟 찾기 정지
+
+            if (IsCatching) // 포획 중이라면 현재 포획 중인 타겟으로 강제 고정 후 바로 return
+            {
+                var catching = CatchingTarget;
+                if (_currentHoverTarget != catching) // 대상이 바뀌었을 때만 Hover 관련 호출
+                {
+                    _currentHoverTarget?.OnHoverExit();
+                    _currentHoverTarget = catching;
+                    _currentHoverTarget?.OnHoverEnter();
+                }
+                _uiInstaller.UIPresenter.SetTarget(_currentHoverTarget as MSG_CatchableNPC);
+                return;
+            }
+
+
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 mousePos2D = new Vector2(mouseWorldPos.x, mouseWorldPos.y);
 
@@ -102,6 +195,11 @@ namespace MSG
                         _currentHoverTarget.OnHoverEnter();  // 새 대상 진입
                     }
 
+                    if ((object)_recentTarget != catchable)  // 가장 최근 타겟을 저장
+                    {
+                        _recentTarget = catchable;
+                    }
+
                     return;
                 }
             }
@@ -116,17 +214,36 @@ namespace MSG
             }
         }
 
+        /// <summary>
+        /// 마우스 클릭 상호작용 핸들러
+        /// </summary>
         private void HandleClick()
         {
-            //if (_pressedTarget == null) return;
+            if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 클릭 상호작용 정지
 
             // 마우스 버튼 다운
             if (Input.GetMouseButtonDown(0))
             {
-                if (_currentHoverTarget != null)
+                // 포획 중이면
+                if (IsCatching)
                 {
-                    _pressedTarget = _currentHoverTarget;
-                    _pressedTarget.OnCatchPressed();
+                    // 포획 중인 타겟이랑만 상호작용 허용
+                    if (_currentHoverTarget == CatchingTarget)
+                    {
+                        _pressedTarget = _currentHoverTarget;
+                        _pressedTarget.OnCatchPressed();
+                    }
+                    // else는 상호작용 금지
+                }
+                // 포획 중이 아니면
+                else
+                {
+                    if (_currentHoverTarget != null)
+                    {
+                        // 타겟 이동 허용
+                        _pressedTarget = _currentHoverTarget;
+                        _pressedTarget.OnCatchPressed();
+                    }
                 }
             }
 
@@ -140,16 +257,67 @@ namespace MSG
                     _pressedTarget = null;
                 }
             }
+
+            // 종료된 타겟 정리
+            if (_recentTarget == null) _recentTarget = null;
+            if (_pressedTarget == null) _pressedTarget = null;
+            if (_currentHoverTarget == null) _currentHoverTarget = null;
         }
 
-        // 플레이어가 이 로직 들고 있는게 자연스러울 듯
+        // 스프라이트 교체 형식이라 현재는 뒤집으면 안됨
+        // 근데 움직이는 애니메이션 재생을 넣고 사용하는 시점에서는 필요한 메서드
         private void FlipSprite(float moveDir)
         {
             if (_spriteRenderer == null) return;
             _spriteRenderer.flipX = moveDir < 0;
         }
 
-        // TODO: Raycast로 ICollectible 인터페이스인 경우 MoveByMousePos() 멈추고 클릭 시 포획 시도
-        // 만약 해당 NPC가 경쟁 중인 상태라면 클릭 연타로 변경
+        /// <summary>
+        /// 마우스 방향을 기준으로 플레이어 스프라이트 교체
+        /// </summary>
+        private void LookByMouseDirection()
+        {
+            if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 교체 정지
+
+            if (_isMoving) return; // 움직이고 있을 때에는 교체하면 안됨
+            LookDirection dir = GetMouseDirection();
+
+            _spriteRenderer.sprite = _playerSettings._playerStopSprites[(int)dir];
+        }
+
+        /// <summary>
+        /// 플레이어가 보는 방향을 6방향으로 변환해 반환합니다
+        /// </summary>
+        private LookDirection GetMouseDirection()
+        {
+            Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 dir = mouseWorldPos - _playerLogic.transform.position;
+
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            angle = (450f - angle) % 360f; // 기존 0도가 오른쪽을 바라보던 것에서 +90을 하여 0도가 위를 바라보도록 보정, 0~360 보정
+
+            foreach (var range in _playerSettings.DirectionAngleRanges)
+            {
+                // startAngle이 endAngle보다 작은 경우 (예: 60~120도)
+                if (range.startAngle < range.endAngle)
+                {
+                    // angle이 시작~끝 사이에 있는지 확인
+                    if (angle >= range.startAngle && angle < range.endAngle)
+                        return range.direction;
+                }
+                // startAngle이 endAngle보다 큰 경우 (예: 330~30도)
+                else
+                {
+                    // angle이 330~360도 이거나 0~30도인 경우
+                    if (angle >= range.startAngle || angle < range.endAngle)
+                        return range.direction;
+                }
+            }
+
+            // 기본값 반환
+            return LookDirection.Right;
+        }
+
+        #endregion
     }
 }

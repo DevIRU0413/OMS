@@ -1,11 +1,14 @@
-﻿using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 namespace MSG
 {
     public class MSG_CapturedState : MSG_INpcState
     {
+        private MSG_PlayerLogic _playerLogic;
         private MSG_CatchableNPC _npc;
 
         public MSG_CapturedState(MSG_CatchableNPC npc)
@@ -15,18 +18,29 @@ namespace MSG
 
         public void Enter()
         {
-            _npc.MarkAsCaptured();
+            _npc.StartCapturedMovement();
             _npc.PlayCaptureEffect();
             _npc.DisableInteraction();
             _npc.SpawnHeart();
-        }
-        public void Update()
-        {
-            // 플레이어 뒤를 따라가게
+            _npc.AddCatchScore();
+            _npc.DespawnRivalWhenWin();
+
+            _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+            _playerLogic.AddFollower();
+
+            if (_playerLogic.IsFever) // 피버타임이라면 
+            {
+                _npc.PrintSuperChatDialogue(); // 슈퍼챗 대사 출력
+            }
+            else // 아니면
+            {
+                _npc.PrintFollowDialogue(); // Follow 대사 출력
+            }
         }
 
 
         #region Unused Methods
+        public void Update() { }
         public void Exit() { }
         public void OnHoverEnter() { }
         public void OnHoverExit() { }

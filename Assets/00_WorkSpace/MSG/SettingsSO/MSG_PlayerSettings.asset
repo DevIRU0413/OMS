@@ -12,4 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd926cdf7fc28745bfff2c3c91246a3, type: 3}
   m_Name: MSG_PlayerSettings
   m_EditorClassIdentifier: 
-  InvincibleTime: 2
+  <InvincibleTime>k__BackingField: 2
+  <BlinkInterval>k__BackingField: 0.5
+  <HPDecreasePerSecond>k__BackingField: 5
+  <HPDecreasePerClick>k__BackingField: 2
+  <FeverTimeDuration>k__BackingField: 10
+  <FeverScoreMagnifier>k__BackingField: 2
+  DirectionAngleRanges:
+  - direction: 0
+    startAngle: 0
+    endAngle: 60
+  - direction: 1
+    startAngle: 60
+    endAngle: 120
+  - direction: 2
+    startAngle: 120
+    endAngle: 180
+  - direction: 3
+    startAngle: 180
+    endAngle: 240
+  - direction: 4
+    startAngle: 240
+    endAngle: 300
+  - direction: 5
+    startAngle: 300
+    endAngle: 0
+  _playerStopSprites:
+  - {fileID: 21300000, guid: 6189d4f611b980e45810e394bc0b6365, type: 3}
+  - {fileID: 21300000, guid: 9b9e286f98ad7fb4295720e08d6b3a7a, type: 3}
+  - {fileID: 21300000, guid: 040276ffd6ff1f94d80e6733ca1701de, type: 3}
+  - {fileID: 21300000, guid: 6b56da304f2258c4fb0f82a4cd54f25b, type: 3}
+  - {fileID: 21300000, guid: 6d63a93482a6289458cdd05aacfe9cc1, type: 3}
+  - {fileID: 21300000, guid: 85fe33610c714d54e83a7b96f3d699ca, type: 3}

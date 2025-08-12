@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82b2d820d01265d41a15587490ff1ffb, type: 3}
-  m_Name: Catchable Ugly NPCDataSO
+  m_Name: Catchable Handsom NPCDataSO
   m_EditorClassIdentifier: 
   ID: 1
   Name: 1
@@ -20,11 +20,11 @@ MonoBehaviour:
   CharMaxHealth: 0
   CurrentCharHealth: 0
   CharMaxCatchGauge: 100
-  CurrentCharCatchGauge: 0
+  _currentCharCatchGauge: 0
   CharCatchGaugeHealValue: 0
   CharWalkSpeed: 1
   CharRunSpeed: 0
   CurrentScore: 0
-  CatchScore: 0
-  ClickScore: 0
+  CatchScore: 1000
+  ClickScore: 20
   FollowScore: 0

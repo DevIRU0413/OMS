@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 4934420987252913343}
   - component: {fileID: 5807867288747861380}
   - component: {fileID: 624544947071274292}
+  - component: {fileID: 196615957336009795}
   - component: {fileID: 1869654333662973770}
   - component: {fileID: 3789249139647151823}
   m_Layer: 10
@@ -359,6 +360,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 2, y: 5}
   m_Direction: 0
+--- !u!50 &196615957336009795
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625608519349435251}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!114 &1869654333662973770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +404,8 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _collider: {fileID: 624544947071274292}
   _spriteRenderer: {fileID: 5807867288747861380}
+  _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
+  _rigidbody2D: {fileID: 196615957336009795}
 --- !u!114 &3789249139647151823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,3 +421,4 @@ MonoBehaviour:
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _spriteRenderer: {fileID: 5807867288747861380}
   _dataSO: {fileID: 11400000, guid: e87fcd685ae7af34d8aa2f6ba79604f0, type: 2}
+  _npcBase: {fileID: 1869654333662973770}

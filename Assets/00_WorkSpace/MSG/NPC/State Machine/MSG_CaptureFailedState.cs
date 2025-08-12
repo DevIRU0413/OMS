@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,10 +18,12 @@ namespace MSG
         {
             _npc.PlayFailEffect();
             _npc.DisableInteraction();
+
+            Debug.Log("포획 실패 Enter");
         }
         public void Update()
         {
-            // 사라지는 로직?
+
         }
 
         #region Unused Methods

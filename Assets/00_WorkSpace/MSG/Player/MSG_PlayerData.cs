@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -6,7 +6,6 @@ using System;
 
 namespace MSG
 {
-    // Model을 SO로 해도 되나?
     [CreateAssetMenu(fileName = "MSG_PlayerData", menuName = "ScriptableObjects/MSG_PlayerData")]
     public class MSG_PlayerData : ScriptableObject
     {
@@ -25,14 +24,14 @@ namespace MSG
             {
                 _currentHP = value;
                 OnCurrentHPChanged?.Invoke(_currentHP);
+                YSJ_GameManager.Instance.ChangeHealth(_currentHP);
             }
         }
-        [field: SerializeField] public float RunSpeed { get; private set; }
-        [field: SerializeField] public float WalkMoveSpeed { get; private set; }
-        [field: SerializeField] public float DebuffedMoveSpeed { get; private set; }
-        //[field: SerializeField] public float HPDecreasePerSecond { get; private set; }
+        [field: SerializeField] public float RunSpeed { get; private set; }             // 달리기 속도
+        [field: SerializeField] public float WalkMoveSpeed { get; private set; }        // 걷기 속도
+        [field: SerializeField] public float DebuffedMoveSpeed { get; private set; }    // 피격 시 속도
 
-        public event Action<int> OnCurrentHPChanged;
+        public event Action<int> OnCurrentHPChanged; // TODO: 필요 없을 수도 있음
 
         public void Init()
         {

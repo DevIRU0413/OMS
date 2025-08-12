@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 namespace MSG
 {
+    // static 클래스여도 무방할 듯
     public class MSG_PlayerReferenceProvider : MonoBehaviour
     {
         [SerializeField] private MSG_PlayerLogic _playerLogic;

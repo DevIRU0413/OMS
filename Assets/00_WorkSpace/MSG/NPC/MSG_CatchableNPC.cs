@@ -1,7 +1,9 @@
-﻿using Core.UnityUtil.PoolTool;
+using Core.UnityUtil.PoolTool;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 
@@ -14,17 +16,21 @@ namespace MSG
         [SerializeField] private GameObject _aimObject;
         [SerializeField] private LayerMask _rivalLayer;
         [SerializeField] private MSG_FollowController _followController;
-
-        [Header("NPC 설정값")]
-        [SerializeField] private MSG_NPCSettings _settings;
-        public MSG_NPCSettings Settings => _settings;
-        public MSG_FollowController FollowController => _followController;
+        [SerializeField] private MSG_DialogueSO _dialogueSO;
 
         private MSG_INpcState _currentState;
-
+        private bool _isCompeting;
         private int _rivalCount;
         private float _totalHealPointPerSecond;
+
+        private List<MSG_RivalNPC> _competingRivals = new(); // 경쟁 중인 라이벌이 정지 후 정지 해제 명령용 캐싱
+
+        public bool IsCompeting => _isCompeting;
+        public int RivalCount => _rivalCount;
+        public MSG_FollowController FollowController => _followController;
         public float TotalHealPointPerSecond => _totalHealPointPerSecond;
+        public int FollowScore => _npcData.FollowScore; // 게임 종료 시 포획되었다면 더할 점수, 배율 X
+
 
         #endregion
 
@@ -44,7 +50,7 @@ namespace MSG
         {
             base.OnEnable();
 
-            _aimObject.SetActive(false);
+            Init();
         }
 
         private void Start()
@@ -93,7 +99,6 @@ namespace MSG
         public void IncreaseGauge(float amount)
         {
             _npcData.CurrentCharCatchGauge = _npcData.CurrentCharCatchGauge + amount; // IsGaugeFull을 Update에서 검사해서 경쟁 중에 100을 찍었더라도 다시 내려올 수 있음. 그래서 Mathf.Clamp를 사용하지 않음
-            Debug.Log($"포획 게이지 증가: {_npcData.CurrentCharCatchGauge}");
         }
 
         /// <summary>
@@ -103,7 +108,6 @@ namespace MSG
         public void DecreaseGauge(float amout)
         {
             _npcData.CurrentCharCatchGauge = _npcData.CurrentCharCatchGauge - amout; // IsGaugeEmpty를 Update에서 검사해서 경쟁 중에 0을 찍었더라도 다시 올라갈 수 있음. 그래서 Mathf.Clamp를 사용하지 않음
-            Debug.Log($"포획 게이지 감소: {_npcData.CurrentCharCatchGauge}");
         }
 
         public bool IsGaugeFull()
@@ -146,19 +150,33 @@ namespace MSG
             _totalHealPointPerSecond = CalculateRivalPressure();
             Debug.Log($"경쟁 시작: 초당 감소량 {_totalHealPointPerSecond}");
 
+            _isCompeting = true;
             OnCompeteStarted?.Invoke();
+
+            foreach (var rival in _competingRivals) // 경쟁 중 라이벌들 정지
+            {
+                rival.StartCompeting();
+            }
         }
 
         public void EndCompete()
         {
             OnCompeteEnded?.Invoke();
+
+            _isCompeting = false;
             Debug.Log("경쟁 종료");
+
+            foreach (var rival in _competingRivals) // // 경쟁 중 라이벌들 정지 해제
+            {
+                rival.EndCompeting();
+            }
         }
 
         public void PlayFailEffect()
         {
             // 실패 이펙트
             Debug.Log("포획 실패 효과 실행");
+            PoolManager.Instance.Despawn(this.gameObject);
         }
 
         public void PlayCaptureEffect()
@@ -174,12 +192,21 @@ namespace MSG
             Debug.Log("NPC 상호작용 종료");
         }
 
-        public void MarkAsCaptured()
+        /// <summary>
+        /// 추종 로직 시작
+        /// </summary>
+        public void StartCapturedMovement()
         {
-            // 점수 지급
-
             MSG_FollowManager.Instance.AddCapturedNPC(this);
             Debug.Log("NPC 상태: Captured 처리됨");
+        }
+
+        public void DespawnRivalWhenWin()
+        {
+            foreach (var rival in _competingRivals) // // 경쟁 중 라이벌들 정지 해제
+            {
+                rival.LoseAndDespawn();
+            }
         }
 
         public void ShowAimUI(bool isActive)
@@ -218,20 +245,38 @@ namespace MSG
 
             foreach (var col in hits)
             {
-                if (col is CapsuleCollider2D capsuleCol)
+                if (MSG_NPCProvider.TryGetRival(col, out var rival))
                 {
-                    if (MSG_NPCProvider.TryGetRival(capsuleCol, out var rival))
-                    {
-                        // rival.경쟁시작();
+                    // rival.경쟁시작();
 
-                        Debug.Log($"근처 Rival 발견: {rival.NPCData.Name}");
-                        return true;
-                    }
+                    Debug.Log($"근처 Rival 발견: {rival.NPCData.Name}");
+                    return true;
                 }
             }
 
             Debug.Log("근처 Rival 없음");
             return false;
+        }
+
+
+        /// <summary>
+        /// 경쟁 중 클릭 시 오르는 점수
+        /// </summary>
+        public void AddClickScore()
+        {
+            //_score += NPCData.ClickScore;
+            YSJ_GameManager.Instance.AddScore(NPCData.ClickScore * RivalCount); // 라이벌 수에 비례하여 배율 적용
+        }
+
+
+        // TODO: 포획 후 주변 라이벌 수와 비례해서 점수 배율 처리 필요한가?
+        /// <summary>
+        /// 포획 성공 시 오르는 점수
+        /// </summary>
+        public void AddCatchScore()
+        {
+            //_score += NPCData.CatchScore;
+            YSJ_GameManager.Instance.AddScore(NPCData.CatchScore);
         }
 
         /// <summary>
@@ -244,20 +289,68 @@ namespace MSG
             Vector2 center = transform.position;
             Collider2D[] hits = Physics2D.OverlapBoxAll(center, _settings.DetectionSize, 0f, _rivalLayer);
 
+            _competingRivals.Clear();
+
             foreach (var col in hits)
             {
-                if (col is CapsuleCollider2D capsuleCol)
+                if (MSG_NPCProvider.TryGetRival(col, out var rival))
                 {
-                    if (MSG_NPCProvider.TryGetRival(capsuleCol, out var rival))
-                    {
-                        _rivalCount++;
-                        total += rival.NPCData.CharCatchGaugeHealValue;
-                    }
+                    _rivalCount++;
+                    total += rival.NPCData.CharCatchGaugeHealValue;
+                    _competingRivals.Add(rival);
                 }
             }
 
             Debug.Log($"경쟁 Rival의 총 포획 게이지 힐 값: {total}");
             return total;
+        }
+
+        // 이건 현재 NPC가 특정 층에 존재한다는 정보가 없어서 조금 더 고려해봐야 될 듯
+        public void PrintHiDialogue()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.HiDialogue.Count);
+
+            Debug.Log($"{_dialogueSO.HiDialogue[randomIndex]}");
+            // UI에 전달하는 메서드
+        }
+
+        /// <summary>
+        /// 포획 시도 시 출력하는 웃음 대사, 여러 번 나올 수 있습니다
+        /// </summary>
+        public void PrintLaughDialogue()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.LaughDialogue.Count);
+
+            Debug.Log($"{_dialogueSO.LaughDialogue[randomIndex]}");
+        }
+
+        /// <summary>
+        /// 피버 타임이 아닐 때, 포획 성공 직후 나오는 Follow 대사, 한 번 만 나옵니다
+        /// </summary>
+        public void PrintFollowDialogue()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.FollowDialogue.Count);
+
+            Debug.Log($"{_dialogueSO.FollowDialogue[randomIndex]}");
+        }
+
+        /// <summary>
+        /// 피버 타임일 때, 포획 성공 직후 나오는 Follow 대사, 한 번 만 나옵니다
+        /// </summary>
+        public void PrintSuperChatDialogue()
+        {
+            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.SuperChatDialogue.Count);
+
+            Debug.Log($"{_dialogueSO.SuperChatDialogue[randomIndex]}");
+        }
+
+
+        // 활성화 시 콜라이더 등 초기화하는 메서드
+        private void Init()
+        {
+            _collider.enabled = true;
+            //_score = 0;
+            _aimObject.SetActive(false);
         }
 
         #endregion

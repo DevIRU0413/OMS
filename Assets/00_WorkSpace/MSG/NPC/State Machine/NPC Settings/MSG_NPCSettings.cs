@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,6 +29,20 @@ namespace MSG
         [Min(0)] public int SmallHeartDropStartRivalCount = 0;  // 작은 하트를 드랍하기 위해 필요한 최소 라이벌 수
         public int MediumHeartDropStartRivalCount = 2;          // 중간 하트를 드랍하기 위해 필요한 최소 라이벌 수
         public int LargeHeartDropStartRivalCount = 3;           // 큰   하트를 드랍하기 위해 필요한 최소 라이벌 수
+
+        [Header("맵 이탈 방지 관련 설정")]
+        public int ForceMoveCount = 3;                          // 맵 끝에 다달았을 때 반대로 무조건 이동하게 하는 횟수
+
+        [Header("피격 시 강제 이동 설정")]
+        public float ForcedMoveDuration = 2f;                   // 방해 NPC가 플레이어와 부딪혔을 때, 강제로 이동하게 할 시간 (초)
+        public float ForcedMoveSpeedMultiplier = 1f;            // 방해 NPC가 플레이어와 부딪혔을 때, 강제로 이동할 때의 속도 배율
+
+        [Header("경쟁 승리 시 라이벌 애니메이션 설정")]
+        public float MinAngle = -45f;                           // 0도가 위일 때를 기준으로 최소 각도
+        public float MaxAngle = 45f;                            // 0도가 위일 때를 기준으로 최대 각도
+        public float ImpulsePower = 10f;                        // NPC가 날아가는 힘, 높을 수록 위로 높이 올라갑니다
+        public float GravityScale = 3f;                         // NPC가 날아갈 때의 중력 가속도, 높을 수록 빠르게 떨어집니다
+        public float DespawnTime = 3f;                          // NPC가 날아가기 시작할 때부터 없어질 때까지의 시간
 
         //[Header("포획 완료 설정")]
         //public float CaptureDistance = 1.5f;                    // 포획 완료 시 NPC 간의 거리
