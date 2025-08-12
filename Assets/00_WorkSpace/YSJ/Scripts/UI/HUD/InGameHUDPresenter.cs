@@ -28,7 +28,7 @@ public class InGameHUDPresenter
         model.OnChangedReachedFloorEnd += view.ShowNextFloorButton;
 
         // 초기 UI 반영
-        view.UpdateHealth(model.PlayerHealth);
+        view.UpdateHealth(model.CurrentPlayerHealth);
         view.UpdateBattery(model.BatteryPercent);
         view.UpdateScore(model.Score);
         view.UpdateFollowerCount(model.FollowerCount);

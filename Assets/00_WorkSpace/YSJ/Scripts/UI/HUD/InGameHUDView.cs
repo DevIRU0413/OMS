@@ -25,7 +25,7 @@ public class InGameHUDView : YSJ_HUDBaseUI
 
     public void UpdateBattery(float percent)
     {
-        uiBinder.Get<TextMeshProUGUI>(InGameHUDType.BatteryCount_Text).text = percent.ToString();
+        uiBinder.Get<TextMeshProUGUI>(InGameHUDType.BatteryCount_Text).text = Mathf.Round(percent).ToString();
     }
 
     public void UpdateScore(int score)
