@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +23,7 @@ namespace MSG
         Special
     }
 
+    // TODO: Field: SerializeField 로 get만 허용해도 좋을 듯
     /// <summary>
     /// CSV 파싱 이전 개발용 NPC 데이터 모델입니다.
     /// </summary>
@@ -59,9 +60,9 @@ namespace MSG
         public          float                   CharRunSpeed;
 
         public          int                     CurrentScore;
-        public          int                     CatchScore;
-        public          int                     ClickScore;
-        public          int                     FollowScore;
+        public          int                     CatchScore;     // 포획 직후 얻는 점수, 배율 X
+        public          int                     ClickScore;     // 클릭 당 얻는 점수, 배율 O
+        public          int                     FollowScore;    // 게임 끝나고 얻는 점수, 배율 X
 
 
         public event Action<float> OnGaugeChanged;
