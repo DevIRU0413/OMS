@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +7,9 @@ namespace MSG
 {
     public class MSG_CompetingState : MSG_INpcState
     {
+        private MSG_PlayerLogic _playerLogic;
         private MSG_CatchableNPC _npc;
+
         public MSG_CompetingState(MSG_CatchableNPC npc)
         {
             _npc = npc;
@@ -15,6 +17,8 @@ namespace MSG
 
         public void Enter()
         {
+            _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+
             _npc.StartCompete();
             _npc.StopMovement(true);
         }
@@ -26,7 +30,7 @@ namespace MSG
 
             if (_npc.IsGaugeEmpty())
             {
-                _npc.ChangeState(new MSG_CatchingState(_npc));
+                _npc.ChangeState(new MSG_CaptureFailedState(_npc));
             }
             else if (_npc.IsGaugeFull())
             {
@@ -39,9 +43,12 @@ namespace MSG
             _npc.EndCompete();
             _npc.StopMovement(false);
         }
+
         public void OnCatchPressed() 
         {
-            _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerClick); 
+            _playerLogic.TakeDamage(_playerLogic.PlayerSettings.HPDecreasePerClick * _npc.RivalCount); // 클릭 당 체력 감소 * 라이벌 수 만큼 플레이어 체력 감소
+            _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerClick); // 클릭 당 게이지 증가량
+            _npc.AddClickScore();
         }
 
         #region Unused Methods
