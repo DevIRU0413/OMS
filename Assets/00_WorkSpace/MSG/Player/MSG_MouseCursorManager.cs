@@ -28,6 +28,7 @@ namespace MSG
         private MSG_PlayerData _playerData;
         private SpriteRenderer _spriteRenderer;
         private bool _isMoving = false;
+        private bool _isDead = false;
 
         private MSG_ICatchable _currentHoverTarget; // 현재 올려져있는 타겟,
                                                     // 타겟 UI를 표기하기 위해 사용
@@ -91,10 +92,25 @@ namespace MSG
 
         private void Update()
         {
+            if (_isDead) return; // 플레이어 사망 시 모든 상호작용 중단
+
             CheckHoverTarget();
             MoveByMousePos();
             LookByMouseDirection();
             HandleClick();
+        }
+
+        #endregion
+
+
+        #region Public Methods
+
+        /// <summary>
+        /// 플레이어 사망 시 상호작용 일괄 중단용
+        /// </summary>
+        public void StopAll()
+        {
+            _isDead = true;
         }
 
         #endregion
