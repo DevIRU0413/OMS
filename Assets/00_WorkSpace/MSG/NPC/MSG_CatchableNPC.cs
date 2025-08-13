@@ -298,6 +298,7 @@ namespace MSG
         {
             //_score += NPCData.CatchScore;
             YSJ_GameManager.Instance.AddScore(NPCData.CatchScore);
+            Debug.Log($"{NPCData.CatchScore}");
         }
 
         /// <summary>
@@ -369,7 +370,7 @@ namespace MSG
         // 활성화 시 콜라이더 등 초기화하는 메서드
         private void Init()
         {
-            _isCaught = true;
+            _isCaught = false;
             _collider.enabled = true;
             //_score = 0;
             _aimObject.SetActive(false);
