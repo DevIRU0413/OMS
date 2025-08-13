@@ -46,6 +46,12 @@ namespace MSG
         public float GravityScale = 3f;                         // NPC가 날아갈 때의 중력 가속도, 높을 수록 빠르게 떨어집니다
         public float DespawnTime = 3f;                          // NPC가 날아가기 시작할 때부터 없어질 때까지의 시간
 
+        [Header("포획 후 NPC 움직임 애니메이션 설정")]
+        public float NpcDistance = 2f;                          // 포획된 NPC 간의 이격 거리
+        public float SmoothSpeed = 5f;                          // 부드럽게 따라오는 속도
+        public float AttachSpeed = 2f;                          // 포획 직후 플레이어에게 붙는 속도, 값이 작을수록 빠르게 붙습니다
+
+
         //[Header("포획 완료 설정")]
         //public float CaptureDistance = 1.5f;                    // 포획 완료 시 NPC 간의 거리
     }
