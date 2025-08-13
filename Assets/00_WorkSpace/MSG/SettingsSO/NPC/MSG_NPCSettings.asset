@@ -34,4 +34,4 @@ MonoBehaviour:
   DespawnTime: 3
   NpcDistance: 2
   SmoothSpeed: 5
-  AttachSpeed: 2
+  AttachSpeed: 62
