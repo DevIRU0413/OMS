@@ -39,6 +39,8 @@ namespace MSG
                     MSG_PlayerLogic playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
                     playerLogic.CallEndCutScene();
                     Debug.Log("[MSG_FollowScoreTriggerBox]: 팔로우 점수 계산 끝");
+
+                    YSJ_GameManager.Instance.GameResult(); // 팔로워 다 지나가면 점수 패널 호출
                 }
 
                 // 머리 위에 뜨는 애니메이션에 대한 추가 로직이 필요하다면 여기서 score 변수를 보내 사용 및 추가
