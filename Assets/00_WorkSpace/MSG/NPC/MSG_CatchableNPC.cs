@@ -22,6 +22,9 @@ namespace MSG
         private bool _isCompeting;
         private int _rivalCount;
         private float _totalHealPointPerSecond;
+        private bool _isCaught = false;
+        private bool _isPressed = false;
+
 
         private List<MSG_RivalNPC> _competingRivals = new(); // 경쟁 중인 라이벌이 정지 후 정지 해제 명령용 캐싱
 
@@ -30,7 +33,9 @@ namespace MSG
         public MSG_FollowController FollowController => _followController;
         public float TotalHealPointPerSecond => _totalHealPointPerSecond;
         public int FollowScore => _npcData.FollowScore; // 게임 종료 시 포획되었다면 더할 점수, 배율 X
-
+        public bool IsCaught => _isCaught; // FollowScoreTriggerBox에서 포획 되었는지 검사 후 맞다면 점수를 주기 위한 용도
+        public bool IsPressed => _isPressed; // 경쟁 상태로 넘어가기 직전 눌린 상태를 확인하는 플래그 추가
+        public SpriteRenderer SpriteRenderer => _spriteRenderer; // FollowController에서 접근하기 위해 추가
 
         #endregion
 
@@ -182,7 +187,17 @@ namespace MSG
         public void PlayCaptureEffect()
         {
             // 성공 이펙트
+            _isCaught = true;
             Debug.Log("포획 성공 효과 실행");
+        }
+
+        /// <summary>
+        /// 게임 종료 시 호출될 예정입니다.
+        /// Follow Score 점수 합산을 위해 콜라이더를 활성화합니다.
+        /// </summary>
+        public void EnableInteraction()
+        {
+            _collider.enabled = true;
         }
 
         public void DisableInteraction()
@@ -221,7 +236,15 @@ namespace MSG
 
         public void SpawnHeart()
         {
-            if (_rivalCount >= _settings.LargeHeartDropStartRivalCount)
+            if (_rivalCount >= _settings.XXLargeHeartDropStartRivalCount)
+            {
+                PoolManager.Instance.Spawn("XXLargeHeartPool", transform.position, Quaternion.identity);
+            }
+            else if (_rivalCount >= _settings.XLargeHeartDropStartRivalCount)
+            {
+                PoolManager.Instance.Spawn("XLargeHeartPool", transform.position, Quaternion.identity);
+            }
+            else if (_rivalCount >= _settings.LargeHeartDropStartRivalCount)
             {
                 PoolManager.Instance.Spawn("LargeHeartPool", transform.position, Quaternion.identity);
             }
@@ -258,16 +281,14 @@ namespace MSG
             return false;
         }
 
-
         /// <summary>
         /// 경쟁 중 클릭 시 오르는 점수
         /// </summary>
         public void AddClickScore()
         {
             //_score += NPCData.ClickScore;
-            YSJ_GameManager.Instance.AddScore(NPCData.ClickScore * RivalCount); // 라이벌 수에 비례하여 배율 적용
+            YSJ_GameManager.Instance.AddScore(RivalCount * 3); // 라이벌 수에 비례하여 배율 적용
         }
-
 
         // TODO: 포획 후 주변 라이벌 수와 비례해서 점수 배율 처리 필요한가?
         /// <summary>
@@ -348,6 +369,7 @@ namespace MSG
         // 활성화 시 콜라이더 등 초기화하는 메서드
         private void Init()
         {
+            _isCaught = true;
             _collider.enabled = true;
             //_score = 0;
             _aimObject.SetActive(false);
@@ -359,8 +381,16 @@ namespace MSG
         #region Callbacks for State
         public void OnHoverEnter() => _currentState?.OnHoverEnter();
         public void OnHoverExit() => _currentState?.OnHoverExit();
-        public void OnCatchPressed() => _currentState?.OnCatchPressed();
-        public void OnCatchReleased() => _currentState?.OnCatchReleased();
+        public void OnCatchPressed()
+        {
+            _isPressed = true;
+            _currentState?.OnCatchPressed();
+        }
+        public void OnCatchReleased()
+        {
+            _isPressed = false;
+            _currentState?.OnCatchReleased();
+        }
 
         #endregion
     }

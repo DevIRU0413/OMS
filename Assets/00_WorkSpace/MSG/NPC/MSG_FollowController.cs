@@ -1,6 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 namespace MSG
@@ -8,72 +10,86 @@ namespace MSG
     public class MSG_FollowController : MonoBehaviour
     {
         [SerializeField] private MSG_CatchableNPC _catchableNPC;
-        private SpriteRenderer _spriteRenderer;
 
-        private Transform _targetTransform;
-        [SerializeField] private float _moveWeight = 1f;
+        // TODO: 아래 변수 전부 setting으로 옮기기
+        [SerializeField] private float _npcDistance = 2f;
         [SerializeField] private float _smoothSpeed = 5f;
-        [SerializeField] private float _distance = 2f;
         [SerializeField] private float _attachSpeed = 50f;
         [SerializeField] private float _slideOffset = 0.2f;
         [SerializeField] private float _slideDuration = 0.05f;
 
-        private float _dir;
+        private SpriteRenderer _spriteRenderer;
+        private Transform _anchor;
+        private float _direction;
         private int _index;
+        private Vector3 _vel;
+        private Coroutine _animationCO;
 
-        public void Init(Transform target, int index, float dir)
+
+        public void Init(Transform anchor, int index, float direction)
         {
-            _spriteRenderer = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic().PlayerSpriteRenderer;
+            _spriteRenderer = _catchableNPC.SpriteRenderer;
+            _anchor = anchor;
+            _index = index;
 
-            _targetTransform = target;
-            _index = index + 1;
+            SetDirection(direction);
 
-            _dir = dir < 0 ? -1f : 1f;
-            _spriteRenderer.flipX = _dir > 0;
-
-            StartCoroutine(AttachCoroutine()); // 슬라이드 애니메이션
+            if (_animationCO != null)
+            {
+                StopCoroutine(_animationCO);
+                _animationCO = null;
+            }
+            _animationCO = StartCoroutine(AttachCoroutine());
         }
+
 
         private void Update()
         {
-            if (_targetTransform == null) return;
+            if (_anchor == null) return;
 
-            // 이동
-            Vector3 offset = new Vector3(_dir * _distance * _index, 0f, 0f);
-            Vector3 targetPos = _targetTransform.position + offset;
-            //transform.position = Vector3.Lerp(transform.position, targetPos, Time.deltaTime * _index * _moveWeight);
+            Vector3 targetPos = _anchor.position + new Vector3(_direction * _npcDistance * (_index + 1), 0f, 0f);
 
-            if (Vector3.Distance(transform.position, targetPos) > 0.01f)
-            {
-                transform.position = targetPos;
-            }
+            // 부드럽게 따라오기
+            transform.position = Vector3.SmoothDamp(
+                transform.position, targetPos, ref _vel,
+                1f / Mathf.Max(0.0001f, _smoothSpeed)
+            );
         }
 
-        public void OnDirectionChanged(float dir)
+        private void SetDirection(float direction)
         {
-            _dir = dir < 0 ? -1f : 1f;
-            _spriteRenderer.flipX = dir > 0;
+            _direction = direction < 0 ? -1f : 1f;
+            _spriteRenderer.flipX = (direction > 0);
+        }
 
-            StartCoroutine(SlideAnimCoroutine());
+        public void OnDirectionChanged(float direction)
+        {
+            SetDirection(direction);
+
+            if (_animationCO != null)
+            {
+                StopCoroutine(_animationCO);
+                _animationCO = null;
+            }
+            _animationCO = StartCoroutine(SlideAnimCoroutine());
         }
 
         private IEnumerator SlideAnimCoroutine()
         {
-            Vector3 offset = new Vector3(_slideOffset * -Mathf.Sign(_spriteRenderer.flipX ? -1 : 1), 0f, 0f);
+            float facing = _spriteRenderer.flipX ? -1f : 1f;
             Vector3 original = transform.position;
-            transform.position += offset;
+            transform.position = original + new Vector3(_slideOffset * -facing, 0f, 0f);
             yield return new WaitForSeconds(_slideDuration);
             transform.position = original;
         }
 
         private IEnumerator AttachCoroutine()
         {
-            while (true)
+            while (_anchor != null)
             {
-                Vector3 end = _targetTransform.position + new Vector3(_dir * _distance * _index, 0f, 0f);
+                Vector3 end = _anchor.position + new Vector3(_direction * _npcDistance * (_index + 1), 0f, 0f);
                 transform.position = Vector3.Lerp(transform.position, end, Time.deltaTime * _attachSpeed);
-
-                if (Vector3.Distance(transform.position, end) < 0.1f) break;
+                if (Vector3.Distance(transform.position, end) < 0.05f) break;
                 yield return null;
             }
         }

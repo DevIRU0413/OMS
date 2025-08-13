@@ -18,6 +18,7 @@ MonoBehaviour:
   <HPDecreasePerClick>k__BackingField: 2
   <FeverTimeDuration>k__BackingField: 10
   <FeverScoreMagnifier>k__BackingField: 2
+  <DeathMoveSpeed>k__BackingField: 4
   DirectionAngleRanges:
   - direction: 0
     startAngle: 0

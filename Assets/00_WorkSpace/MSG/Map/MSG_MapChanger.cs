@@ -1,6 +1,8 @@
 using Core.UnityUtil.PoolTool;
+
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 
@@ -9,6 +11,7 @@ namespace MSG
     public class MSG_MapChanger : MonoBehaviour
     {
         [SerializeField] private MSG_MapData _startMap;
+        [SerializeField] private GameObject _cameraBound; // Cinemachine Confiner 2D를 쓸거라서 Bound 위치를 동적으로 옮기는 구조, 맵을 여러 개 추가해도 Bound를 하나만 두기 위함
 
         [Header("스폰포인트 랜덤 값 설정")]
         [SerializeField] private float _leftX;
@@ -28,6 +31,7 @@ namespace MSG
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
 
             _currentMap = _startMap;
+            _cameraBound.transform.position = new Vector2(_currentMap.XPos, _currentMap.YPos);
             _playerLogic.ChangeCurrentMap(_currentMap);
 
             Coroutine wait;
@@ -36,23 +40,37 @@ namespace MSG
 
         public void ChangeMap(Direction direction)
         {
+            Debug.Log("ChangeMap 호출 받음");
             MSG_MapData nextMap;
 
-            // 왼쪽이면
-            if (direction == Direction.Left)
+            // 입력받은 방향에 따라 현재 맵 변경
+            if (direction == Direction.LeftUp)
             {
-                nextMap = _currentMap.LeftMap;
+                if (_currentMap.LeftUpMap == null) return; // 만약 이동할 수 없다면 return
+                nextMap = _currentMap.LeftUpMap;
+                YSJ_GameManager.Instance.MoveToUpFloor();
             }
-            // 오른쪽이면
-            else
+            else if (direction == Direction.LeftDown)
             {
-                nextMap = _currentMap.RightMap;
+                if (_currentMap.LeftDownMap == null) return;
+                nextMap = _currentMap.LeftDownMap;
+                YSJ_GameManager.Instance.MoveToDownFloor();
+            }
+            else if (direction == Direction.RightUp)
+            {
+                if (_currentMap.RightUpMap == null) return;
+                nextMap = _currentMap.RightUpMap;
+                YSJ_GameManager.Instance.MoveToUpFloor();
+            }
+            else //(direction == Direction.RightDown) 일 때
+            {
+                if (_currentMap.RightDownMap == null) return;
+                nextMap = _currentMap.RightDownMap;
+                YSJ_GameManager.Instance.MoveToDownFloor();
             }
 
-            if (nextMap != null)
-            {
-                _currentMap = nextMap;
-            }
+            _currentMap = nextMap;
+            _cameraBound.transform.position = new Vector2(_currentMap.XPos, _currentMap.YPos);
 
             ApplyMap(direction);
             _playerLogic.ChangeCurrentMap(_currentMap);
@@ -64,7 +82,7 @@ namespace MSG
 
             // 어느 방향에서 플레이어가 스폰될 지
             // 근데 플레이어가 중앙에서 스폰되어야 되려나??
-            if (direction == Direction.Left)
+            if (direction == Direction.LeftUp || direction == Direction.LeftDown)
             {
                 _playerTransform.position = _currentMap.LeftSpawnPoint;
             }
@@ -89,12 +107,12 @@ namespace MSG
 
         private void SpawnNPC()
         {
-            PoolManager.Instance.Spawn("HandsomeNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
-            PoolManager.Instance.Spawn("NormalNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
-            PoolManager.Instance.Spawn("UglyNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
-            PoolManager.Instance.Spawn("RivalNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
-            PoolManager.Instance.Spawn("DisturbNPC", GetRandomSpawnPointForDisturb(), Quaternion.identity);
-            PoolManager.Instance.Spawn("BossNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
+            for (int handsome = 0; handsome < _currentMap.HandsomeNPCSpawnCount; handsome++) PoolManager.Instance.Spawn("HandsomeNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
+            for (int normal = 0; normal < _currentMap.NormalNPCSpawnCount; normal++) PoolManager.Instance.Spawn("NormalNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
+            for (int ugly = 0; ugly < _currentMap.UglyNPCSpawnCount; ugly++) PoolManager.Instance.Spawn("UglyNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
+            for (int rival = 0; rival < _currentMap.RivalNPCSpawnCount; rival++) PoolManager.Instance.Spawn("RivalNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
+            for (int disturb = 0; disturb < _currentMap.DisturbNPCSpawnCount; disturb++) PoolManager.Instance.Spawn("DisturbNPC", GetRandomSpawnPointForDisturb(), Quaternion.identity);
+            for (int boss = 0; boss < _currentMap.BossNPCSpawnCount; boss++) PoolManager.Instance.Spawn("BossNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
         }
 
 

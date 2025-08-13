@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 
@@ -56,6 +57,13 @@ namespace MSG
         private IEnumerator WaitAndCheckRival()
         {
             yield return new WaitForSeconds(_npc.Settings.StartDetectionDelay); // 시작 지연 시간 후에 경쟁자 확인
+
+            if (!_npc.IsPressed)
+            {
+                Debug.Log("눌려지지 않아서 경쟁상태로 전환 취소");
+                yield break; // 지금도 눌리고 있는지 확인
+            }
+
             if (_npc.HasNearbyRival())
             {
                 _npc.ChangeState(new MSG_CompetingState(_npc)); // 경쟁 상태로 전환

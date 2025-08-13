@@ -15,16 +15,19 @@ MonoBehaviour:
   Name: 3
   CurrentFloor: 3
   MapType: 2
+  XPos: 0
   YPos: 40
-  LeftSpawnPoint: {x: -7.5, y: 40}
-  RightSpawnPoint: {x: 7.5, y: 40}
+  LeftSpawnPoint: {x: -20, y: 40}
+  RightSpawnPoint: {x: 20, y: 40}
   HandsomeNPCSpawnCount: 3
   NormalNPCSpawnCount: 3
   UglyNPCSpawnCount: 3
   RivalNPCSpawnCount: 3
   DisturbNPCSpawnCount: 3
   BossNPCSpawnCount: 0
-  LeftMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
-  RightMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
-  LeftEndPoint: -9
-  RightEndPoint: 9
+  LeftUpMap: {fileID: 0}
+  LeftDownMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
+  RightUpMap: {fileID: 0}
+  RightDownMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
+  LeftEndPoint: -20
+  RightEndPoint: 20
