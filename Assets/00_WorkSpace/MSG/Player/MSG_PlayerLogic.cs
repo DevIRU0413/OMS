@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using Cinemachine;
+
 using UnityEngine;
 
 
@@ -58,6 +60,22 @@ namespace MSG
         private void Awake()
         {
             //_playerData.Init();
+        }
+
+        private void OnEnable()
+        {
+            if (YSJ_GameManager.Instance != null)
+            {
+                YSJ_GameManager.Instance.OnChangedOver += TimeOut;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (YSJ_GameManager.Instance != null)
+            {
+                YSJ_GameManager.Instance.OnChangedOver -= TimeOut;
+            }
         }
 
         private void Start()
@@ -197,7 +215,7 @@ namespace MSG
         {
             if (_isFinished) return; // TimeOut 중복 호출 뿐만 아니라 Die 중복호출 막기위함
             _isFinished = true; // 체력 추가 및 감소 중지
-                                
+
             OnPlayerDied?.Invoke(); // 죽음 처리
             Debug.Log("죽음!");
 
@@ -316,6 +334,8 @@ namespace MSG
         {
             if (_isFinished) return; // Die 중복 호출 뿐만 아니라 TimeOut 중복호출 막기위함
             _isFinished = true; // 체력 추가 및 감소 중지
+
+            YSJ_GameManager.Instance.GameResult(); // Die는 즉시 점수 호출
 
             // 죽음 처리
             OnPlayerDied?.Invoke();
