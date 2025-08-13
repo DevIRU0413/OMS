@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 
@@ -8,7 +9,7 @@ namespace MSG
     public class MSG_FollowManager : MonoBehaviour
     {
         [SerializeField] private MSG_MouseCursorManager _mouseCursorManager;
-        
+
         private Transform _playerTransform;
         private List<MSG_CatchableNPC> _captured = new();
         public List<MSG_CatchableNPC> CapturedList => _captured;
@@ -42,7 +43,18 @@ namespace MSG
 
         public void AddCapturedNPC(MSG_CatchableNPC npc)
         {
-            npc.FollowController.Init(_playerTransform, _captured.Count, _mouseCursorManager.MoveDir);
+            float dir;
+
+            if (_captured.Count > 0)
+            {
+                dir = _captured[0].FollowController.Direction;
+            }
+            else
+            {
+                dir = _mouseCursorManager.MoveDir;
+            }
+
+            npc.FollowController.Init(_playerTransform, _captured.Count, dir);
             _captured.Add(npc);
         }
 
