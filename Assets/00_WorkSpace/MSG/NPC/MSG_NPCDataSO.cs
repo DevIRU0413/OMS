@@ -61,7 +61,7 @@ namespace MSG
 
         public          int                     CurrentScore;
         public          int                     CatchScore;     // 포획 직후 얻는 점수, 배율 X
-        public          int                     ClickScore;     // 클릭 당 얻는 점수, 배율 O
+        public          int                     ClickScore;     // 클릭 당 얻는 점수, 배율 O, 라이벌 수와 정비례하니까 애초에 필요 없는 변수인 듯
         public          int                     FollowScore;    // 게임 끝나고 얻는 점수, 배율 X
 
 
