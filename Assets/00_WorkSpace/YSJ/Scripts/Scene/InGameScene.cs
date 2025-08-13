@@ -13,8 +13,8 @@ namespace Scripts.Scene
         protected override void Initialize()
         {
             base.Initialize();
-            _inGameHUDPresenter = new(_inGameHUDView, YSJ_GameManager.Instance);
-            ManagerGroup.Instance.GetManager<YSJ_GameManager>().GameStart();
+            _inGameHUDPresenter = new(_inGameHUDView, YSJ_GameManager.Instance, YSJ_ChattingManager.Instance);
+            ManagerGroup.Instance.GetManager<YSJ_GameManager>().GamePlay();
         }
     }
 }
