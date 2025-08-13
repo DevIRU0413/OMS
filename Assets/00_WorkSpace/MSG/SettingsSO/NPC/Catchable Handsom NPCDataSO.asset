@@ -25,6 +25,6 @@ MonoBehaviour:
   CharWalkSpeed: 1
   CharRunSpeed: 0
   CurrentScore: 0
-  CatchScore: 1000
-  ClickScore: 20
-  FollowScore: 0
+  CatchScore: 20
+  ClickScore: 0
+  FollowScore: 10000
