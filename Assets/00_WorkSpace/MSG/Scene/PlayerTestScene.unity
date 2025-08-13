@@ -1554,6 +1554,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InGame_HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 1658512964002084585, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
+      propertyPath: _chattingPrefab
+      value: 
+      objectReference: {fileID: 4241431966757631304, guid: e47c98e39903fd540ba13a7f49f1804b, type: 3}
     - target: {fileID: 1942362074035199863, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
