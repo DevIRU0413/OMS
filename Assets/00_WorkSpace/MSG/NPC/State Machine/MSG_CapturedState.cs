@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace MSG
 {
+    // 포획 성공 상태
     public class MSG_CapturedState : MSG_INpcState
     {
         private MSG_PlayerLogic _playerLogic;
