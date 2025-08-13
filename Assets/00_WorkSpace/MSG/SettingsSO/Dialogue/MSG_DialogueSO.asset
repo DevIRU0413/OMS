@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: MSG_DialogueSO
   m_EditorClassIdentifier: 
   HiDialogue:
-  - "\u314E\u3147\uC694"
-  - "\uC548\uB155\uD558\uC138\uC694 \u314E\u314E"
+  - hi1
+  - hi2
   FollowDialogue:
-  - "\uD314\uB85C\uC6B0 \uD588\uC2B4\uB2F9~"
-  - "\uD314\uB85C\uC6B0 \uD588\uC5B4\uC694 \u314E\u314E"
+  - follow1
+  - follow2
   LaughDialogue:
-  - "\u3139\u3147\u314B\u314B"
-  - "\uADC0\uC5FD\uB2E4\u314E\u314E\u314E\u314E\u314E\u314E\u314E\u314E\u314E"
+  - laugh1
+  - laugh2
   SuperChatDialogue:
-  - "1,000,000\uC6D0\uC744 \uD6C4\uC6D0\uD588\uC2B5\uB2C8\uB2E4"
-  - "50,000\uC6D0\uC744 \uD6C4\uC6D0\uD588\uC2B5\uB2C8\uB2E4"
+  - super1
+  - super2

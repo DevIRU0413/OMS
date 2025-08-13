@@ -22,6 +22,16 @@ MonoBehaviour:
   SmallHeartDropStartRivalCount: 0
   MediumHeartDropStartRivalCount: 1
   LargeHeartDropStartRivalCount: 2
+  XLargeHeartDropStartRivalCount: 3
+  XXLargeHeartDropStartRivalCount: 4
   ForceMoveCount: 3
   ForcedMoveDuration: 2
   ForcedMoveSpeedMultiplier: 2
+  MinAngle: -45
+  MaxAngle: 45
+  ImpulsePower: 10
+  GravityScale: 3
+  DespawnTime: 3
+  NpcDistance: 2
+  SmoothSpeed: 5
+  AttachSpeed: 2
