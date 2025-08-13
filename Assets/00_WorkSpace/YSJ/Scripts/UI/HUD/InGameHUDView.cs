@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+
 using TMPro;
 
 using UnityEngine;
 using UnityEngine.UI;
+
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class InGameHUDView : YSJ_HUDBaseUI
 {
@@ -42,13 +46,15 @@ public class InGameHUDView : YSJ_HUDBaseUI
 
         _chattingGOArray = new GameObject[count];
         _chattingContentTMPArray = new TextMeshProUGUI[count];
-
+        List<TextMeshProUGUI> tmps = new List<TextMeshProUGUI>();
         for (int i = 0; i < count; i++)
         {
             _chattingGOArray[i] = GameObject.Instantiate(_chattingPrefab, _chattingGOParent.transform);
             TextMeshProUGUI tmp = _chattingGOArray[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp) _chattingContentTMPArray[i] = tmp;
+            if (tmp) tmps.Add(tmp);
         }
+        tmps.Reverse();
+        _chattingContentTMPArray = tmps.ToArray();
     }
 
     public void UpdateBattery(float percent)
@@ -90,9 +96,13 @@ public class InGameHUDView : YSJ_HUDBaseUI
         int count = YSJ_ChattingManager.Instance.MaxChattingCount;
         for (int i = 0; i < count; i++)
         {
-            TextMeshProUGUI tmp = _chattingGOArray[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp && message[i] != null && message.Length > i)
+            var tmp = _chattingContentTMPArray[i];
+            if (tmp != null &&
+                message != null &&
+                message.Length > i)
+            {
                 tmp.text = message[i];
+            }
             else
                 tmp.text = string.Empty;
         }
