@@ -7,6 +7,7 @@ public enum GameStateType
     Init,
     Playing,
     Over,
+    Result,
 }
 
 public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
@@ -50,6 +51,10 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     public event Action<int> OnFollowerChanged;
     public event Action<bool> OnChangedReachedFloorEnd;
 
+    public event Action OnChangedPlaying;
+    public event Action OnChangedOver;
+    public event Action OnChangedResult;
+
     private void Update()
     {
         PlayTime += Time.deltaTime;
@@ -60,7 +65,7 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
         OnBatteryChanged?.Invoke(BatteryPercent);
 
         if (BatteryPercent == 0)
-            StateType = GameStateType.Over;
+            GameOver();
     }
 
     // 체력 감소/회복
@@ -70,20 +75,20 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
         OnHealthChanged?.Invoke(CurrentPlayerHealth);
 
         if (CurrentPlayerHealth == 0)
-            StateType = GameStateType.Over;
+            GameOver();
     }
 
     // 점수 증가
     public void AddScore(int amount)
     {
-        Score += amount;
+        Score += Mathf.Min(amount, 0);
         OnScoreChanged?.Invoke(Score);
     }
 
     // 팔로워 포획
     public void AddFollower(int amount = 1)
     {
-        FollowerCount += amount;
+        FollowerCount += Mathf.Min(amount, 0);
         OnFollowerChanged?.Invoke(FollowerCount);
     }
 
@@ -110,8 +115,21 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
         OnChangedReachedFloorEnd.Invoke(IsFloorEndReached);
     }
 
-    public void GameStart()
+    public void GamePlay()
     {
         StateType = GameStateType.Playing;
+        OnChangedPlaying.Invoke();
+    }
+
+    public void GameOver()
+    {
+        StateType = GameStateType.Over;
+        OnChangedOver.Invoke();
+    }
+
+    public void GameResult()
+    {
+        StateType = GameStateType.Result;
+        OnChangedResult.Invoke();
     }
 }
