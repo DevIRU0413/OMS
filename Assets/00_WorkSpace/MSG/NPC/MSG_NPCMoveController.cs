@@ -122,7 +122,7 @@ namespace MSG
             {
                 if (_forceMoveCount > 0)
                 {
-                    _moveDirection = _endReachedDirection == Direction.Left ? Vector2.right : Vector2.left; // 끝에 다달은 반대 방향으로 강제로 이동하도록 설정
+                    _moveDirection = (_endReachedDirection == Direction.LeftUp || _endReachedDirection == Direction.LeftDown) ? Vector2.right : Vector2.left; // 끝에 다달은 반대 방향으로 강제로 이동하도록 설정
                     _forceMoveCount--;
                 }
                 else
