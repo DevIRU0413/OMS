@@ -12,6 +12,7 @@ namespace MSG
     {
         [SerializeField] private MSG_MapData _startMap;
         [SerializeField] private GameObject _cameraBound; // Cinemachine Confiner 2D를 쓸거라서 Bound 위치를 동적으로 옮기는 구조, 맵을 여러 개 추가해도 Bound를 하나만 두기 위함
+        [SerializeField] private LayerMask _catchableLayer;
 
         [Header("스폰포인트 랜덤 값 설정")]
         [SerializeField] private float _leftX;
@@ -24,6 +25,7 @@ namespace MSG
         private MSG_MapData _currentMap;
         private MSG_PlayerLogic _playerLogic;
         private Transform _playerTransform;
+        private Collider2D[] _catchables = new Collider2D[20]; // 한 맵에 Catchable NPC 20명 초과하지 않을 것 같아서 설정. 많아지면 추후 변경
 
         private void Start()
         {
@@ -80,8 +82,7 @@ namespace MSG
         {
             // 페이드 아웃 등의 효과
 
-            // 어느 방향에서 플레이어가 스폰될 지
-            // 근데 플레이어가 중앙에서 스폰되어야 되려나??
+            // 플레이어 스폰
             if (direction == Direction.LeftUp || direction == Direction.LeftDown)
             {
                 _playerTransform.position = _currentMap.LeftSpawnPoint;
@@ -101,6 +102,10 @@ namespace MSG
                 Debug.Log("방문해서 스폰 안함");
             }
 
+            // OverlapBox 검사 후 HiDialogue 호출
+            StartCoroutine(CheckCatchNpcForHi());
+
+            // 스폰 중복 검사용 HashSet에 Add
             _visitedMaps.Add(_currentMap.MapType);
         }
 
@@ -184,6 +189,26 @@ namespace MSG
             PoolManager.Instance.DebugPool();
             _visitedMaps.Add(_currentMap.MapType);
             SpawnNPC();
+
+            StartCoroutine(CheckCatchNpcForHi());
+        }
+
+        // NPC가 활성화되고, OnEnable에서 Register하니까 같은 프레임에서 안되는 경우가 있어 1 프레임 대기
+        private IEnumerator CheckCatchNpcForHi()
+        {
+            yield return null;
+
+            Vector2 mapPos = new(_currentMap.XPos, _currentMap.YPos); // 맵의 중앙 좌표
+            Vector2 mapSize = new Vector2((_currentMap.RightEndPoint - _currentMap.LeftEndPoint), 12f); // 맵의 크기
+            int npcCount = Physics2D.OverlapBoxNonAlloc(mapPos, mapSize, 0f, _catchables, _catchableLayer);
+
+            for (int i = 0; i < npcCount; i++)
+            {
+                if (MSG_NPCProvider.TryGetCatchable(_catchables[i], out MSG_CatchableNPC catchNPC))
+                {
+                    catchNPC.PrintHiDialogue();
+                }
+            }
         }
     }
 }
