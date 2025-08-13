@@ -330,7 +330,7 @@ namespace MSG
         public void PrintHiDialogue()
         {
             int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.HiDialogue.Count);
-
+            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.HiDialogue[randomIndex]);
             Debug.Log($"{_dialogueSO.HiDialogue[randomIndex]}");
             // UI에 전달하는 메서드
         }
@@ -341,7 +341,7 @@ namespace MSG
         public void PrintLaughDialogue()
         {
             int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.LaughDialogue.Count);
-
+            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.LaughDialogue[randomIndex]);
             Debug.Log($"{_dialogueSO.LaughDialogue[randomIndex]}");
         }
 
@@ -351,7 +351,7 @@ namespace MSG
         public void PrintFollowDialogue()
         {
             int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.FollowDialogue.Count);
-
+            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.FollowDialogue[randomIndex]);
             Debug.Log($"{_dialogueSO.FollowDialogue[randomIndex]}");
         }
 
@@ -361,7 +361,7 @@ namespace MSG
         public void PrintSuperChatDialogue()
         {
             int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.SuperChatDialogue.Count);
-
+            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.SuperChatDialogue[randomIndex]);
             Debug.Log($"{_dialogueSO.SuperChatDialogue[randomIndex]}");
         }
 
