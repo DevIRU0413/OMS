@@ -48,21 +48,25 @@ namespace MSG
             {
                 if (_currentMap.LeftUpMap == null) return; // 만약 이동할 수 없다면 return
                 nextMap = _currentMap.LeftUpMap;
+                YSJ_GameManager.Instance.MoveToUpFloor();
             }
             else if (direction == Direction.LeftDown)
             {
                 if (_currentMap.LeftDownMap == null) return;
                 nextMap = _currentMap.LeftDownMap;
+                YSJ_GameManager.Instance.MoveToDownFloor();
             }
             else if (direction == Direction.RightUp)
             {
                 if (_currentMap.RightUpMap == null) return;
                 nextMap = _currentMap.RightUpMap;
+                YSJ_GameManager.Instance.MoveToUpFloor();
             }
             else //(direction == Direction.RightDown) 일 때
             {
                 if (_currentMap.RightDownMap == null) return;
                 nextMap = _currentMap.RightDownMap;
+                YSJ_GameManager.Instance.MoveToDownFloor();
             }
 
             _currentMap = nextMap;
