@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Cinemachine;
 using UnityEngine;
 
 
@@ -12,6 +12,10 @@ namespace MSG
         #region Fields, Properties, Actions
         [SerializeField] private MSG_PlayerData _playerData;
         [SerializeField] private MSG_PlayerSettings _playerSettings;
+        [SerializeField] private MSG_MouseCursorManager _mouseCursorManager;
+        [SerializeField] private MSG_CameraEdgePlacer _cameraEdgePlacer;
+        [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+
         [SerializeField] private Animator _animator;
         [SerializeField] private CapsuleCollider2D _capsuleCollider2D;
         [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -29,6 +33,8 @@ namespace MSG
         private bool _isFallen = false;
         private int _followerCount = 0; // UI에서 별도로 값을 가지고 있어서 안쓸 수도 있음
         private MSG_MapData _currentMap;
+        private bool _isFinished = false;
+        private bool _isTimeOut = false;
 
         public MSG_PlayerData PlayerData => _playerData;
         public MSG_PlayerSettings PlayerSettings => _playerSettings;
@@ -58,6 +64,14 @@ namespace MSG
         {
             _playerData.Init();
             _currentHPFloat = _playerData.CurrentHP;
+            _virtualCamera.Follow = transform;
+        }
+
+        private void Update()
+        {
+            if (!_isTimeOut) return; // 타임아웃으로 끝나지 않았으면 return
+
+            transform.Translate(Vector2.right * Time.deltaTime * PlayerSettings.DeathMoveSpeed);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -117,8 +131,114 @@ namespace MSG
             _breadBag.SetActive(true);
         }
 
+        /// <summary>
+        /// 포획 중 체력 감소용
+        /// </summary>
+        public void TakeDamage(float amount)
+        {
+            if (_isFinished) return; // 게임 종료 시 체력 감소 금지
+            if (_isFever) return; // 피버타임이라면 체력 감소 금지
+
+            _currentHPFloat = Mathf.Clamp(_currentHPFloat - amount, MSG_PlayerData.MinHP, MSG_PlayerData.MaxHP);
+            int next = Mathf.CeilToInt(_currentHPFloat); // 올림 계산, 0.1도 1로 보이긴 함
+
+            if (next != _playerData.CurrentHP)
+            {
+                _playerData.CurrentHP = next;
+            }
+
+            if (next <= MSG_PlayerData.MinHP)
+            {
+                Die();
+            }
+        }
+
+        /// <summary>
+        /// 방해 NPC와 충돌 시 데미지 처리용
+        /// </summary>
+        public void TakeDamageForFallen(float amount)
+        {
+            if (_isFinished) return; // 게임 종료 시 체력 감소 금지
+            if (_isFever) return; // 피버타임이라면 체력 감소 금지
+
+            _currentHPFloat = Mathf.Clamp(_currentHPFloat - amount, MSG_PlayerData.MinHP, MSG_PlayerData.MaxHP);
+            int next = Mathf.CeilToInt(_currentHPFloat); // 올림 계산, 0.1도 1로 보이긴 함
+
+            if (next != _playerData.CurrentHP)
+            {
+                _playerData.CurrentHP = next;
+            }
+
+            OnPlayerDamaged?.Invoke(); // 충돌 시에만 호출
+
+            if (next <= MSG_PlayerData.MinHP)
+            {
+                Die();
+            }
+        }
+
+        public void ChangeCurrentMap(MSG_MapData currentMap)
+        {
+            _currentMap = currentMap;
+        }
+
+        public void AddFollower()
+        {
+            _followerCount++;
+            YSJ_GameManager.Instance.AddFollower();
+        }
+
+        /// <summary>
+        /// Die와 다르게 체력은 있으나 시간이 없어 끝날 때 호출.
+        /// TimeOut에서는 FollowScore를 계산해야 하며, Die에서는 FollowScore 점수 계산 없이 즉시 배드엔딩
+        /// </summary>
+        [ContextMenu("TimeOut")]
+        public void TimeOut()
+        {
+            if (_isFinished) return; // TimeOut 중복 호출 뿐만 아니라 Die 중복호출 막기위함
+            _isFinished = true; // 체력 추가 및 감소 중지
+                                
+            OnPlayerDied?.Invoke(); // 죽음 처리
+            Debug.Log("죽음!");
+
+            _mouseCursorManager.StopAll(); // 마우스 상호작용 중지
+
+            // 만약 중간에 추가 로직이 필요하면 여기서 호출
+
+            MoveRightWhenTimeOut();
+        }
+
+        /// <summary>
+        /// 사망 처리 모두 한 이후 결과창 혹은 엔딩 씬 호출용 메서드
+        /// </summary>
+        public void CallEndCutScene()
+        {
+            Debug.Log("모든 사망 처리 완료, 엔딩 호출");
+        }
+
+        #endregion
+
+
+        #region Private Methods
+
+        // Restart가 있고 씬을 재시작해야되면 필요할 듯
+        private void InitPlayer()
+        {
+            if (_feverCO != null)
+            {
+                StopCoroutine(_feverCO);
+                _feverCO = null;
+            }
+
+            _isWornBreadBag = false;
+            _isFever = false;
+            _isFallen = false;
+            _isFinished = false;
+        }
+
         private void TryFallDown(float damage)
         {
+            if (_isFinished) return; // 게임 종료 시 피격 감소 금지
             // if (_isFever) return; // 피버타임이라면 피격 금지 -> 아님 스턴은 되는데 데미지만 무효
 
             // 1. 빵 봉투 착용 중이라면
@@ -150,80 +270,6 @@ namespace MSG
                 StopCoroutine(_invincibleCO);
             }
             _invincibleCO = StartCoroutine(InvincibleRoutine());
-        }
-
-        /// <summary>
-        /// 포획 중 체력 감소용
-        /// </summary>
-        public void TakeDamage(float amount)
-        {
-            if (_isFever) return; // 피버타임이라면 체력 감소 금지
-
-            _currentHPFloat = Mathf.Clamp(_currentHPFloat - amount, MSG_PlayerData.MinHP, MSG_PlayerData.MaxHP);
-            int next = Mathf.CeilToInt(_currentHPFloat); // 올림 계산, 0.1도 1로 보이긴 함
-
-            if (next != _playerData.CurrentHP)
-            {
-                _playerData.CurrentHP = next;
-            }
-
-            if (next <= MSG_PlayerData.MinHP)
-            {
-                Die();
-            }
-        }
-
-        /// <summary>
-        /// 방해 NPC와 충돌 시 데미지 처리용
-        /// </summary>
-        public void TakeDamageForFallen(float amount)
-        {
-            if (_isFever) return; // 피버타임이라면 체력 감소 금지
-
-            _currentHPFloat = Mathf.Clamp(_currentHPFloat - amount, MSG_PlayerData.MinHP, MSG_PlayerData.MaxHP);
-            int next = Mathf.CeilToInt(_currentHPFloat); // 올림 계산, 0.1도 1로 보이긴 함
-
-            if (next != _playerData.CurrentHP)
-            {
-                _playerData.CurrentHP = next;
-            }
-
-            OnPlayerDamaged?.Invoke(); // 충돌 시에만 호출
-
-            if (next <= MSG_PlayerData.MinHP)
-            {
-                Die();
-            }
-        }
-
-        public void ChangeCurrentMap(MSG_MapData currentMap)
-        {
-            _currentMap = currentMap;
-        }
-
-        public void AddFollower()
-        {
-            _followerCount++;
-            YSJ_GameManager.Instance.AddFollower();
-        }
-
-        #endregion
-
-
-        #region Private Methods
-
-        // Restart가 있고 씬을 재시작해야되면 필요할 듯
-        private void InitPlayer()
-        {
-            if (_feverCO != null)
-            {
-                StopCoroutine(_feverCO);
-                _feverCO = null;
-            }
-
-            _isWornBreadBag = false;
-            _isFever = false;
-            _isFallen = false;
         }
 
         private IEnumerator InvincibleRoutine()
@@ -262,11 +308,24 @@ namespace MSG
             Debug.Log("무적 시간 끝");
         }
 
+        /// <summary>
+        /// TimeOut과 다르게 시간은 남았으나 체력이 없어 끝날 때 호출.
+        /// TimeOut에서는 FollowScore를 계산해야 하며, Die에서는 FollowScore 점수 계산 없이 즉시 배드엔딩
+        /// </summary>
         private void Die()
         {
+            if (_isFinished) return; // Die 중복 호출 뿐만 아니라 TimeOut 중복호출 막기위함
+            _isFinished = true; // 체력 추가 및 감소 중지
+
             // 죽음 처리
             OnPlayerDied?.Invoke();
             Debug.Log("죽음!");
+
+            _mouseCursorManager.StopAll(); // 마우스 상호작용 중지
+
+            // 만약 추가 로직이 필요하면 여기서 처리
+
+            CallEndCutScene();
         }
 
         private IEnumerator FeverRoutine()
@@ -297,6 +356,17 @@ namespace MSG
         private void EndFeverAnimation()
         {
             Debug.Log("피버타임 애니메이션 끝");
+        }
+
+        /// <summary>
+        /// 체력 0이 아닌, 시간 끝으로 게임 종료 시 플레이어 오른쪽으로 쭉 이동하는 메서드
+        /// 시간 끝과 오른쪽 이동 사이에 애니메이션이 필요할 수도 있을 것 같아서 분리
+        /// </summary>
+        private void MoveRightWhenTimeOut()
+        {
+            _isTimeOut = true; // 플레이어 오른쪽으로 쭉 이동
+            _virtualCamera.Follow = null; // 카메라 이동 정지
+            _cameraEdgePlacer.PlaceBox(); // 점수 처리를 위한 트리거 박스 활성화
         }
 
         #endregion
