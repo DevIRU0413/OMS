@@ -73,9 +73,6 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     {
         CurrentPlayerHealth = Mathf.Clamp(amount, 0, maxHealth);
         OnHealthChanged?.Invoke(CurrentPlayerHealth);
-
-        if (CurrentPlayerHealth == 0)
-            GameOver();
     }
 
     // 점수 증가
@@ -106,30 +103,30 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     public void ReachedFloorEnd()
     {
         IsFloorEndReached = true;
-        OnChangedReachedFloorEnd.Invoke(IsFloorEndReached);
+        OnChangedReachedFloorEnd?.Invoke(IsFloorEndReached);
     }
 
     public void ReachedFloorNotEnd()
     {
         IsFloorEndReached = false;
-        OnChangedReachedFloorEnd.Invoke(IsFloorEndReached);
+        OnChangedReachedFloorEnd?.Invoke(IsFloorEndReached);
     }
 
     public void GamePlay()
     {
         StateType = GameStateType.Playing;
-        OnChangedPlaying.Invoke();
+        OnChangedPlaying?.Invoke();
     }
 
     public void GameOver()
     {
         StateType = GameStateType.Over;
-        OnChangedOver.Invoke();
+        OnChangedOver?.Invoke();
     }
 
     public void GameResult()
     {
         StateType = GameStateType.Result;
-        OnChangedResult.Invoke();
+        OnChangedResult?.Invoke();
     }
 }
