@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b19bfe7e05e9ee41a247c1ba9186470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chattingPrefab: {fileID: 4241431966757631304, guid: e47c98e39903fd540ba13a7f49f1804b, type: 3}
 --- !u!1 &725728132681093196
 GameObject:
   m_ObjectHideFlags: 0
