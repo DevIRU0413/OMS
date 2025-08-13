@@ -91,7 +91,10 @@ public class InGameHUDView : YSJ_HUDBaseUI
         for (int i = 0; i < count; i++)
         {
             TextMeshProUGUI tmp = _chattingGOArray[i].GetComponentInChildren<TextMeshProUGUI>();
-            if (tmp) tmp.text = message[i];
+            if (tmp && message[i] != null && message.Length > i)
+                tmp.text = message[i];
+            else
+                tmp.text = string.Empty;
         }
     }
 }
