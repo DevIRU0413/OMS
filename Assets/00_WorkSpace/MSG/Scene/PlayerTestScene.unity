@@ -519,6 +519,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hpBar: {fileID: 895537058}
   _hpText: {fileID: 1286567957}
+--- !u!1 &656610038 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6278185073845340925, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
+  m_PrefabInstance: {fileID: 1655841829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &656610040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 656610038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 6
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &672128118 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1627840893047467192, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
@@ -879,6 +910,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _managersInOrder:
   - {fileID: 987721945}
+  - {fileID: 1858375589}
   _bgm: {fileID: 0}
   _inGameHUDView: {fileID: 1655841831}
 --- !u!4 &1046758857
@@ -1734,6 +1766,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 6278185073845340925, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
+      propertyPath: m_Name
+      value: ChattingContent
+      objectReference: {fileID: 0}
     - target: {fileID: 8160255145295845576, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1750,6 +1786,9 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6278185073845340925, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 656610040}
     - targetCorrespondingSourceObject: {fileID: 3173298567029254553, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2081162793}
@@ -1899,6 +1938,55 @@ MonoBehaviour:
   _competeGaugeUI: {fileID: 1221162737}
   _canvasRectTransform: {fileID: 1773021119}
   _uiInstaller: {fileID: 380900507}
+--- !u!1 &1858375589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1858375591}
+  - component: {fileID: 1858375590}
+  m_Layer: 0
+  m_Name: Chatting Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1858375590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858375589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a30b2f5b4f1648340abf3a3eb7ff579b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDontDestroyOnLoad: 1
+  _isChattingEnabled: 1
+  _chattingUpdateMinTime: 1
+  _chattingUpdateMaxTime: 2
+  _maxChattingCount: 10
+--- !u!4 &1858375591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1858375589}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1716.4802, y: 384.08002, z: -1.6501765}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1869088396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2307,6 +2395,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Maps
       objectReference: {fileID: 0}
+    - target: {fileID: 5611095191918094749, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
+      propertyPath: _catchableLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2389,6 +2481,7 @@ SceneRoots:
   - {fileID: 1882020829}
   - {fileID: 1565738908}
   - {fileID: 169814616}
+  - {fileID: 1858375591}
   - {fileID: 1920963462}
   - {fileID: 842689468}
   - {fileID: 1240780453}
