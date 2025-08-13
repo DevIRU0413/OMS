@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using UnityEngine;
 
@@ -51,8 +52,13 @@ public class YSJ_ChattingManager : YSJ_SimpleSingleton<YSJ_ChattingManager>, IMa
         if (_isChattingEnabled)
         {
             _chattingMessages?.Enqueue(message);
-            Debug.Log($"Added chat message: {message}");
+            if (_chattingMessages.Count == _maxChattingCount)
+            {
+                _chattingMessages?.Dequeue();
+                _chattingMessages?.Enqueue(message);
+            }
 
+            Debug.Log($"Added chat message: {message}");
             OnChattingMessageAdded?.Invoke(GetChattingMessages());
         }
         else
@@ -65,7 +71,9 @@ public class YSJ_ChattingManager : YSJ_SimpleSingleton<YSJ_ChattingManager>, IMa
     {
         if (_isChattingEnabled && _chattingMessages != null)
         {
-            string[] messages = _chattingMessages.ToArray();
+            var list = _chattingMessages.ToList();
+            list.Reverse();
+            string[] messages = list.ToArray();
             return messages;
         }
         else
