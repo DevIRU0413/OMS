@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace MSG
 {
+    // 마우스가 위로 올라간 상태
     public class MSG_AimedState : MSG_INpcState
     {
         private MSG_CatchableNPC _npc;
