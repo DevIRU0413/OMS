@@ -11,7 +11,10 @@ namespace MSG
         
         private Transform _playerTransform;
         private List<MSG_CatchableNPC> _captured = new();
+        public List<MSG_CatchableNPC> CapturedList => _captured;
+
         public static MSG_FollowManager Instance { get; private set; }
+
 
         private void Awake()
         {
@@ -39,11 +42,10 @@ namespace MSG
 
         public void AddCapturedNPC(MSG_CatchableNPC npc)
         {
-            Transform followTarget = _captured.Count == 0 ? _playerTransform : _captured[^1].transform;
-
-            npc.FollowController.Init(followTarget, _captured.Count, _mouseCursorManager.MoveDir);
+            npc.FollowController.Init(_playerTransform, _captured.Count, _mouseCursorManager.MoveDir);
             _captured.Add(npc);
         }
+
 
         private void BroadcastDirectionChanged()
         {
