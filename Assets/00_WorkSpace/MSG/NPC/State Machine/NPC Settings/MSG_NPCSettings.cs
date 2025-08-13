@@ -27,8 +27,10 @@ namespace MSG
 
         [Header("하트 드랍 관련 설정")]
         [Min(0)] public int SmallHeartDropStartRivalCount = 0;  // 작은 하트를 드랍하기 위해 필요한 최소 라이벌 수
-        public int MediumHeartDropStartRivalCount = 2;          // 중간 하트를 드랍하기 위해 필요한 최소 라이벌 수
-        public int LargeHeartDropStartRivalCount = 3;           // 큰   하트를 드랍하기 위해 필요한 최소 라이벌 수
+        public int MediumHeartDropStartRivalCount = 1;          // 중간 하트를 드랍하기 위해 필요한 최소 라이벌 수
+        public int LargeHeartDropStartRivalCount = 2;           // 큰   하트를 드랍하기 위해 필요한 최소 라이벌 수
+        public int XLargeHeartDropStartRivalCount = 3;          // XL   하트를 드랍하기 위해 필요한 최소 라이벌 수
+        public int XXLargeHeartDropStartRivalCount = 4;         // XXL  하트를 드랍하기 위해 필요한 최소 라이벌 수
 
         [Header("맵 이탈 방지 관련 설정")]
         public int ForceMoveCount = 3;                          // 맵 끝에 다달았을 때 반대로 무조건 이동하게 하는 횟수
