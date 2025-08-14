@@ -131,5 +131,6 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     {
         StateType = GameStateType.Result;
         OnChangedResult?.Invoke();
+        YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.EndingScene.ToString());
     }
 }
