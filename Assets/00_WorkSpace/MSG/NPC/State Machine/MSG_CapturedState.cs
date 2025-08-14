@@ -28,6 +28,7 @@ namespace MSG
 
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
             _playerLogic.AddFollower();
+            _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
 
             if (_playerLogic.IsFever) // 피버타임이라면 
             {
