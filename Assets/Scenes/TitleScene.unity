@@ -362,62 +362,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1633584562
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1633584564}
-  - component: {fileID: 1633584563}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1633584563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1633584562}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7caf25a1c8ffa334b934039957cc264d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDontDestroyOnLoad: 1
-  endCatSO: {fileID: 11400000, guid: d13c29c781185e8479fe16be7d252998, type: 2}
-  maxHealth: 100
-  <BatteryPercent>k__BackingField: 100
-  <batteryDrainRate>k__BackingField: 1
-  <Score>k__BackingField: 0
-  <FollowerCount>k__BackingField: 0
-  <CurrentFloor>k__BackingField: 1
-  <EndFloor>k__BackingField: 3
-  <IsFloorEndReached>k__BackingField: 0
-  batteryWarningThreshold: 30
-  batteryCriticalThreshold: 20
---- !u!4 &1633584564
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1633584562}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1870040808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -638,6 +582,18 @@ PrefabInstance:
       propertyPath: tutorialPanelView
       value: 
       objectReference: {fileID: 1870040811}
+    - target: {fileID: 4200004222668328887, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
+      propertyPath: _managersInOrder.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200004222668328887, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
+      propertyPath: _managersInOrder.Array.data[0]
+      value: 
+      objectReference: {fileID: 785178507}
+    - target: {fileID: 4200004222668328887, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
+      propertyPath: _managersInOrder.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4420442031362612032, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -692,4 +648,3 @@ SceneRoots:
   - {fileID: 3039871645011179519}
   - {fileID: 785178509}
   - {fileID: 178793739}
-  - {fileID: 1633584564}
