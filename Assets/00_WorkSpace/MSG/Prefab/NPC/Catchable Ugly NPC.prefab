@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7811260753705133481}
   - component: {fileID: 3947984423278589331}
   - component: {fileID: 4403317412794873340}
+  - component: {fileID: -6364069045443038940}
   - component: {fileID: 591620360104251437}
   - component: {fileID: 6760645398979423416}
   - component: {fileID: -2097392430537649303}
@@ -125,6 +126,27 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 2, y: 5}
   m_Direction: 0
+--- !u!95 &-6364069045443038940
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663285420706329282}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ebd293f3b2366d4d9eee4ee8fbbf647, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &591620360104251437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcData: {fileID: 11400000, guid: 7a4cea916224dfb4b9ccf65efc77c20e, type: 2}
   _moveController: {fileID: 6760645398979423416}
-  _animator: {fileID: 0}
+  _animator: {fileID: -6364069045443038940}
   _collider: {fileID: 4403317412794873340}
   _spriteRenderer: {fileID: 3947984423278589331}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
@@ -178,12 +200,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _catchableNPC: {fileID: 591620360104251437}
-  _moveWeight: 1
-  _smoothSpeed: 5
-  _distance: 2
-  _attachSpeed: 1
-  _slideOffset: 0.2
-  _slideDuration: 0.05
 --- !u!1 &2492320999009931146
 GameObject:
   m_ObjectHideFlags: 0

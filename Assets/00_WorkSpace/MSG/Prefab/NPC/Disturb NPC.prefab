@@ -398,6 +398,7 @@ GameObject:
   - component: {fileID: 8296899141641502412}
   - component: {fileID: 6491314295364426212}
   - component: {fileID: 6584644466641137791}
+  - component: {fileID: 8421056279007159023}
   - component: {fileID: 1314128779077439795}
   - component: {fileID: 1452264980473850542}
   m_Layer: 11
@@ -538,6 +539,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &8421056279007159023
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7741721679919193187}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e11b3428f1878f84a8f92f0b20e61825, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1314128779077439795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,11 +574,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcData: {fileID: 11400000, guid: 0657efd6a84e867458b5b21c0f8e05c2, type: 2}
   _moveController: {fileID: 1452264980473850542}
-  _animator: {fileID: 0}
+  _animator: {fileID: 8421056279007159023}
   _collider: {fileID: 6491314295364426212}
   _spriteRenderer: {fileID: 8296899141641502412}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
-  _rigidbody: {fileID: 6584644466641137791}
 --- !u!114 &1452264980473850542
 MonoBehaviour:
   m_ObjectHideFlags: 0
