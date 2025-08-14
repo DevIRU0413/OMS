@@ -9,11 +9,11 @@ namespace Core.UnityUtil.PoolTool
         private Dictionary<string, Pool> pools = new Dictionary<string, Pool>();
         private Dictionary<GameObject, string> objectToKeyMap = new Dictionary<GameObject, string>(); // 추가
 
-        public bool IsDontDestroy => isDontDestroyOnLoad ;
+        public bool IsDontDestroy => isDontDestroyOnLoad;
 
         public void Initialize() { }
 
-        public void Cleanup() { }
+        public void Cleanup() { RemoveAllPools(); }
 
         public GameObject GetGameObject() => this.gameObject;
 
@@ -84,8 +84,48 @@ namespace Core.UnityUtil.PoolTool
             }
         }
 
-        public bool HasPool(string key) => pools.ContainsKey(key);
+        public void RemovePool(string key)
+        {
+            if (!pools.TryGetValue(key, out Pool pool))
+            {
+                Debug.LogWarning($"[PoolManager] {key} 키로 생성된 풀이 없습니다.");
+                return;
+            }
 
-        
+            pool.Clear();
+            pools.Remove(key);
+
+            // objectToKeyMap에서 해당 키 오브젝트 제거
+            List<GameObject> removeList = new List<GameObject>();
+            foreach (var pair in objectToKeyMap)
+            {
+                if (pair.Value == key)
+                    removeList.Add(pair.Key);
+            }
+            foreach (var obj in removeList)
+                objectToKeyMap.Remove(obj);
+
+            Debug.Log($"[PoolManager] {key} 풀을 제거했습니다.");
+        }
+
+        public void RemoveAllPools()
+        {
+            if (pools.Count == 0)
+            {
+                Debug.Log("[PoolManager] 제거할 풀이 없습니다.");
+                return;
+            }
+
+            foreach (var pool in pools.Values)
+                pool.Clear();
+
+            pools.Clear();
+            objectToKeyMap.Clear();
+
+            Debug.Log("[PoolManager] 모든 풀을 제거했습니다.");
+        }
+
+
+        public bool HasPool(string key) => pools.ContainsKey(key);
     }
 }

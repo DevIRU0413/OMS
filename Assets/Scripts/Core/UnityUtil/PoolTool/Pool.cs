@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -54,6 +54,32 @@ namespace Core.UnityUtil.PoolTool
                 GameObject obj = GameObject.Instantiate(prefab, _group.transform);
                 obj.SetActive(false);
                 _poolStack.Push(obj);
+            }
+        }
+
+        public void Clear(bool destroyGroup = true)
+        {
+            while (_poolStack.Count > 0)
+            {
+                var obj = _poolStack.Pop();
+                if (obj != null)
+                    GameObject.Destroy(obj);
+            }
+
+            if (_group != null)
+            {
+                for (int i = _group.transform.childCount - 1; i >= 0; i--)
+                {
+                    var child = _group.transform.GetChild(i);
+                    if (child != null)
+                        GameObject.Destroy(child.gameObject);
+                }
+            }
+
+            if (destroyGroup && _group != null)
+            {
+                GameObject.Destroy(_group);
+                _group = null;
             }
         }
     }
