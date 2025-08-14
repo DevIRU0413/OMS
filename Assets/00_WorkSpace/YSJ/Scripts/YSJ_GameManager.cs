@@ -81,14 +81,14 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     // 점수 증가
     public void AddScore(int amount)
     {
-        Score += Mathf.Min(amount, 0);
+        Score += Mathf.Max(amount, 0);
         OnScoreChanged?.Invoke(Score);
     }
 
     // 팔로워 포획
     public void AddFollower(int amount = 1)
     {
-        FollowerCount += Mathf.Min(amount, 0);
+        FollowerCount += Mathf.Max(amount, 0);
         OnFollowerChanged?.Invoke(FollowerCount);
     }
 
