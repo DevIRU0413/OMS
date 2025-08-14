@@ -16,7 +16,7 @@ namespace Scripts.Scene
             if (_endingHUDView != null)
             {
                 _endingHUDView.InitBaseUI();
-                _endingHUDPresenter = new(_endingHUDView, YSJ_GameManager.Instance);
+                _endingHUDPresenter = new(_endingHUDView, ManagerGroup.Instance.GetManager<YSJ_GameManager>());
             }
         }
     }
