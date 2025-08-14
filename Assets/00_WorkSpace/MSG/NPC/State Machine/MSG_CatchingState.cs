@@ -21,6 +21,7 @@ namespace MSG
         public void Enter()
         {
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+            _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING);
 
             _npc.StartCaptureGauge();
             _npc.PrintLaughDialogue();
