@@ -11,6 +11,7 @@ public class EndingHUDPresenter
         this.modelGM = modelGM;
 
         this.view.UpdateTotalScore(this.modelGM.Score);
+        this.view.UpdateEndingState(this.modelGM.endCatSO, this.modelGM.Score);
         this.view.Open();
     }
 }
