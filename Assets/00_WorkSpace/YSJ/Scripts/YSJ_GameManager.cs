@@ -26,6 +26,9 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
 
     public GameStateType StateType { get; private set; } = GameStateType.Init;
 
+    [field: Header("End Branch Score Cat SO")]
+    public EndingBranchScoreCatData endCatSO;
+
     [field: Header("플레이어 상태")]
     [field: SerializeField] private int maxHealth = 100;
     public int CurrentPlayerHealth { get; private set; } = 100;
