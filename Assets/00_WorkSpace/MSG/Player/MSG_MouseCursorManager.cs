@@ -27,7 +27,9 @@ namespace MSG
         private MSG_PlayerLogic _playerLogic;
         private MSG_PlayerData _playerData;
         private SpriteRenderer _spriteRenderer;
+        private Animator _animator;
         private bool _isMoving = false;
+        private float _speed = 0f;
         private bool _isDead = false;
 
         private MSG_ICatchable _currentHoverTarget; // 현재 올려져있는 타겟,
@@ -79,6 +81,7 @@ namespace MSG
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
             _playerData = MSG_PlayerReferenceProvider.Instance.GetPlayerData();
             _spriteRenderer = _playerLogic.PlayerSpriteRenderer;
+            _animator = _playerLogic.Animator;
 
             if (_uiInstaller == null)
             {
@@ -96,8 +99,13 @@ namespace MSG
 
             CheckHoverTarget();
             MoveByMousePos();
-            LookByMouseDirection();
+
             HandleClick();
+        }
+
+        private void LateUpdate()
+        {
+            LookByMouseDirection();
         }
 
         #endregion
@@ -123,18 +131,39 @@ namespace MSG
         /// </summary>
         private void MoveByMousePos()
         {
-            if (_playerLogic.IsFallen) return; // 플레이어가 넘어져있다면 움직임 정지
-            if (IsCatching) return;
+            // Early Return 하지 않아야 될 듯 좀 지저분함. if문 안의 조건을 만족한다면 _speed = 0f으로 덮어쓰는게 나을 듯?
+            if (_playerLogic.IsFallen)
+            {
+                _speed = 0f;
+                _isMoving = false;
+                UpdateMoveAnimation();
+                return; // 플레이어가 넘어져있다면 움직임 정지
+            }
+            if (IsCatching)
+            {
+                _speed = 0f;
+                _isMoving = false;
+                UpdateMoveAnimation();
+                return; // 잡는 중이라면 움직임 정지
+            }
             // 가장 최근 타겟이 경쟁 중이라면 플레이어 움직임 정지
             if (_recentTarget != null)
             {
                 if (_recentTarget is MSG_CatchableNPC catchble && catchble.IsCompeting)
                 {
+                    _speed = 0f;
+                    _isMoving = false;
+                    UpdateMoveAnimation();
                     return;
                 }
             }
-
-            if (_currentHoverTarget != null) return; // 마우스가 포획 가능한 NPC 위에 있을 때는 이동하지 않음
+            if (_currentHoverTarget != null)
+            {
+                _speed = 0f;
+                _isMoving = false;
+                UpdateMoveAnimation();
+                return; // 마우스가 포획 가능한 NPC 위에 있을 때는 이동하지 않음
+            }
 
             Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 playerPos = _playerLogic.transform.position;
@@ -142,21 +171,22 @@ namespace MSG
             float deltaX = mouseWorldPos.x - playerPos.x;
             float absDelta = Mathf.Abs(deltaX);
 
-            float speed = 0f;
-            if (absDelta < 0.5f)
+            _speed = 0f;
+            if (absDelta < 2f)
             {
-                speed = 0f;
+                _speed = 0f;
             }
-            else if (absDelta < 2f)
+            else if (absDelta < 4f)
             {
-                speed = _playerData.WalkMoveSpeed;
+                _speed = _playerData.WalkMoveSpeed;
             }
             else
             {
-                speed = _playerData.RunSpeed;
+                _speed = _playerData.RunSpeed;
             }
 
-            _isMoving = speed > 0f;
+            _isMoving = _speed > 0f;
+            UpdateMoveAnimation(); // 스피드에 따른 애니메이션 변경
 
             if (_moveDir != Mathf.Sign(deltaX))
             {
@@ -164,8 +194,9 @@ namespace MSG
             }
 
             _moveDir = Mathf.Sign(deltaX);
+            FlipSprite(_moveDir);
 
-            Vector3 move = new Vector3(_moveDir * speed, 0f, 0f);
+            Vector3 move = new Vector3(_moveDir * _speed, 0f, 0f);
             float nextX = playerPos.x + move.x * Time.deltaTime; // 다음 움직일 장소 계산
             float clampedX = Mathf.Clamp(nextX, _playerLogic.CurrentMap.LeftEndPoint, _playerLogic.CurrentMap.RightEndPoint); // 맵의 끝 지점을 벗어나지 못하도록 Clamp
 
@@ -282,9 +313,15 @@ namespace MSG
 
         // 스프라이트 교체 형식이라 현재는 뒤집으면 안됨
         // 근데 움직이는 애니메이션 재생을 넣고 사용하는 시점에서는 필요한 메서드
-        private void FlipSprite(float moveDir)
+        private void FlipSprite(float moveDir = 0)
         {
             if (_spriteRenderer == null) return;
+            if (_speed <= 0)
+            {
+                _spriteRenderer.flipX = false;
+                return;
+            }
+
             _spriteRenderer.flipX = moveDir < 0;
         }
 
@@ -332,6 +369,32 @@ namespace MSG
 
             // 기본값 반환
             return LookDirection.Right;
+        }
+
+        private void UpdateMoveAnimation()
+        {
+            if (_speed <= 0)
+            {
+                LookByMouseDirection();
+                FlipSprite(); // LookByMouseDirection는 FlipX를 고려하지 않아서 _speed = 0 안에서 재설정해줘야 함
+                _animator.Play(MSG_AnimParams.PLAYER_IDLE); // 해당 애니메이션은 LookByMouseDirection() 사용을 위해 키프레임이 없음
+                return;
+            }
+
+            if (_speed < _playerData.RunSpeed)
+            {
+                if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_WALK))
+                {
+                    _animator.Play(MSG_AnimParams.PLAYER_WALK);
+                }
+            }
+            else
+            {
+                if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_RUN))
+                {
+                    _animator.Play(MSG_AnimParams.PLAYER_RUN);
+                }
+            }
         }
 
         #endregion
