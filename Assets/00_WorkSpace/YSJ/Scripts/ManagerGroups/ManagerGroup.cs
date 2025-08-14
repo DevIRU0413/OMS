@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -118,14 +118,14 @@ public class ManagerGroup : MonoBehaviour
         for (int i = 0; i < _registeredManagers.Count; i++)
         {
             IManager manager = _registeredManagers[i];
-            GameObject go = manager.GetGameObject();
 
-            if (go == null)
+            if (manager == null)
             {
                 _registeredManagers.Remove(manager);
                 continue;
             }
 
+            GameObject go = manager.GetGameObject();
             manager.Cleanup();
 #if UNITY_EDITOR
             Debug.Log($"[ManagerGroup-Cleanup]: {go.name}");
