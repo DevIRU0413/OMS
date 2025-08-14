@@ -41,6 +41,7 @@ namespace MSG
         public MSG_PlayerData PlayerData => _playerData;
         public MSG_PlayerSettings PlayerSettings => _playerSettings;
         public SpriteRenderer PlayerSpriteRenderer => _spriteRenderer;
+        public Animator Animator => _animator;
         public bool IsWornBreadBag => _isWornBreadBag;
         public bool IsFever => _isFever;
         public bool IsFallen => _isFallen;
@@ -178,6 +179,8 @@ namespace MSG
         {
             if (_isFinished) return; // 게임 종료 시 체력 감소 금지
             if (_isFever) return; // 피버타임이라면 체력 감소 금지
+
+            _animator.Play(MSG_AnimParams.PLAYER_HIT);
 
             _currentHPFloat = Mathf.Clamp(_currentHPFloat - amount, MSG_PlayerData.MinHP, MSG_PlayerData.MaxHP);
             int next = Mathf.CeilToInt(_currentHPFloat); // 올림 계산, 0.1도 1로 보이긴 함
