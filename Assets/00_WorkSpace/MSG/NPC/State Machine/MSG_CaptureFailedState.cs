@@ -7,17 +7,22 @@ namespace MSG
 {
     public class MSG_CaptureFailedState : MSG_INpcState
     {
+        private MSG_PlayerLogic _playerLogic;
         private MSG_CatchableNPC _npc;
 
         public MSG_CaptureFailedState(MSG_CatchableNPC npc)
         {
             _npc = npc;
+
+            _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
         }
 
         public void Enter()
         {
             _npc.PlayFailEffect();
             _npc.DisableInteraction();
+
+            _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
 
             Debug.Log("포획 실패 Enter");
         }
