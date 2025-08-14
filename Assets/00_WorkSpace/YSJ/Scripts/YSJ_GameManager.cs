@@ -60,6 +60,8 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
 
     private void Update()
     {
+        if (StateType != GameStateType.Playing) return;
+        
         PlayTime += Time.deltaTime;
 
         // 배터리 감소
