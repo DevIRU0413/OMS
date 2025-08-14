@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -149,11 +151,11 @@ public class YSJ_UIManager : YSJ_SimpleSingleton<YSJ_UIManager>, IManager
 
     public void AllClear(params YSJ_UIType[] excludedLayers)
     {
-        foreach (var kvp in _canvasMap)
+        var keys = _canvasMap.Keys;
+        foreach (var key in keys)
         {
-            if (excludedLayers.Length > 0 && !System.Array.Exists(excludedLayers, l => l == kvp.Key))
-                continue;
-            TypeClear(kvp.Key);
+            if (excludedLayers.Contains(key)) continue;
+            TypeClear(key);
         }
 #if UNITY_EDITOR
         Debug.Log("[UIManager] 모든 Canvas 레이어의 UI 오브젝트를 정리했습니다.");
