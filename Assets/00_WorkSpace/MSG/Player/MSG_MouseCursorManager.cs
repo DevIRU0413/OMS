@@ -136,7 +136,6 @@ namespace MSG
             {
                 _speed = 0f;
                 _isMoving = false;
-                UpdateMoveAnimation();
                 return; // 플레이어가 넘어져있다면 움직임 정지
             }
             if (IsCatching)
@@ -330,6 +329,7 @@ namespace MSG
         /// </summary>
         private void LookByMouseDirection()
         {
+            if (IsForcedAnim()) return;
             if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 교체 정지
 
             if (_isMoving) return; // 움직이고 있을 때에는 교체하면 안됨
@@ -373,6 +373,8 @@ namespace MSG
 
         private void UpdateMoveAnimation()
         {
+            if (IsForcedAnim()) return;
+
             if (_speed <= 0)
             {
                 LookByMouseDirection();
@@ -395,6 +397,13 @@ namespace MSG
                     _animator.Play(MSG_AnimParams.PLAYER_RUN);
                 }
             }
+        }
+
+        // 외부 애니메이션 재생 중 덮어쓰지 않아야 되는지 검사하는 메서드
+        private bool IsForcedAnim()
+        {
+            int st = _animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+            return st == MSG_AnimParams.PLAYER_CATCHING || st == MSG_AnimParams.PLAYER_HIT; // 플레이어가 포획 중이거나 피격 시
         }
 
         #endregion
