@@ -40,7 +40,7 @@ public class TitleHUDView : YSJ_HUDBaseUI
 
             case TitleState.TutorialOpened:
                 // 씬 전환 (YSJ_SystemManager 사용 가정)
-                YSJ_SystemManager.Instance.LoadSceneWithPreActions("GameScene");
+                YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.InGameScene.ToString());
                 break;
         }
     }
