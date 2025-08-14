@@ -9,6 +9,7 @@ namespace MSG
     // 마우스가 위로 올라간 상태
     public class MSG_AimedState : MSG_INpcState
     {
+        private MSG_PlayerLogic _playerLogic;
         private MSG_CatchableNPC _npc;
 
         private float _stateTime;
@@ -21,6 +22,8 @@ namespace MSG
         {
             _npc = npc;
             _controller = _npc.NPCMoveController;
+
+            _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
         }
 
         public void Enter()
@@ -36,6 +39,7 @@ namespace MSG
         public void Exit()
         {
             _npc.ShowAimUI(false);
+            _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
         }
 
 
