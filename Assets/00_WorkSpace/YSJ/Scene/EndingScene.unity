@@ -375,6 +375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ending_HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 5349255342413560827, guid: fde7c3d027525e2439566ac8060b9608, type: 3}
+      propertyPath: m_Name
+      value: EndingStateCount_TMP
+      objectReference: {fileID: 0}
     - target: {fileID: 6737882267002253429, guid: fde7c3d027525e2439566ac8060b9608, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
