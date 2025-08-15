@@ -32,6 +32,7 @@ public class YSJ_SystemManager : YSJ_SimpleSingleton<YSJ_SystemManager>, IManage
     {
         SceneLoaded();
         ChangeState(SystemStateType.Init);
+        GetVolume();
     }
 
     public void Cleanup() { }

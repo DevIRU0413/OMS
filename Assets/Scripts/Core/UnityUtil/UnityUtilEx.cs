@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.UnityUtil
@@ -43,5 +43,27 @@ namespace Core.UnityUtil
 
             return nearest;
         }
+        public static GameObject SafeGetGameObject(IManager m)
+        {
+            if (IsUnityNull(m)) return null; // 이미 null 또는 Destroy 상태면 null 반환
+            try
+            {
+                return m.GetGameObject();     // 안전하게 시도
+            }
+            catch (MissingReferenceException)
+            {
+                return null;                  // 예외 나면 null로 처리
+            }
+        }
+
+        private static bool IsUnityNull(object obj)
+        {
+            // C# null 체크
+            if (obj == null) return true;
+
+            // UnityEngine.Object 파생 타입이면 Destroy 여부까지 확인
+            return (obj is UnityEngine.Object uo && uo == null);
+        }
+
     }
 }

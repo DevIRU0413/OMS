@@ -12,6 +12,7 @@ namespace Scripts.Scene
 
         protected override void Initialize()
         {
+            base.Initialize();
             titleHUDView.InitBaseUI();
             tutorialPanelView.InitBaseUI();
         }

@@ -1,5 +1,9 @@
 using System.Collections.Generic;
+
+using Core.UnityUtil;
+
 using Unity.VisualScripting;
+
 using UnityEngine;
 
 public class ManagerGroup : MonoBehaviour
@@ -87,8 +91,10 @@ public class ManagerGroup : MonoBehaviour
 #endif 
         foreach (var manager in _unregisteredManagers)
         {
+            if (manager == null) continue;
+
             manager.Initialize();
-            GameObject goM = manager.GetGameObject();
+            GameObject goM =  UnityUtilEx.SafeGetGameObject(manager);
             if (goM == null)
             {
 #if UNITY_EDITOR
@@ -100,7 +106,7 @@ public class ManagerGroup : MonoBehaviour
             Debug.Log($"[ManagerGroup-Init]: {goM.name}");
 #endif
             _registeredManagers.Add(manager);
-            goM.transform.parent = transform;
+            goM.transform.SetParent(transform, false);
         }
 
         _unregisteredManagers.Clear();
@@ -145,19 +151,22 @@ public class ManagerGroup : MonoBehaviour
         for (int i = 0; i < _registeredManagers.Count; i++)
         {
             IManager manager = _registeredManagers[i];
-            if (!manager.IsDontDestroy || forceClear)
+            if (manager == null)                                        // 매니저 인터페이스가 없는 상태(오브젝트에 접근 불가)
             {
-                GameObject go = manager.GetGameObject();
-
-                if (go == null)
-                {
-                    _registeredManagers.Remove(manager);
-                    continue;
-                }
-
-                manager.Cleanup();
-                string name = go.name;
-                Destroy(go);
+                _registeredManagers.RemoveAt(i);                        // 매니저가 없으니 Remove 사용 불가 > RemoveAt 사용
+#if UNITY_EDITOR
+                Debug.Log($"[ManagerGroup-Clear]: Remove Null Manager Interface(Rmove Index: {i})");
+#endif 
+                i--;                                                    // 매니저 제거로 인한 인덱스 에러 방지위한 -1
+            }
+            else if (!manager.IsDontDestroy || forceClear)
+            {
+                GameObject go = UnityUtilEx.SafeGetGameObject(manager); // 안전하게 게임오브젝트 확인
+                manager.Cleanup();                                      // 매니저 클린업 진행
+                _registeredManagers.Remove(manager);                    // 매니저 제거
+                i--;                                                    // 매니저 제거로 인한 인덱스 에러 방지위한 -1
+                string name = go.name;                                  // 제거 대상 이름 캐싱
+                if (go) Destroy(go);                                    // 오브젝트 존재 시, 제거
 #if UNITY_EDITOR
                 Debug.Log($"[ManagerGroup-Clear]: {name}");
 #endif 
