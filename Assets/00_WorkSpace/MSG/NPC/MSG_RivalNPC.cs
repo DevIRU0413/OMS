@@ -87,7 +87,7 @@ namespace MSG
         public void EndCompeting()
         {
             _isCompeting = false;
-            StopAnim();
+            ForceStartAnim(MSG_AnimParams.RIVAL_IDLE);
         }
 
         // 패배 후 사라져야됨
