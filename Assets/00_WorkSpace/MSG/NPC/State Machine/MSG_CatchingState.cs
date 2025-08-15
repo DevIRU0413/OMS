@@ -25,6 +25,7 @@ namespace MSG
 
             _npc.StartCaptureGauge();
             _npc.PrintLaughDialogue();
+            _npc.StartCatchingAnim();
 
             if (_waitForCheckRivalCO != null)
             {

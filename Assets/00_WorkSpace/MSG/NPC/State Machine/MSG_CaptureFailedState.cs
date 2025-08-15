@@ -23,6 +23,7 @@ namespace MSG
             _npc.DisableInteraction();
 
             _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
+            _npc.StopAnim();
 
             Debug.Log("포획 실패 Enter");
         }

@@ -67,13 +67,18 @@ namespace MSG
 
         public void Tick()
         {
-            if (_isStopped) return; // 라이벌 패배 시 이동 정지 후 날아가는 애니메이션을 위한 플래그
+            if (_isStopped)
+            {
+                _npcBase.StartIdleAnim();
+                return; // 라이벌 패배 시 이동 정지 후 날아가는 애니메이션을 위한 플래그
+            }
 
             _currentTime += Time.deltaTime;
 
             // 피격 시 강제 이동 우선 처리
             if (_isForcedMove)
             {
+                _npcBase.StartWalkAnim();
                 float speed = _dataSO.CharWalkSpeed * _settings.ForcedMoveSpeedMultiplier;
                 transform.Translate(_forcedDir * Time.deltaTime * speed);
 
@@ -94,9 +99,15 @@ namespace MSG
 
             if (_isMoving)
             {
+                _npcBase.StartWalkAnim();
                 transform.Translate(_moveDirection * Time.deltaTime * _dataSO.CharWalkSpeed);
             }
+            else
+            {
+                _npcBase.StartIdleAnim();
+            }
         }
+
         public void ReachEnd(Direction endReachedDirection)
         {
             if (_isForcedMove) return; // 강제 이동 중엔 반전 강제 무시, 속도가 빠르면 맵을 많이 벗어나는 것 처럼 보일 수 있음

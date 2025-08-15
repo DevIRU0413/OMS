@@ -25,6 +25,7 @@ namespace MSG
             _npc.SpawnHeart();
             _npc.AddCatchScore();
             _npc.DespawnRivalWhenWin();
+            _npc.StopAnim();
 
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
             _playerLogic.AddFollower();

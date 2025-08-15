@@ -29,6 +29,7 @@ namespace MSG
         public void Enter()
         {
             _npc.ShowAimUI(true);
+            _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_IDLE);
         }
 
         public void Update()

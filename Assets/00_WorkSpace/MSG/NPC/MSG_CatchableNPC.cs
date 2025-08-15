@@ -84,6 +84,27 @@ namespace MSG
         #endregion
 
 
+        #region Animation Methods
+
+        public override void StartIdleAnim()
+        {
+            PlayIfPossible(MSG_AnimParams.CATCHABLE_IDLE);
+        }
+
+        public override void StartWalkAnim()
+        {
+            PlayIfPossible(MSG_AnimParams.CATCHABLE_WALK);
+        }
+
+        public override void StartCatchingAnim()
+        {
+            PlayIfPossible(MSG_AnimParams.CATCHABLE_CATCHING);
+        }
+
+        public override void StartSurprisedAnim() { }
+
+        #endregion
+
         #region State Management
 
         public void ChangeState(MSG_INpcState newState)
@@ -160,7 +181,7 @@ namespace MSG
 
             foreach (var rival in _competingRivals) // 경쟁 중 라이벌들 정지
             {
-                rival.StartCompeting();
+                rival.StartCompeting(transform);
             }
         }
 

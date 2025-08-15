@@ -34,9 +34,40 @@ namespace MSG
             Init();
         }
 
+        // 애니메이션 호출용 가상 메서드
+        public virtual void StartIdleAnim() { }
+        public virtual void StartWalkAnim() { }
+        public virtual void StartCatchingAnim() { }
+        public virtual void StartSurprisedAnim() { }
+        public void StopAnim()
+        {
+            _animator.enabled = false;
+        }
+
+        // GetCurrentAnimatorStateInfo 한 번만 하기 위해 묶음
+        // 또한 특정 상태에서 애니메이션이 덮이지 않게 하기 위함
+        protected void PlayIfPossible(int stateHash)
+        {
+            int current = _animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+            if (current == stateHash ||                         // 현재 이미 동일한 애니메이션 재생 중이거나
+                current == MSG_AnimParams.RIVAL_CATCHING ||     // 라이벌 경쟁 중이거나
+                current == MSG_AnimParams.RIVAL_SURPRISED ||    // 라이벌 놀란 상태이거나
+                current == MSG_AnimParams.CATCHABLE_CATCHING)   // 캐쳐블 포획 중일 때 애니메이션 변경 금지
+                return;
+
+            _animator.Play(stateHash);
+        }
+
+        // 위 조건의 상태(경쟁 등)에서도 애니메이션을 강제 전환하기 위한 메서드
+        public void ForceStartAnim(int stateHash)
+        {
+            _animator.Play(stateHash);
+        }
+
         private void Init()
         {
             _npcData.Init();
+            _animator.enabled = true;
         }
     }
 }

@@ -43,15 +43,51 @@ namespace MSG
         }
 
 
-        public void StartCompeting()
+        #region Animation Methods
+
+        public override void StartIdleAnim()
+        {
+            PlayIfPossible(MSG_AnimParams.RIVAL_IDLE);
+        }
+
+        public override void StartWalkAnim()
+        {
+            PlayIfPossible(MSG_AnimParams.RIVAL_WALK);
+        }
+
+        public override void StartCatchingAnim()
+        {
+            PlayIfPossible(MSG_AnimParams.RIVAL_CATCHING);
+        }
+
+        public override void StartSurprisedAnim()
+        {
+            PlayIfPossible(MSG_AnimParams.RIVAL_SURPRISED);
+        }
+
+        #endregion
+
+
+        public void StartCompeting(Transform target)
         {
             _isCompeting = true;
-            // TODO: 바라보는 로직 추가
+
+            if ((transform.position.x - target.position.x) > 0) // 타겟이 자신(라이벌)보다 왼쪽에 있으면
+            {
+                _spriteRenderer.flipX = true; // 기본이 오른쪽, flipX = true
+            }
+            else
+            {
+                _spriteRenderer.flipX = false;
+            }
+
+            StartCatchingAnim();
         }
 
         public void EndCompeting()
         {
             _isCompeting = false;
+            StopAnim();
         }
 
         // 패배 후 사라져야됨
@@ -68,8 +104,6 @@ namespace MSG
         // 날아가는 애니메이션
         private IEnumerator FlyingRoutine()
         {
-            // TODO: 매직 넘버 전부 setting으로 옮기기
-
             _moveController.StopMovement();
 
             _collider.enabled = false;
