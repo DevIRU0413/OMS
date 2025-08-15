@@ -25,7 +25,8 @@ namespace MSG
             _npc.SpawnHeart();
             _npc.AddCatchScore();
             _npc.DespawnRivalWhenWin();
-            _npc.StopAnim();
+            _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_IDLE); // 일반 상태로 원복하여 Sprite 원복
+            //_npc.StopAnim();
 
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
             _playerLogic.AddFollower();
