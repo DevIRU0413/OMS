@@ -428,6 +428,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 5807867288747861380}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _rigidbody2D: {fileID: 5012313303787495238}
+  _surprisedAnimationClip: {fileID: 7400000, guid: 57cedeb3cacfa3742811621e2aa2164e, type: 2}
 --- !u!114 &3789249139647151823
 MonoBehaviour:
   m_ObjectHideFlags: 0
