@@ -23,7 +23,7 @@ MonoBehaviour:
   NormalNPCSpawnCount: 3
   UglyNPCSpawnCount: 3
   RivalNPCSpawnCount: 3
-  DisturbNPCSpawnCount: 3
+  DisturbNPCSpawnCount: 1
   BossNPCSpawnCount: 0
   LeftUpMap: {fileID: 0}
   LeftDownMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
