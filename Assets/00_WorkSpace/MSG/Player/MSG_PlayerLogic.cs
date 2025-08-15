@@ -318,6 +318,8 @@ namespace MSG
             _capsuleCollider2D.enabled = true;
             _isFallen = false;
 
+            _animator.Play(MSG_AnimParams.PLAYER_IDLE);
+
             Debug.Log("무적 시간 끝");
         }
 
