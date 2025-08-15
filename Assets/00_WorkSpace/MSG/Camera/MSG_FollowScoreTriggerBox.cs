@@ -34,10 +34,14 @@ namespace MSG
                 YSJ_GameManager.Instance.AddScore(score);
                 _npcCount++;
 
+                if (MSG_FollowManager.Instance.CapturedList.Count == 0) // 포획한 NPC가 없으면
+                {
+                    YSJ_GameManager.Instance.GameResult(); // 즉시 점수 패널 호출
+                }
+
                 if (MSG_FollowManager.Instance.CapturedList.Count <= _npcCount) // 모든 NPC가 다 들어왔으면
                 {
                     MSG_PlayerLogic playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
-                    playerLogic.CallEndCutScene();
                     Debug.Log("[MSG_FollowScoreTriggerBox]: 팔로우 점수 계산 끝");
 
                     YSJ_GameManager.Instance.GameResult(); // 팔로워 다 지나가면 점수 패널 호출
