@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,7 +84,7 @@ namespace MSG
 
         private void UpdateHpUI(int value)
         {
-            _hpView.SetHpUI(value);
+            //_hpView.SetHpUI(value);
         }
 
         private void ShowCatchGauge()
