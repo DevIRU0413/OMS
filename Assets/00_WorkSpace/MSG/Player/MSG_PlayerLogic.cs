@@ -339,8 +339,6 @@ namespace MSG
             _mouseCursorManager.StopAll(); // 마우스 상호작용 중지
 
             // 만약 추가 로직이 필요하면 여기서 처리
-
-            CallEndCutScene();
         }
 
         private IEnumerator FeverRoutine()
