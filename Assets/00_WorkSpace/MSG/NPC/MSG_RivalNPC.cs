@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using Core.UnityUtil.PoolTool;
-
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 
 namespace MSG
@@ -11,8 +13,15 @@ namespace MSG
     public class MSG_RivalNPC : MSG_NPCBase
     {
         [SerializeField] private Rigidbody2D _rigidbody2D;
+        [SerializeField] private AnimationClip _surprisedAnimationClip;
+
+        private bool _isCompeteStarted = false;
         private bool _isCompeting = false;
         private Coroutine _flyingCO;
+        private Coroutine _animCO;
+
+        public bool IsCompeting => _isCompeting; // 놀란 상태가 아닌 실제 경쟁 시작하였는지 판단
+
 
         private void Start()
         {
@@ -28,12 +37,19 @@ namespace MSG
                 StopCoroutine(_flyingCO);
                 _flyingCO = null;
             }
+            if (_animCO != null)
+            {
+                StopCoroutine(_animCO);
+                _animCO = null;
+            }
+
+            _isCompeteStarted = false;
             _isCompeting = false;
         }
 
         private void Update()
         {
-            if (_isCompeting) return; // 경쟁 중에는 이동 중지
+            if (_isCompeteStarted) return; // 경쟁 중에는 이동 중지
             _moveController.Tick();
         }
 
@@ -70,7 +86,12 @@ namespace MSG
 
         public void StartCompeting(Transform target)
         {
-            _isCompeting = true;
+            if (!IsOnScreen()) return; // 화면 밖에 있으면 return
+
+            if (_isCompeteStarted) return; // 이미 경쟁 중이면 return
+
+            _isCompeteStarted = true;
+            _isCompeting = false;
 
             if ((transform.position.x - target.position.x) > 0) // 타겟이 자신(라이벌)보다 왼쪽에 있으면
             {
@@ -81,12 +102,24 @@ namespace MSG
                 _spriteRenderer.flipX = false;
             }
 
-            StartCatchingAnim();
+            if (_animCO != null)
+            {
+                StopCoroutine(_animCO);
+                _animCO = null;
+            }
+            _animCO = StartCoroutine(CompeteAfterSurprising());
         }
 
         public void EndCompeting()
         {
-            _isCompeting = false;
+            _isCompeteStarted = false;
+
+            if (_animCO != null)
+            {
+                StopCoroutine(_animCO);
+                _animCO = null;
+            }
+
             ForceStartAnim(MSG_AnimParams.RIVAL_IDLE);
         }
 
@@ -100,6 +133,7 @@ namespace MSG
             }
             _flyingCO = StartCoroutine(FlyingRoutine());
         }
+
 
         // 날아가는 애니메이션
         private IEnumerator FlyingRoutine()
@@ -127,5 +161,38 @@ namespace MSG
 
             PoolManager.Instance.Despawn(this.gameObject);
         }
+
+        // 놀라는 애니메이션 직후 경쟁 실행용 메서드
+        private IEnumerator CompeteAfterSurprising()
+        {
+            StartSurprisedAnim();
+            yield return new WaitForSeconds(_surprisedAnimationClip.length);
+            ForceStartAnim(MSG_AnimParams.RIVAL_CATCHING);
+            _isCompeting = true;
+        }
+
+        // 자신(라이벌)이 화면 밖에 있는지 검사하는 메서드
+        private bool IsOnScreen()
+        {
+            Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
+
+            // 뷰포트 0~1 사이에 들어오는지 확인
+            bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 1f &&
+                              viewportPos.y >= 0f && viewportPos.y <= 1f;
+
+            return isOnScreen;
+        }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            var cam = Camera.main;
+
+            // Viewport 좌표
+            Vector3 vp = cam.WorldToViewportPoint(transform.position);
+            Handles.color = Color.white;
+            Handles.Label(transform.position + Vector3.up * 0.3f, $"VP ({vp.x:F2},{vp.y:F2},{vp.z:F2})");
+        }
+#endif
     }
 }
