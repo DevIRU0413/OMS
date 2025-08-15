@@ -23,6 +23,16 @@ namespace MSG
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
             _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING);
 
+            // 포획 중 플레이어 스프라이트 회전
+            if (_playerLogic.transform.position.x > _npc.transform.position.x)
+            {
+                _playerLogic.PlayerSpriteRenderer.flipX = true;
+            }
+            else
+            {
+                _playerLogic.PlayerSpriteRenderer.flipX = false;
+            }
+
             _npc.StartCaptureGauge();
             _npc.PrintLaughDialogue();
             _npc.StartCatchingAnim();
