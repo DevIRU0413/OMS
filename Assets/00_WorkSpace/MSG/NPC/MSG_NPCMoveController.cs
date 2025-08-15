@@ -44,7 +44,7 @@ namespace MSG
 
         private void OnEnable()
         {
-            _isStopped = false;
+            Init();
         }
 
         private void Start()
@@ -110,10 +110,18 @@ namespace MSG
 
         public void ReachEnd(Direction endReachedDirection)
         {
-            if (_isForcedMove) return; // 강제 이동 중엔 반전 강제 무시, 속도가 빠르면 맵을 많이 벗어나는 것 처럼 보일 수 있음
+            Debug.Log($"{gameObject.name}이 맵 경계에 부딪힘");
 
             _forceMoveCount = _npcBase.Settings.ForceMoveCount;
             _endReachedDirection = endReachedDirection;
+
+            if (_isForcedMove) // 강제 이동 중에 맵 경계에 닿으면 즉시 복귀 처리
+            {
+                _isForcedMove = false;
+                _isMoving = true;
+                _stateTime = 0f;
+                _currentTime = 0f;
+            }
         }
 
         // 라이벌 NPC 날아가는 애니메이션 재생용 이동 중지 플래그
@@ -123,9 +131,19 @@ namespace MSG
         }
 
 
+        private void Init()
+        {
+            _isStopped = false;
+            _isForcedMove = false;
+            _isStopped = false;
+            _forceMoveCount = 0;
+            _currentTime = 0f;
+            _moveDirection = Vector2.zero;
+        }
+
         private void SetNewWanderState()
         {
-            _isMoving = Random.value > _settings.MoveProbability; // MoveProbability * 100 % 확률로 이동 결정
+            _isMoving = Random.value < _settings.MoveProbability; // MoveProbability * 100 % 확률로 이동 결정
             _stateTime = Random.Range(_settings.MinDuration, _settings.MaxDuration); // MinDuration ~ MaxDuration 사이의 행동 시간 설정
             _currentTime = 0f;
 
