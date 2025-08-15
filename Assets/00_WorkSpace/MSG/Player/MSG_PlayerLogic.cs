@@ -229,14 +229,6 @@ namespace MSG
             MoveRightWhenTimeOut();
         }
 
-        /// <summary>
-        /// 사망 처리 모두 한 이후 결과창 혹은 엔딩 씬 호출용 메서드
-        /// </summary>
-        public void CallEndCutScene()
-        {
-            Debug.Log("모든 사망 처리 완료, 엔딩 호출");
-        }
-
         #endregion
 
 
