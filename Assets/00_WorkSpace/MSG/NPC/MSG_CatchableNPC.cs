@@ -24,9 +24,11 @@ namespace MSG
         private float _totalHealPointPerSecond;
         private bool _isCaught = false;
         private bool _isPressed = false;
+        private Coroutine _searchRivalCO;
 
 
         private List<MSG_RivalNPC> _competingRivals = new(); // 경쟁 중인 라이벌이 정지 후 정지 해제 명령용 캐싱
+        private List<MSG_RivalNPC> _surprisedRivals = new(); // 실제 경쟁 들어가지 않았지만 명령이 들어간 NPC 캐싱
 
         public bool IsCompeting => _isCompeting;
         public int RivalCount => _rivalCount;
@@ -173,26 +175,33 @@ namespace MSG
         /// </summary>
         public void StartCompete()
         {
-            _totalHealPointPerSecond = CalculateRivalPressure();
-            Debug.Log($"경쟁 시작: 초당 감소량 {_totalHealPointPerSecond}");
-
             _isCompeting = true;
             OnCompeteStarted?.Invoke();
 
-            foreach (var rival in _competingRivals) // 경쟁 중 라이벌들 정지
+            if (_searchRivalCO != null)
             {
-                rival.StartCompeting(transform);
+                StopCoroutine(_searchRivalCO);
+                _searchRivalCO = null;
             }
+            _searchRivalCO = StartCoroutine(ContinuouslySearchRivalRoutine());
         }
 
         public void EndCompete()
         {
+            _isCompeting = false;
             OnCompeteEnded?.Invoke();
 
-            _isCompeting = false;
-            Debug.Log("경쟁 종료");
+            if (_searchRivalCO != null)
+            {
+                StopCoroutine(_searchRivalCO);
+                _searchRivalCO = null;
+            }
 
-            foreach (var rival in _competingRivals) // // 경쟁 중 라이벌들 정지 해제
+            foreach (var rival in _competingRivals) // 경쟁 중 라이벌들 정지 해제
+            {
+                rival.EndCompeting();
+            }
+            foreach (var rival in _surprisedRivals) // 경쟁에 아직 들어가진 않았지만 놀란 NPC도 정지 해제
             {
                 rival.EndCompeting();
             }
@@ -239,7 +248,11 @@ namespace MSG
 
         public void DespawnRivalWhenWin()
         {
-            foreach (var rival in _competingRivals) // // 경쟁 중 라이벌들 정지 해제
+            foreach (var rival in _competingRivals) // 경쟁 중 라이벌들 디스폰
+            {
+                rival.LoseAndDespawn();
+            }
+            foreach (var rival in _surprisedRivals) // 놀란 라이벌도 디스폰
             {
                 rival.LoseAndDespawn();
             }
@@ -291,14 +304,19 @@ namespace MSG
             {
                 if (MSG_NPCProvider.TryGetRival(col, out var rival))
                 {
-                    // rival.경쟁시작();
+                    Vector3 viewportPos = Camera.main.WorldToViewportPoint(rival.transform.position);
 
-                    Debug.Log($"근처 Rival 발견: {rival.NPCData.Name}");
+                    // 뷰포트 0~1 사이에 들어오는지 확인
+                    bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 1f &&
+                                      viewportPos.y >= 0f && viewportPos.y <= 1f;
+
+                    if (!isOnScreen) continue;
+
                     return true;
                 }
             }
 
-            Debug.Log("근처 Rival 없음");
+            Debug.Log("근처 Rival 없거나 화면 밖에 있음");
             return false;
         }
 
@@ -322,33 +340,8 @@ namespace MSG
             Debug.Log($"{NPCData.CatchScore}");
         }
 
-        /// <summary>
-        /// 경쟁 Rival의 포획 게이지 힐 값의 총합을 계산
-        /// </summary>
-        private float CalculateRivalPressure()
-        {
-            _rivalCount = 0;
-            float total = 0f;
-            Vector2 center = transform.position;
-            Collider2D[] hits = Physics2D.OverlapBoxAll(center, _settings.DetectionSize, 0f, _rivalLayer);
 
-            _competingRivals.Clear();
 
-            foreach (var col in hits)
-            {
-                if (MSG_NPCProvider.TryGetRival(col, out var rival))
-                {
-                    _rivalCount++;
-                    total += rival.NPCData.CharCatchGaugeHealValue;
-                    _competingRivals.Add(rival);
-                }
-            }
-
-            Debug.Log($"경쟁 Rival의 총 포획 게이지 힐 값: {total}");
-            return total;
-        }
-
-        // 이건 현재 NPC가 특정 층에 존재한다는 정보가 없어서 조금 더 고려해봐야 될 듯
         public void PrintHiDialogue()
         {
             int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.HiDialogue.Count);
@@ -387,14 +380,87 @@ namespace MSG
             Debug.Log($"{_dialogueSO.SuperChatDialogue[randomIndex]}");
         }
 
+        #endregion
+
+
+        #region Private Methods
 
         // 활성화 시 콜라이더 등 초기화하는 메서드
         private void Init()
         {
             _isCaught = false;
             _collider.enabled = true;
-            //_score = 0;
             _aimObject.SetActive(false);
+        }
+
+        // ContinuouslySearchRivalRoutine() 에서 역할을 대신하여 안씀
+        /// <summary>
+        /// 경쟁 Rival의 포획 게이지 힐 값의 총합을 계산
+        /// </summary>
+        //private float CalculateRivalPressure()
+        //{
+        //    _rivalCount = 0;
+        //    float total = 0f;
+        //    Vector2 center = transform.position;
+        //    Collider2D[] hits = Physics2D.OverlapBoxAll(center, _settings.DetectionSize, 0f, _rivalLayer);
+
+        //    _competingRivals.Clear();
+
+        //    foreach (var col in hits)
+        //    {
+        //        if (MSG_NPCProvider.TryGetRival(col, out var rival))
+        //        {
+        //            if (!rival.IsCompeting) continue; // 아직 놀란 상태이고 경쟁에는 참여하지 않았다면 continue
+
+        //            _rivalCount++;
+        //            total += rival.NPCData.CharCatchGaugeHealValue;
+        //            _competingRivals.Add(rival);
+        //        }
+        //    }
+
+        //    Debug.Log($"경쟁 Rival의 총 포획 게이지 힐 값: {total}");
+        //    return total;
+        //}
+
+        // 경쟁 중에도 라이벌이 중간 참여하기 위한 메서드
+        private IEnumerator ContinuouslySearchRivalRoutine()
+        {
+            var wait = new WaitForSeconds(0.1f);
+
+            while (true)
+            {
+                Vector2 center = transform.position;
+                Collider2D[] hits = Physics2D.OverlapBoxAll(center, _settings.DetectionSize, 0f, _rivalLayer);
+
+                _competingRivals.Clear();
+                _surprisedRivals.Clear();
+
+                float total = 0f;
+
+                foreach (var col in hits)
+                {
+                    if (MSG_NPCProvider.TryGetRival(col, out var rival))
+                    {
+                        // 근처 라이벌이면 무조건 경쟁 시작 시도 (라이벌 내부에서 중복 방지)
+                        rival.StartCompeting(transform);
+
+                        // 놀람이 끝나 실제 경쟁 상태가 된 라이벌만 압박에 포함
+                        if (rival.IsCompeting)
+                        {
+                            total += rival.NPCData.CharCatchGaugeHealValue;
+                            _competingRivals.Add(rival);
+                        }
+                        else
+                        {
+                            _surprisedRivals.Add(rival);
+                        }
+                    }
+                }
+
+                _totalHealPointPerSecond = total;
+
+                yield return wait;
+            }
         }
 
         #endregion
