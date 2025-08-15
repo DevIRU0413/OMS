@@ -52,6 +52,7 @@ namespace MSG
             else
             {
                 dir = _mouseCursorManager.MoveDir;
+                dir = -dir;
             }
 
             npc.FollowController.Init(_playerTransform, _captured.Count, dir);
