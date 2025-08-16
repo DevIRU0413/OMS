@@ -14,13 +14,6 @@ namespace MSG
         [SerializeField] private GameObject _cameraBound; // Cinemachine Confiner 2D를 쓸거라서 Bound 위치를 동적으로 옮기는 구조, 맵을 여러 개 추가해도 Bound를 하나만 두기 위함
         [SerializeField] private LayerMask _catchableLayer;
 
-        [Header("스폰포인트 랜덤 값 설정")]
-        [SerializeField] private float _leftX;
-        [SerializeField] private float _rightX;
-        [SerializeField] private float _topY;
-        [SerializeField] private float _middleY; // 방해 NPC용 Y좌표 (플레이어와 동일)
-        [SerializeField] private float _bottomY;
-
         private HashSet<MapType> _visitedMaps = new();
         private MSG_MapData _currentMap;
         private MSG_PlayerLogic _playerLogic;
@@ -85,11 +78,11 @@ namespace MSG
             // 플레이어 스폰
             if (direction == Direction.LeftUp || direction == Direction.LeftDown)
             {
-                _playerTransform.position = _currentMap.LeftSpawnPoint;
+                _playerTransform.position = _currentMap.LeftPlayerSpawnPoint;
             }
             else
             {
-                _playerTransform.position = _currentMap.RightSpawnPoint;
+                _playerTransform.position = _currentMap.RightPlayerSpawnPoint;
             }
 
             // 방문한 적이 없다면 스폰
@@ -127,9 +120,9 @@ namespace MSG
         /// </summary>
         private Vector2 GetRandomSpawnPointForDisturb()
         {
-            float randomX = Random.Range(_leftX, _rightX);
+            float randomX = Random.Range(_currentMap.LeftNPCEndPoint, _currentMap.RightNPCEndPoint);
             //return new Vector2(randomX, _middleY + GetFloorHeight());
-            return new Vector2(randomX, _middleY + _currentMap.YPos); // GetFloorHeight 대신 YPos 그대로 사용
+            return new Vector2(randomX, _currentMap.MiddleYPos + _currentMap.YPos); // GetFloorHeight 대신 YPos 그대로 사용
         }
 
         /// <summary>
@@ -139,18 +132,18 @@ namespace MSG
         /// <returns></returns>
         private Vector2 GetRandomSpawnPointForOther()
         {
-            float randomX = Random.Range(_leftX, _rightX);
+            float randomX = Random.Range(_currentMap.LeftNPCEndPoint, _currentMap.RightNPCEndPoint);
 
             float randomY;
             int randomYIndex = Random.Range(0, 2);
 
             if (randomYIndex == 0)
-                randomY = _topY;
+                randomY = _currentMap.TopYPos;
             else
-                randomY = _bottomY;
+                randomY = _currentMap.BottomYPos;
 
             //return new Vector2(randomX, randomY + GetFloorHeight());
-            return new Vector2(randomX, randomY + _currentMap.YPos); // GetFloorHeight 대신 YPos 그대로 사용
+            return new Vector2(randomX, randomY); // GetFloorHeight 대신 YPos 그대로 사용
         }
 
         // 이 방식이 괜찮은지 확인 필요
@@ -199,7 +192,7 @@ namespace MSG
             yield return null;
 
             Vector2 mapPos = new(_currentMap.XPos, _currentMap.YPos); // 맵의 중앙 좌표
-            Vector2 mapSize = new Vector2((_currentMap.RightEndPoint - _currentMap.LeftEndPoint), 12f); // 맵의 크기
+            Vector2 mapSize = new Vector2((_currentMap.RightPlayerEndPoint - _currentMap.LeftPlayerEndPoint), 12f); // 맵의 크기
             int npcCount = Physics2D.OverlapBoxNonAlloc(mapPos, mapSize, 0f, _catchables, _catchableLayer);
 
             for (int i = 0; i < npcCount; i++)
