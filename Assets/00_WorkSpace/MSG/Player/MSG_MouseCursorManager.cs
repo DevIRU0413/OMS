@@ -76,6 +76,13 @@ namespace MSG
 
         #region Unity Methods
 
+        private void OnEnable()
+        {
+            _isMoving = false;
+            _speed = 0f;
+            _isDead = false;
+        }
+
         private void Start()
         {
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
@@ -105,8 +112,11 @@ namespace MSG
 
         private void LateUpdate()
         {
+            if (_isDead) return; // 플레이어 사망 시 모든 상호작용 중단
+
             LookByMouseDirection();
         }
+
 
         #endregion
 
@@ -119,6 +129,13 @@ namespace MSG
         public void StopAll()
         {
             _isDead = true;
+
+            
+            _spriteRenderer.flipX = false; // 종료 시 플레이어가 항상 오른쪽을 바라보게
+            if (_moveDir < 0f)
+            {
+                OnDirectionChanged?.Invoke(); // NPC는 왼쪽으로 줄을 서게
+            }
         }
 
         #endregion
@@ -197,7 +214,7 @@ namespace MSG
 
             Vector3 move = new Vector3(_moveDir * _speed, 0f, 0f);
             float nextX = playerPos.x + move.x * Time.deltaTime; // 다음 움직일 장소 계산
-            float clampedX = Mathf.Clamp(nextX, _playerLogic.CurrentMap.LeftEndPoint, _playerLogic.CurrentMap.RightEndPoint); // 맵의 끝 지점을 벗어나지 못하도록 Clamp
+            float clampedX = Mathf.Clamp(nextX, _playerLogic.CurrentMap.LeftPlayerEndPoint, _playerLogic.CurrentMap.RightPlayerEndPoint); // 맵의 끝 지점을 벗어나지 못하도록 Clamp
 
             _playerLogic.transform.position = new Vector3(clampedX, playerPos.y, playerPos.z);
         }
