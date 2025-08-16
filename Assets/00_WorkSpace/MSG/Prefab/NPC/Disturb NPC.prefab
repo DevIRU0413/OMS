@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 6584644466641137791}
   - component: {fileID: 8421056279007159023}
   - component: {fileID: 1314128779077439795}
-  - component: {fileID: 1452264980473850542}
+  - component: {fileID: -6216529824135466075}
   m_Layer: 11
   m_Name: Disturb NPC
   m_TagString: Untagged
@@ -573,12 +573,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcData: {fileID: 11400000, guid: 0657efd6a84e867458b5b21c0f8e05c2, type: 2}
-  _moveController: {fileID: 1452264980473850542}
+  _moveController: {fileID: -6216529824135466075}
   _animator: {fileID: 8421056279007159023}
   _collider: {fileID: 6491314295364426212}
   _spriteRenderer: {fileID: 8296899141641502412}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
---- !u!114 &1452264980473850542
+--- !u!114 &-6216529824135466075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -587,7 +587,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7741721679919193187}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c16a0f28765d15546bb0c0eb7b4e624d, type: 3}
+  m_Script: {fileID: 11500000, guid: 48cb7c1b0159d574eafb9f6941a7698a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}

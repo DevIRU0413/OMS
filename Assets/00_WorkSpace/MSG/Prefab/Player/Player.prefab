@@ -103,6 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: 976c9e6ff70901a4aa1af0a32a7a15e8, type: 2}
   _playerSettings: {fileID: 11400000, guid: 24e08a57daca23d48bf2ac42ef358d4b, type: 2}
+  _mouseCursorManager: {fileID: 0}
+  _cameraEdgePlacer: {fileID: 0}
+  _virtualCamera: {fileID: 0}
   _animator: {fileID: 8618079803455083994}
   _capsuleCollider2D: {fileID: 1812899691265220220}
   _spriteRenderer: {fileID: 9143976581538902674}
@@ -116,6 +119,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8192
   _breadBag: {fileID: 7362760866169053858}
+  _currentMap: {fileID: 11400000, guid: 94d66420bfc4fb34a9f88bfa4c80bbc3, type: 2}
 --- !u!70 &1812899691265220220
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -188,7 +192,7 @@ Animator:
   m_GameObject: {fileID: 6574531561497756819}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4ff016ba5bfeb2489c788d42ec40411, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
