@@ -12,6 +12,7 @@ namespace MSG
     /// </summary>
     public class MSG_FollowScoreTriggerBox : MonoBehaviour
     {
+        [SerializeField] private MSG_ScoreUIManager _scoreUIManager;
         [SerializeField] private LayerMask _catchNpcLayer;
         private int _npcCount = 0;
 
@@ -32,6 +33,7 @@ namespace MSG
 
                 int score = catchNPC.NPCData.FollowScore;
                 YSJ_GameManager.Instance.AddScore(score);
+                _scoreUIManager.ShowScore(score);
                 _npcCount++;
 
                 if (MSG_FollowManager.Instance.CapturedList.Count == 0) // 포획한 NPC가 없으면
