@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <InvincibleTime>k__BackingField: 2
   <BlinkInterval>k__BackingField: 0.5
-  <HPDecreasePerSecond>k__BackingField: 5
+  <HPDecreasePerSecond>k__BackingField: 3
   <HPDecreasePerClick>k__BackingField: 2
   <FeverTimeDuration>k__BackingField: 10
   <FeverScoreMagnifier>k__BackingField: 2
