@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rival
+  m_text: Boss
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 1869654333662973770}
   - component: {fileID: 3789249139647151823}
   m_Layer: 10
-  m_Name: Boss NPC (Temp)
+  m_Name: Boss NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +316,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 42890466878a2bc43bd213f87c273d47, type: 3}
-  m_Color: {r: 1, g: 0.5151782, b: 0.4470588, a: 1}
+  m_Color: {r: 1, g: 0.12056742, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696c3c8c2604733408b5677d0fb91c8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcData: {fileID: 11400000, guid: e87fcd685ae7af34d8aa2f6ba79604f0, type: 2}
+  _npcData: {fileID: 11400000, guid: a072a6b4292ba704da7ed61136798b29, type: 2}
   _moveController: {fileID: 3789249139647151823}
   _animator: {fileID: -8510711971459591016}
   _collider: {fileID: 624544947071274292}
@@ -443,5 +443,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _spriteRenderer: {fileID: 5807867288747861380}
-  _dataSO: {fileID: 11400000, guid: e87fcd685ae7af34d8aa2f6ba79604f0, type: 2}
+  _dataSO: {fileID: 11400000, guid: a072a6b4292ba704da7ed61136798b29, type: 2}
   _npcBase: {fileID: 1869654333662973770}
