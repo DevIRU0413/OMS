@@ -25,6 +25,7 @@ namespace MSG
         [SerializeField] private LayerMask _heartLayer;
         [SerializeField] private LayerMask _breadBoxLayer;
         [SerializeField] private GameObject _breadBag;
+        [SerializeField] private MSG_MapData _currentMap; // 시작 시 첫 맵은 갖고 있도록 함
 
         private float _currentHPFloat;  // 경쟁상태에서는 Update에서 체력을 감산하여 정밀 계산용 float 필드
         private bool _isWornBreadBag = false;
@@ -34,7 +35,6 @@ namespace MSG
         private Coroutine _feverCO;
         private bool _isFallen = false;
         private int _followerCount = 0; // UI에서 별도로 값을 가지고 있어서 안쓸 수도 있음
-        private MSG_MapData _currentMap;
         private bool _isFinished = false;
         private bool _isTimeOut = false;
 
@@ -349,6 +349,7 @@ namespace MSG
             StartFeverAnimation();
             float elapsed = 0;
             _feverGauge = 0;
+            OnPlayerFeverStarted?.Invoke();
 
             while (elapsed < _playerSettings.FeverTimeDuration)
             {
@@ -361,6 +362,7 @@ namespace MSG
             EndFeverAnimation();
             _feverGauge = 100f;
             _playerData.CurrentHP = 60; // 피버타임 끝나고 체력 60
+            OnPlayerFeverEnded?.Invoke();
         }
 
         private void StartFeverAnimation()
@@ -382,6 +384,27 @@ namespace MSG
             _isTimeOut = true; // 플레이어 오른쪽으로 쭉 이동
             _virtualCamera.Follow = null; // 카메라 이동 정지
             _cameraEdgePlacer.PlaceBox(); // 점수 처리를 위한 트리거 박스 활성화
+        }
+
+        #endregion
+
+
+        #region Test Methods
+
+        [ContextMenu("TestHeal")]
+        private void TestHeal()
+        {
+            _playerData.CurrentHP = Mathf.Min(_playerData.CurrentHP + 30, MSG_PlayerData.MaxHP);
+
+            if (_playerData.CurrentHP == MSG_PlayerData.MaxHP)
+            {
+                if (_feverCO != null)
+                {
+                    StopCoroutine(_feverCO);
+                    _feverCO = null;
+                }
+                _feverCO = StartCoroutine(FeverRoutine());
+            }
         }
 
         #endregion
