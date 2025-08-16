@@ -17,17 +17,22 @@ MonoBehaviour:
   MapType: 1
   XPos: 0
   YPos: 20
-  LeftSpawnPoint: {x: -20, y: 20}
-  RightSpawnPoint: {x: 20, y: 20}
   HandsomeNPCSpawnCount: 2
   NormalNPCSpawnCount: 2
   UglyNPCSpawnCount: 2
   RivalNPCSpawnCount: 2
-  DisturbNPCSpawnCount: 1
+  DisturbNPCSpawnCount: 0
   BossNPCSpawnCount: 0
   LeftUpMap: {fileID: 11400000, guid: 3c017b7c594238f4d9831bc28928aa8d, type: 2}
   LeftDownMap: {fileID: 11400000, guid: 94d66420bfc4fb34a9f88bfa4c80bbc3, type: 2}
   RightUpMap: {fileID: 11400000, guid: 3c017b7c594238f4d9831bc28928aa8d, type: 2}
   RightDownMap: {fileID: 11400000, guid: 94d66420bfc4fb34a9f88bfa4c80bbc3, type: 2}
-  LeftEndPoint: -20
-  RightEndPoint: 20
+  LeftPlayerEndPoint: -22
+  RightPlayerEndPoint: 20
+  LeftNPCEndPoint: -18
+  RightNPCEndPoint: 16
+  LeftPlayerSpawnPoint: {x: -22, y: 18}
+  RightPlayerSpawnPoint: {x: 20, y: 18}
+  TopYPos: 19
+  MiddleYPos: 18
+  BottomYPos: 17
