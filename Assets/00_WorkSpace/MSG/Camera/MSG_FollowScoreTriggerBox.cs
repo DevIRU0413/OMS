@@ -14,6 +14,7 @@ namespace MSG
     {
         [SerializeField] private MSG_ScoreUIManager _scoreUIManager;
         [SerializeField] private LayerMask _catchNpcLayer;
+        [SerializeField] private LayerMask _playerLayer;
         private int _npcCount = 0;
 
         private void OnEnable()
@@ -36,11 +37,6 @@ namespace MSG
                 _scoreUIManager.ShowScore(score);
                 _npcCount++;
 
-                if (MSG_FollowManager.Instance.CapturedList.Count == 0) // 포획한 NPC가 없으면
-                {
-                    YSJ_GameManager.Instance.GameResult(); // 즉시 점수 패널 호출
-                }
-
                 if (MSG_FollowManager.Instance.CapturedList.Count <= _npcCount) // 모든 NPC가 다 들어왔으면
                 {
                     MSG_PlayerLogic playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
@@ -50,6 +46,14 @@ namespace MSG
                 }
 
                 // 머리 위에 뜨는 애니메이션에 대한 추가 로직이 필요하다면 여기서 score 변수를 보내 사용 및 추가
+            }
+
+            if (((1 << collision.gameObject.layer) & _playerLayer.value) != 0) // 플레이어가 들어오고
+            {
+                if (MSG_FollowManager.Instance.CapturedList.Count == 0) // 포획한 NPC가 없으면
+                {
+                    YSJ_GameManager.Instance.GameResult(); // 즉시 점수 패널 호출
+                }
             }
         }
     }
