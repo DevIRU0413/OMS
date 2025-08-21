@@ -45,6 +45,8 @@ namespace MSG
 
             _isCompeteStarted = false;
             _isCompeting = false;
+
+            YSJ_GameManager.Instance.OnChangedOver += EndCompeting;
         }
 
         private void Update()
@@ -56,6 +58,11 @@ namespace MSG
         private void OnDestroy()
         {
             MSG_NPCProvider.UnregisterRival(this, _collider);
+
+            if (YSJ_GameManager.Instance != null)
+            {
+                YSJ_GameManager.Instance.OnChangedOver -= EndCompeting;
+            }
         }
 
 

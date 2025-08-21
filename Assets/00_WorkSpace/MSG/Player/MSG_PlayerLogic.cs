@@ -68,6 +68,7 @@ namespace MSG
             if (YSJ_GameManager.Instance != null)
             {
                 YSJ_GameManager.Instance.OnChangedOver += TimeOut;
+                YSJ_GameManager.Instance.OnChangedOver += StopAnimWhenGameEnd;
             }
         }
 
@@ -76,6 +77,7 @@ namespace MSG
             if (YSJ_GameManager.Instance != null)
             {
                 YSJ_GameManager.Instance.OnChangedOver -= TimeOut;
+                YSJ_GameManager.Instance.OnChangedOver -= StopAnimWhenGameEnd;
             }
         }
 
@@ -384,6 +386,11 @@ namespace MSG
             _isTimeOut = true; // 플레이어 오른쪽으로 쭉 이동
             _virtualCamera.Follow = null; // 카메라 이동 정지
             _cameraEdgePlacer.PlaceBox(); // 점수 처리를 위한 트리거 박스 활성화
+        }
+
+        private void StopAnimWhenGameEnd()
+        {
+            _animator.Play(MSG_AnimParams.PLAYER_IDLE);
         }
 
         #endregion
