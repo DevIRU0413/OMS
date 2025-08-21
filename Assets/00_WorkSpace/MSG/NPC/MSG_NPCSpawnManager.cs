@@ -14,7 +14,8 @@ public class MSG_NPCSpawnManager : MonoBehaviour
     [SerializeField] private GameObject _handsomeNPC;
     [SerializeField] private GameObject _normalNPC;
     [SerializeField] private GameObject _uglyNPC;
-    [SerializeField] private GameObject _rivalNPC;
+    [SerializeField] private GameObject _rivalNPC1;
+    [SerializeField] private GameObject _rivalNPC2;
     [SerializeField] private GameObject _disturbNPC;
     [SerializeField] private GameObject _bossNPC;
 
@@ -59,9 +60,10 @@ public class MSG_NPCSpawnManager : MonoBehaviour
         PoolManager.Instance.CreatePool("HandsomeNPC", _handsomeNPC);
         PoolManager.Instance.CreatePool("NormalNPC", _normalNPC);
         PoolManager.Instance.CreatePool("UglyNPC", _uglyNPC);
-        PoolManager.Instance.CreatePool("RivalNPC", _rivalNPC);
+        PoolManager.Instance.CreatePool("RivalNPC1", _rivalNPC1);
+        PoolManager.Instance.CreatePool("RivalNPC2", _rivalNPC2);
         PoolManager.Instance.CreatePool("DisturbNPC", _disturbNPC);
-        PoolManager.Instance.CreatePool("BossNPC", _bossNPC, 2);
+        PoolManager.Instance.CreatePool("BossNPC", _bossNPC, 1);
     }
 
     private void InitSpawnSetting()
@@ -116,24 +118,25 @@ public class MSG_NPCSpawnManager : MonoBehaviour
         PoolManager.Instance.Spawn("DisturbNPC", spawnPos, Quaternion.identity);
     }
 
+    // 보스 NPC 스폰 취소
     private void SpawnBossNPC()
     {
-        if (_isBossSpawned) return; // 보스는 한 번만 스폰 가능
+        //if (_isBossSpawned) return; // 보스는 한 번만 스폰 가능
 
-        // 1층 맵의 정 중앙에 스폰
-        Vector2 spawnPos;
-        int randomY = Random.Range(0, 2);
+        //// 1층 맵의 정 중앙에 스폰
+        //Vector2 spawnPos;
+        //int randomY = Random.Range(0, 2);
 
-        if (randomY == 0)
-        {
-            spawnPos = new Vector2(_firstMap.XPos, _firstMap.TopYPos);
-        }
-        else
-        {
-            spawnPos = new Vector2(_firstMap.XPos, _firstMap.BottomYPos);
-        }
+        //if (randomY == 0)
+        //{
+        //    spawnPos = new Vector2(_firstMap.XPos, _firstMap.TopYPos);
+        //}
+        //else
+        //{
+        //    spawnPos = new Vector2(_firstMap.XPos, _firstMap.BottomYPos);
+        //}
 
-        PoolManager.Instance.Spawn("BossNPC", spawnPos, Quaternion.identity);
-        _isBossSpawned = true;
+        //PoolManager.Instance.Spawn("BossNPC", spawnPos, Quaternion.identity);
+        //_isBossSpawned = true;
     }
 }
