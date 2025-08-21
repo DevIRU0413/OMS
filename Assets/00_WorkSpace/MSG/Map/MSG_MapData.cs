@@ -33,7 +33,8 @@ namespace MSG
         public int HandsomeNPCSpawnCount;         // Handsome NPC 스폰 수
         public int NormalNPCSpawnCount;           // Normal NPC 스폰 수
         public int UglyNPCSpawnCount;             // Ugly NPC 스폰 수
-        public int RivalNPCSpawnCount;            // 라이벌 NPC 스폰 수
+        public int RivalNPC1SpawnCount;           // 라이벌 NPC 스폰 수
+        public int RivalNPC2SpawnCount;           // 라이벌 NPC 스폰 수
         public int DisturbNPCSpawnCount;          // 방해 NPC 스폰 수      * DisturbNPC의 스폰 방법이 변경되어 현재는 사용하지 않습니다. 0이 아닐 경우 일반 스폰 로직을 따릅니다*
         public int BossNPCSpawnCount;             // 보스 NPC 스폰 수
 

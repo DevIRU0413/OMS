@@ -108,7 +108,8 @@ namespace MSG
             for (int handsome = 0; handsome < _currentMap.HandsomeNPCSpawnCount; handsome++) PoolManager.Instance.Spawn("HandsomeNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
             for (int normal = 0; normal < _currentMap.NormalNPCSpawnCount; normal++) PoolManager.Instance.Spawn("NormalNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
             for (int ugly = 0; ugly < _currentMap.UglyNPCSpawnCount; ugly++) PoolManager.Instance.Spawn("UglyNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
-            for (int rival = 0; rival < _currentMap.RivalNPCSpawnCount; rival++) PoolManager.Instance.Spawn("RivalNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
+            for (int rival1 = 0; rival1 < _currentMap.RivalNPC1SpawnCount; rival1++) PoolManager.Instance.Spawn("RivalNPC1", GetRandomSpawnPointForOther(), Quaternion.identity);
+            for (int rival2 = 0; rival2 < _currentMap.RivalNPC2SpawnCount; rival2++) PoolManager.Instance.Spawn("RivalNPC2", GetRandomSpawnPointForOther(), Quaternion.identity);
             for (int disturb = 0; disturb < _currentMap.DisturbNPCSpawnCount; disturb++) PoolManager.Instance.Spawn("DisturbNPC", GetRandomSpawnPointForDisturb(), Quaternion.identity);
             for (int boss = 0; boss < _currentMap.BossNPCSpawnCount; boss++) PoolManager.Instance.Spawn("BossNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
         }
