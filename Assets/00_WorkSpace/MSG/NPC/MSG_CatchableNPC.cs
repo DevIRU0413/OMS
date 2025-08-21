@@ -429,6 +429,7 @@ namespace MSG
 
             while (true)
             {
+                _rivalCount = 0;
                 Vector2 center = transform.position;
                 Collider2D[] hits = Physics2D.OverlapBoxAll(center, _settings.DetectionSize, 0f, _rivalLayer);
 
@@ -449,6 +450,7 @@ namespace MSG
                         {
                             total += rival.NPCData.CharCatchGaugeHealValue;
                             _competingRivals.Add(rival);
+                            _rivalCount++;
                         }
                         else
                         {
