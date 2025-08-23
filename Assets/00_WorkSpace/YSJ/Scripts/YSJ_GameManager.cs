@@ -58,10 +58,14 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     public event Action OnChangedOver;
     public event Action OnChangedResult;
 
+    private bool isTimeStopped = false;
+
+
     private void Update()
     {
         if (StateType != GameStateType.Playing) return;
-        
+        if (isTimeStopped) return;
+
         PlayTime += Time.deltaTime;
 
         // 배터리 감소
@@ -134,5 +138,17 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
         StateType = GameStateType.Result;
         OnChangedResult?.Invoke();
         YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.EndingScene.ToString());
+    }
+
+    // 피버 타임 중 시간 정지 시작
+    public void StopBattery()
+    {
+        isTimeStopped = true;
+    }
+
+    // 피버 타임 중 시간 정지 해제
+    public void StartBattery()
+    {
+        isTimeStopped = false;
     }
 }
