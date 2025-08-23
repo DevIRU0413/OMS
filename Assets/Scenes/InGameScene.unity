@@ -175,7 +175,8 @@ MonoBehaviour:
   _handsomeNPC: {fileID: 6414284079230515657, guid: 93823ab975ff88b408e2876555e04827, type: 3}
   _normalNPC: {fileID: 8217090538878939720, guid: 56a51c33e5eefd14ab67c5d29c11e332, type: 3}
   _uglyNPC: {fileID: 1663285420706329282, guid: c8ec8572989afbe41a6aa77842801a34, type: 3}
-  _rivalNPC: {fileID: 8625608519349435251, guid: 858c336518969ba479351aa97df57f5f, type: 3}
+  _rivalNPC1: {fileID: 8625608519349435251, guid: 858c336518969ba479351aa97df57f5f, type: 3}
+  _rivalNPC2: {fileID: 8625608519349435251, guid: 858c336518969ba479351aa97df57f5f, type: 3}
   _disturbNPC: {fileID: 7741721679919193187, guid: d7ecb3918c8d2f2478ffa7ebd8142948, type: 3}
   _bossNPC: {fileID: 8625608519349435251, guid: 1c76b83aedbc75743aeb6a29ed7d442e, type: 3}
 --- !u!114 &133340328 stripped
@@ -338,6 +339,56 @@ MonoBehaviour:
   _catchGaugeView: {fileID: 537589506}
   _competeGaugeView: {fileID: 1221162740}
   _hpView: {fileID: 609769193}
+--- !u!1 &398421069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 398421070}
+  - component: {fileID: 398421071}
+  m_Layer: 0
+  m_Name: NPC Restictor Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &398421070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398421069}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.58992356, y: 1.028864, z: -0.06581556}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &398421071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398421069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f707ea0516b6db43a5c0947d60ac471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapDatas:
+  - {fileID: 11400000, guid: 94d66420bfc4fb34a9f88bfa4c80bbc3, type: 2}
+  - {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
+  - {fileID: 11400000, guid: 3c017b7c594238f4d9831bc28928aa8d, type: 2}
+  _restrictorPrefab: {fileID: 8235049512290955337, guid: 50f3d24aa89330846b4b2698753d13e3, type: 3}
+  _parent: {fileID: 398421070}
 --- !u!1 &411264794 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7515856402620505294, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
@@ -2541,3 +2592,4 @@ SceneRoots:
   - {fileID: 1046758857}
   - {fileID: 1744947883}
   - {fileID: 677606137}
+  - {fileID: 398421070}
