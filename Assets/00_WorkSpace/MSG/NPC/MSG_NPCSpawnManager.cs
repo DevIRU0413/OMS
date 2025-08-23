@@ -109,11 +109,11 @@ public class MSG_NPCSpawnManager : MonoBehaviour
 
         if (playerTransform.position.x >= xCenter) // 플레이어가 오른쪽에 있으면
         {
-            spawnPos = new Vector2(currentMap.LeftNPCEndPoint, currentMap.MiddleYPos);
+            spawnPos = new Vector2(currentMap.LeftNPCEndPoint + 2, currentMap.MiddleYPos); // 바로 벽 끝에 붙어 경계가 무시되어 2만큼 보정
         }
         else
         {
-            spawnPos = new Vector2(currentMap.RightNPCEndPoint, currentMap.MiddleYPos);
+            spawnPos = new Vector2(currentMap.RightNPCEndPoint - 2, currentMap.MiddleYPos);
         }
         PoolManager.Instance.Spawn("DisturbNPC", spawnPos, Quaternion.identity);
     }
