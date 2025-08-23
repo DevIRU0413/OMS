@@ -13,12 +13,29 @@ namespace MSG
         [SerializeField] protected CapsuleCollider2D _collider;
         [SerializeField] protected SpriteRenderer _spriteRenderer;
         [SerializeField] protected MSG_NPCSettings _settings;
+        [SerializeField] protected MSG_FollowController _followController;
 
 
         public MSG_NPCMoveController NPCMoveController => _moveController;
         // CSV 파싱 기능 개발 전 NPC 작동을 위한 SO 주입
         public MSG_NPCDataSO NPCData => _npcData;
         public MSG_NPCSettings Settings => _settings;
+        public SpriteRenderer SpriteRenderer => _spriteRenderer;
+        public MSG_FollowController FollowController
+        {
+            get
+            {
+                if (_followController != null)
+                {
+                    return _followController;
+                }
+                else
+                {
+                    Debug.LogWarning("_followController가 없는 NPC에게 요청하거나 _followController가 등록되지 않았습니다.");
+                    return null;
+                }
+            }
+        }
 
         protected virtual void Awake()
         {
