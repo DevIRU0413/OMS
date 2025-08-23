@@ -390,14 +390,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapChanger: {fileID: 5611095191918094749}
-  _direction: 0
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _npcLayer:
-    serializedVersion: 2
-    m_Bits: 3584
   _arrowButton: {fileID: 4816032814577676349}
+  _direction: 0
 --- !u!1 &2549891154518704670
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,7 +793,7 @@ Transform:
   m_GameObject: {fileID: 3385720571561993972}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22, y: 0, z: 0}
+  m_LocalPosition: {x: 20, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -887,14 +884,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapChanger: {fileID: 5611095191918094749}
-  _direction: 1
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _npcLayer:
-    serializedVersion: 2
-    m_Bits: 3584
   _arrowButton: {fileID: 5132687257020943931}
+  _direction: 2
 --- !u!1 &3569724703866581399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,6 +1191,37 @@ Transform:
   - {fileID: 4426275754320689577}
   m_Father: {fileID: 3326307133013420615}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3855158065981789696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3978263457063445703}
+  m_Layer: 0
+  m_Name: Restrictors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3978263457063445703
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3855158065981789696}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3326307133013420615}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4063513799194417352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,14 +1341,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapChanger: {fileID: 5611095191918094749}
-  _direction: 0
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _npcLayer:
-    serializedVersion: 2
-    m_Bits: 3584
   _arrowButton: {fileID: 3569724703866581399}
+  _direction: 0
 --- !u!1 &4064474196812708595
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,6 +1862,7 @@ Transform:
   - {fileID: 4106035264508042842}
   - {fileID: 4540069825516983237}
   - {fileID: 8991012476576440792}
+  - {fileID: 3978263457063445703}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5611095191918094749
@@ -1887,7 +1910,7 @@ Transform:
   m_GameObject: {fileID: 4694306890345169670}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22, y: 0, z: 0}
+  m_LocalPosition: {x: 20, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1978,14 +2001,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapChanger: {fileID: 5611095191918094749}
-  _direction: 1
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _npcLayer:
-    serializedVersion: 2
-    m_Bits: 3584
   _arrowButton: {fileID: 2549891154518704670}
+  _direction: 2
 --- !u!1 &4816032814577676349
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,7 +2638,7 @@ Transform:
   m_GameObject: {fileID: 7253317065535132842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22, y: 0, z: 0}
+  m_LocalPosition: {x: 20, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2709,14 +2729,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapChanger: {fileID: 5611095191918094749}
-  _direction: 1
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _npcLayer:
-    serializedVersion: 2
-    m_Bits: 3584
   _arrowButton: {fileID: 8847446361303446366}
+  _direction: 2
 --- !u!1 &7409588552860785318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2971,14 +2988,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapChanger: {fileID: 5611095191918094749}
-  _direction: 0
   _playerLayer:
     serializedVersion: 2
     m_Bits: 64
-  _npcLayer:
-    serializedVersion: 2
-    m_Bits: 3584
   _arrowButton: {fileID: 4390662222951382219}
+  _direction: 0
 --- !u!1 &8017901926213076142
 GameObject:
   m_ObjectHideFlags: 0
@@ -3101,6 +3115,12 @@ MonoBehaviour:
   _catchNpcLayer:
     serializedVersion: 2
     m_Bits: 512
+  _bossNpcLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &8199130803837730066
 GameObject:
   m_ObjectHideFlags: 0
