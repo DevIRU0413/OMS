@@ -48,6 +48,8 @@ namespace MSG
 
         public void Update()
         {
+            if (_playerLogic.IsFallen) return; // 피격 시 게이지 증가 중지
+
             if (_playerLogic.IsFever)
             {
                 _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerSecond *
