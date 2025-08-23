@@ -8,10 +8,9 @@ namespace MSG
     public class MSG_MapEndPointBehaviour : MonoBehaviour
     {
         [SerializeField] private MSG_MapChanger _mapChanger;
-        [SerializeField] private Direction _direction; // 어느 방향에 있는 끝 지점인지 설정, Up 및 Down은 상관없음, Left와 Right만 중요
         [SerializeField] private LayerMask _playerLayer;
-        [SerializeField] private LayerMask _npcLayer;
         [SerializeField] private GameObject _arrowButton;
+        [SerializeField] private Direction _direction;
 
         private MSG_PlayerLogic _playerLogic;
 
@@ -30,23 +29,10 @@ namespace MSG
 
                 YSJ_GameManager.Instance?.ReachedFloorEnd();
 
-                _arrowButton.SetActive(true);
-            }
+                List<Direction> activables = DecideWhatButtonWillActive();
+                // 여기서 activables 전달해야될 듯
 
-            if (((1 << collision.gameObject.layer) & _npcLayer) != 0)
-            {
-                if (MSG_NPCProvider.TryGetCatchable(collision, out var catchable))
-                {
-                    catchable.NPCMoveController.ReachEnd(_direction);
-                }
-                else if (MSG_NPCProvider.TryGetRival(collision, out var rival))
-                {
-                    rival.NPCMoveController.ReachEnd(_direction);
-                }
-                else if (MSG_NPCProvider.TryGetDisturb(collision, out var disturb))
-                {
-                    disturb.NPCMoveController.ReachEnd(_direction);
-                }
+                _arrowButton.SetActive(true);
             }
         }
 
@@ -58,6 +44,38 @@ namespace MSG
 
                 _arrowButton.SetActive(false);
             }
+        }
+
+        // 현재 위치에서 어떤 위치로 이동할 수 있는지 판단하여 가능한 방향을 Direction List로 반환하는 메서드
+        // 리스트에는 LeftUp, LeftDown, RightUp, RightDown 이 포함될 수 있습니다.
+        private List<Direction> DecideWhatButtonWillActive()
+        {
+            List<Direction> activableButtons = new();
+
+            if (_direction == Direction.LeftUp || _direction == Direction.LeftDown)
+            {
+                if (_playerLogic.CurrentMap.LeftUpMap != null)
+                {
+                    activableButtons.Add(Direction.LeftUp);
+                }
+                if (_playerLogic.CurrentMap.LeftDownMap != null)
+                {
+                    activableButtons.Add(Direction.LeftDown);
+                }
+            }
+            else
+            {
+                if (_playerLogic.CurrentMap.RightUpMap != null)
+                {
+                    activableButtons.Add(Direction.RightUp);
+                }
+                if (_playerLogic.CurrentMap.RightUpMap != null)
+                {
+                    activableButtons.Add(Direction.RightDown);
+                }
+            }
+
+            return activableButtons;
         }
     }
 }
