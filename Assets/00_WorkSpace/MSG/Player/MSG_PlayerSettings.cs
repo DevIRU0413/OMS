@@ -25,6 +25,8 @@ namespace MSG
         [field: SerializeField] public float FeverScoreMagnifier { get; private set; }  // Fever 중 점수 배율
         [field: SerializeField] public float FeverGaugeIncreaseMagnifier { get; private set; } // Fever 중 게이지 증가 배율
         [field: SerializeField] public float DeathMoveSpeed { get; private set; }       // 사망 시 오른쪽으로 쭉 이동할 때의 이동 속도
+        [field: SerializeField] public float KnockbackDistance { get; private set; }    // 밀릴 거리
+        [field: SerializeField] public float KnockbackHeight { get; private set; }      // 포물선의 최고 높이
 
         [field: SerializeField] public List<LookDirectionAngleRange> DirectionAngleRanges; // 각 방향별 각도 설정. 0도가 위를 가리킵니다.
         [field: SerializeField] public Sprite[] _playerStopSprites; // 정지했을 때의 플레이어 스프라이트.
