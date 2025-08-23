@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6b3c342a5628e4a8a6ae587d633c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catchableNPC: {fileID: 8925737180031720415}
+  _followableNPC: {fileID: 8925737180031720415}
 --- !u!1 &8189591517289389567
 GameObject:
   m_ObjectHideFlags: 0
