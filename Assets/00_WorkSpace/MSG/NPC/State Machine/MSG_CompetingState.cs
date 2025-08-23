@@ -21,6 +21,8 @@ namespace MSG
 
             _npc.StartCompete();
             _npc.StopMovement(true);
+
+            YSJ_GameManager.Instance.OnChangedOver += StopAll;
         }
 
 
@@ -42,14 +44,36 @@ namespace MSG
         {
             _npc.EndCompete();
             _npc.StopMovement(false);
+
+            if (YSJ_GameManager.Instance != null)
+            {
+                YSJ_GameManager.Instance.OnChangedOver -= StopAll;
+            }
         }
 
         public void OnCatchPressed() 
         {
             _playerLogic.TakeDamage(_playerLogic.PlayerSettings.HPDecreasePerClick * _npc.RivalCount); // 클릭 당 체력 감소 * 라이벌 수 만큼 플레이어 체력 감소
-            _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerClick); // 클릭 당 게이지 증가량
+
+            if (_playerLogic.IsFever)
+            {
+                _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerClick *
+                    _playerLogic.PlayerSettings.FeverGaugeIncreaseMagnifier); // 피버 시 클릭 당 포획 게이지 증가
+            }
+            else
+            {
+                _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerClick); // 클릭 당 포획 게이지 증가
+            }
+
             _npc.AddClickScore();
         }
+
+        private void StopAll()
+        {
+            _npc.ChangeState(new MSG_WanderingState(_npc));
+            _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_IDLE);
+        }
+
 
         #region Unused Methods
 

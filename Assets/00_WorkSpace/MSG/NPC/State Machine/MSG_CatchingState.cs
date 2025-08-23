@@ -42,11 +42,21 @@ namespace MSG
                 _npc.StopCoroutine(_waitForCheckRivalCO);
             }
             _waitForCheckRivalCO = _npc.StartCoroutine(WaitAndCheckRival());
+
+            YSJ_GameManager.Instance.OnChangedOver += StopAll;
         }
 
         public void Update()
         {
-            _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerSecond * Time.deltaTime); // 포획 중 초당 포획 게이지 증가
+            if (_playerLogic.IsFever)
+            {
+                _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerSecond *
+                    _playerLogic.PlayerSettings.FeverGaugeIncreaseMagnifier * Time.deltaTime); // 피버 시 포획 중 초당 포획 게이지 증가
+            }
+            else
+            {
+                _npc.IncreaseGauge(_npc.Settings.CaptureGaugeIncreasePerSecond * Time.deltaTime); // 포획 중 초당 포획 게이지 증가
+            }
 
             _playerLogic.TakeDamage(_playerLogic.PlayerSettings.HPDecreasePerSecond * Time.deltaTime);  // 포획 중 초당 체력 감소
 
@@ -59,6 +69,11 @@ namespace MSG
         public void Exit()
         {
             _npc.StopCaptureGauge();
+
+            if (YSJ_GameManager.Instance != null)
+            {
+                YSJ_GameManager.Instance.OnChangedOver -= StopAll;
+            }
         }
 
         public void OnCatchReleased()
@@ -80,6 +95,12 @@ namespace MSG
             {
                 _npc.ChangeState(new MSG_CompetingState(_npc)); // 경쟁 상태로 전환
             }
+        }
+
+        private void StopAll()
+        {
+            _npc.ChangeState(new MSG_WanderingState(_npc));
+            _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_IDLE);
         }
 
         #region Unused Methods
