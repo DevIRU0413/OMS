@@ -31,5 +31,12 @@ namespace MSG
         // -- Disturb NPC
         public static readonly int DISTURB_IDLE = Animator.StringToHash("DisturbIdle");
         public static readonly int DISTURB_WALK = Animator.StringToHash("DisturbWalk");
+
+        // -- Boss NPC
+        public static readonly int BOSS_WALK = Animator.StringToHash("BossWalk");
+        public static readonly int BOSS_IDLE = Animator.StringToHash("BossIdle");
+        public static readonly int BOSS_CATCHING = Animator.StringToHash("BossCatching");
+        public static readonly int BOSS_SURPRISED = Animator.StringToHash("BossSurprised");
+        public static readonly int BOSS_FOLLOWING = Animator.StringToHash("BossFollowing");
     }
 }
