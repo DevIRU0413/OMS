@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using Cinemachine;
 
+using DG.Tweening;
+
 using UnityEngine;
 
 
@@ -37,6 +39,8 @@ namespace MSG
         private int _followerCount = 0; // UI에서 별도로 값을 가지고 있어서 안쓸 수도 있음
         private bool _isFinished = false;
         private bool _isTimeOut = false;
+        private float _lastHitDirX = 1f; // 마지막 피격 방향
+
 
         public MSG_PlayerData PlayerData => _playerData;
         public MSG_PlayerSettings PlayerSettings => _playerSettings;
@@ -101,6 +105,12 @@ namespace MSG
             if (((1 << collision.gameObject.layer) & _disturbNPCLayer) != 0)
             {
                 MSG_NPCProvider.TryGetDisturb(collision, out MSG_DisturbNPC npc);
+
+                // 플레이어 기준 왼쪽 혹은 오른쪽으로 밀릴지 방향 선정
+                float dir = Mathf.Sign(transform.position.x - npc.transform.position.x);
+                if (dir == 0) dir = -1f; // 만약 같으면 임의로 왼쪽
+                _lastHitDirX = dir;
+
                 TryFallDown(npc.NPCData.CharAttackDamage);
             }
 
@@ -291,6 +301,14 @@ namespace MSG
         private IEnumerator InvincibleRoutine()
         {
             Debug.Log("무적 시간 시작");
+
+            transform.DOComplete(); // 기존 트윈 정리
+            transform.DOJump(
+                transform.position + new Vector3(_playerSettings.KnockbackDistance * _lastHitDirX, 0f, 0f),
+                _playerSettings.KnockbackHeight,    // 높이
+                1,                                  // 한 번 점프
+                _playerSettings.BlinkInterval       // DoTween 지속 시간
+            ).SetEase(Ease.OutQuad);
 
             _capsuleCollider2D.enabled = false;
 
