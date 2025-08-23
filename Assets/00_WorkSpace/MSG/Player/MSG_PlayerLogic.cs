@@ -47,6 +47,7 @@ namespace MSG
         public bool IsFallen => _isFallen;
         public float FeverGauge => _feverGauge;
         public MSG_MapData CurrentMap => _currentMap;
+        public bool IsFinished => _isFinished;
 
         public event Action OnPlayerDamaged;
         public event Action OnPlayerFeverStarted;
@@ -347,6 +348,8 @@ namespace MSG
 
         private IEnumerator FeverRoutine()
         {
+            YSJ_GameManager.Instance.StopBattery(); // 시간 정지
+
             _isFever = true;
             StartFeverAnimation();
             float elapsed = 0;
@@ -365,6 +368,8 @@ namespace MSG
             _feverGauge = 100f;
             _playerData.CurrentHP = 60; // 피버타임 끝나고 체력 60
             OnPlayerFeverEnded?.Invoke();
+
+            YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제
         }
 
         private void StartFeverAnimation()
