@@ -13,11 +13,21 @@ namespace MSG
         [SerializeField] private LayerMask _npcLayer;
         [SerializeField] private GameObject _arrowButton;
 
+        private MSG_PlayerLogic _playerLogic;
+
+
+        private void Start()
+        {
+            _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+        }
+
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (((1 << collision.gameObject.layer) & _playerLayer) != 0)
             {
+                if (_playerLogic.IsFinished) return; // 게임 종료 이후 활성화 금지
+
                 YSJ_GameManager.Instance?.ReachedFloorEnd();
 
                 _arrowButton.SetActive(true);
