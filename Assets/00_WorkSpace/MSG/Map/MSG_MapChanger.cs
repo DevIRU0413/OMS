@@ -19,6 +19,8 @@ namespace MSG
         private MSG_PlayerLogic _playerLogic;
         private Transform _playerTransform;
         private Collider2D[] _catchables = new Collider2D[20]; // 한 맵에 Catchable NPC 20명 초과하지 않을 것 같아서 설정. 많아지면 추후 변경
+        private Coroutine _waitCO;
+
 
         private void Start()
         {
@@ -29,8 +31,8 @@ namespace MSG
             _cameraBound.transform.position = new Vector2(_currentMap.XPos, _currentMap.YPos);
             _playerLogic.ChangeCurrentMap(_currentMap);
 
-            Coroutine wait;
-            wait = StartCoroutine(Wait()); // 생각한 구조는 시작 씬에서 풀링을 해서 문제가 없어야 되지만 현재는 씬이 하나라 대기 후 NPC 스폰함
+            
+            _waitCO = StartCoroutine(Wait()); // 생각한 구조는 시작 씬에서 풀링을 해서 문제가 없어야 되지만 현재는 씬이 하나라 대기 후 NPC 스폰함
         }
 
         public void ChangeMap(Direction direction)
@@ -105,6 +107,8 @@ namespace MSG
 
         private void SpawnNPC()
         {
+            Debug.Log("SpawnNPC");
+
             for (int handsome = 0; handsome < _currentMap.HandsomeNPCSpawnCount; handsome++) PoolManager.Instance.Spawn("HandsomeNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
             for (int normal = 0; normal < _currentMap.NormalNPCSpawnCount; normal++) PoolManager.Instance.Spawn("NormalNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
             for (int ugly = 0; ugly < _currentMap.UglyNPCSpawnCount; ugly++) PoolManager.Instance.Spawn("UglyNPC", GetRandomSpawnPointForOther(), Quaternion.identity);
@@ -173,10 +177,13 @@ namespace MSG
         // 생각한 구조는 시작 씬에서 풀링을 해서 문제가 없어야 되지만 현재는 씬이 하나라 대기 후 NPC 스폰함
         private IEnumerator Wait()
         {
+            Debug.Log("Wait");
+
             yield return new WaitUntil(() => PoolManager.Instance.HasPool("HandsomeNPC"));
             yield return new WaitUntil(() => PoolManager.Instance.HasPool("NormalNPC"));
             yield return new WaitUntil(() => PoolManager.Instance.HasPool("UglyNPC"));
-            yield return new WaitUntil(() => PoolManager.Instance.HasPool("RivalNPC"));
+            yield return new WaitUntil(() => PoolManager.Instance.HasPool("RivalNPC1"));
+            yield return new WaitUntil(() => PoolManager.Instance.HasPool("RivalNPC2"));
             yield return new WaitUntil(() => PoolManager.Instance.HasPool("DisturbNPC"));
             yield return new WaitUntil(() => PoolManager.Instance.HasPool("BossNPC"));
 
