@@ -36,7 +36,7 @@ namespace MSG
         public static readonly int BOSS_WALK = Animator.StringToHash("BossWalk");
         public static readonly int BOSS_IDLE = Animator.StringToHash("BossIdle");
         public static readonly int BOSS_CATCHING = Animator.StringToHash("BossCatching");
-        public static readonly int BOSS_SURPRISED = Animator.StringToHash("BossSurprised");
+        public static readonly int BOSS_SURPRISED = Animator.StringToHash("BossSurprised"); // 없을 수도?
         public static readonly int BOSS_FOLLOWING = Animator.StringToHash("BossFollowing");
     }
 }
