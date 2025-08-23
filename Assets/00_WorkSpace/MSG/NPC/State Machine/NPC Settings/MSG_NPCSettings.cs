@@ -55,7 +55,10 @@ namespace MSG
 
         [Header("Disturb NPC 스폰 관련 설정")]
         public float[] SpawnTimes = new float[2] { 60f, 80f };  // Disturb NPC가 스폰될 시간의 배열. 코드 예시로는 60초, 80초에 한 번 스폰됩니다.
-        //[Header("포획 완료 설정")]
-        //public float CaptureDistance = 1.5f;                    // 포획 완료 시 NPC 간의 거리
+
+        [Header("포획 완료 후 회전 설정")]
+        public float MinSpinAngularVel = 360f;                  // 1초에 최소 몇 도 돌지, 현재는 1바퀴입니다.
+        public float MaxSpinAngularVel = 900f;                  // 1초에 최대 몇 도 돌지, 현재는 2.5바퀴입니다.
+        public float TempAngularDrag = 0f;                      // 회전 시 회전 감쇠 적용 값. 높을 수록 감속됩니다.
     }
 }
