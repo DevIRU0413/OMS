@@ -8,7 +8,7 @@ namespace MSG
 {
     public class MSG_FollowController : MonoBehaviour
     {
-        [SerializeField] private MSG_CatchableNPC _catchableNPC;
+        [SerializeField] private MSG_NPCBase _followableNPC;
 
         private SpriteRenderer _spriteRenderer;
         private Transform _anchor;
@@ -31,9 +31,9 @@ namespace MSG
         {
             if (_anchor == null) return;
 
-            float smoothTime = 1f / Mathf.Max(0.0001f, _catchableNPC.Settings.SmoothSpeed);
+            float smoothTime = 1f / Mathf.Max(0.0001f, _followableNPC.Settings.SmoothSpeed);
 
-            float targetX = _anchor.position.x + _direction * _catchableNPC.Settings.NpcDistance * (_index + 1);
+            float targetX = _anchor.position.x + _direction * _followableNPC.Settings.NpcDistance * (_index + 1);
             float targetY = _anchor.position.y;
 
             // X, Y 각각 부드럽게 추적
@@ -47,7 +47,7 @@ namespace MSG
 
         public void Init(Transform anchor, int index, float direction)
         {
-            _spriteRenderer = _catchableNPC.SpriteRenderer;
+            _spriteRenderer = _followableNPC.SpriteRenderer;
             _anchor = anchor;
             _index = index;
 
@@ -86,8 +86,8 @@ namespace MSG
             _doTween = DOTween.To(
                 () => _bobOffset,                           // getter: 현재 _bobOffset 값
                 v => _bobOffset = v,                        // setter: 보간 값 할당
-                _catchableNPC.Settings.BobAmplitude,        // 도착값: 0 ~ _bobAmplitude로 보간
-                _catchableNPC.Settings.BobDuration          // 시간: 한 번 가는데 걸리는 시간
+                _followableNPC.Settings.BobAmplitude,        // 도착값: 0 ~ _bobAmplitude로 보간
+                _followableNPC.Settings.BobDuration          // 시간: 한 번 가는데 걸리는 시간
                 )
                 .SetEase(Ease.InOutSine)                            // ease 설정
                 .SetLoops(-1, LoopType.Yoyo)                        // 무한 반복, 0 ~ _bobAmplitude

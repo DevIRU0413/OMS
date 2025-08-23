@@ -11,8 +11,8 @@ namespace MSG
         [SerializeField] private MSG_MouseCursorManager _mouseCursorManager;
 
         private Transform _playerTransform;
-        private List<MSG_CatchableNPC> _captured = new();
-        public List<MSG_CatchableNPC> CapturedList => _captured;
+        private List<MSG_NPCBase> _captured = new();
+        public List<MSG_NPCBase> CapturedList => _captured;
 
         public static MSG_FollowManager Instance { get; private set; }
 
@@ -41,7 +41,7 @@ namespace MSG
             }
         }
 
-        public void AddCapturedNPC(MSG_CatchableNPC npc)
+        public void AddCapturedNPC(MSG_NPCBase npc)
         {
             float dir;
 
@@ -56,6 +56,7 @@ namespace MSG
             }
 
             npc.FollowController.Init(_playerTransform, _captured.Count, dir);
+
             _captured.Add(npc);
         }
 
