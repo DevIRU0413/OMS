@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rival
+  m_text: Boss
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -247,12 +247,13 @@ GameObject:
   - component: {fileID: 4934420987252913343}
   - component: {fileID: 5807867288747861380}
   - component: {fileID: 624544947071274292}
-  - component: {fileID: 196615957336009795}
-  - component: {fileID: 5801047711574910700}
-  - component: {fileID: 1869654333662973770}
+  - component: {fileID: 5012313303787495238}
+  - component: {fileID: -8510711971459591016}
+  - component: {fileID: 6034325364136179390}
   - component: {fileID: 3789249139647151823}
+  - component: {fileID: -2555275716982554993}
   m_Layer: 10
-  m_Name: Rival NPC
+  m_Name: Boss NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +317,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 42890466878a2bc43bd213f87c273d47, type: 3}
-  m_Color: {r: 1, g: 0.5151782, b: 0.4470588, a: 1}
+  m_Color: {r: 1, g: 0.12056742, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -361,7 +362,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 2, y: 5}
   m_Direction: 0
---- !u!50 &196615957336009795
+--- !u!50 &5012313303787495238
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -388,7 +389,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!95 &5801047711574910700
+--- !u!95 &-8510711971459591016
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -398,7 +399,7 @@ Animator:
   m_GameObject: {fileID: 8625608519349435251}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f7bab57b977920142b7360dad5c5b535, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0b5f25a723a1faa42a4fa92a3b2dcbb6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -409,7 +410,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1869654333662973770
+--- !u!114 &6034325364136179390
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -418,17 +419,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8625608519349435251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696c3c8c2604733408b5677d0fb91c8b, type: 3}
+  m_Script: {fileID: 11500000, guid: e0f21fc84b9aebb4ebdb0d58f70b268d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcData: {fileID: 11400000, guid: e87fcd685ae7af34d8aa2f6ba79604f0, type: 2}
+  _npcData: {fileID: 11400000, guid: a072a6b4292ba704da7ed61136798b29, type: 2}
   _moveController: {fileID: 3789249139647151823}
-  _animator: {fileID: 5801047711574910700}
+  _animator: {fileID: -8510711971459591016}
   _collider: {fileID: 624544947071274292}
   _spriteRenderer: {fileID: 5807867288747861380}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
-  _rigidbody2D: {fileID: 196615957336009795}
-  _surprisedAnimationClip: {fileID: 7400000, guid: 57cedeb3cacfa3742811621e2aa2164e, type: 2}
+  _followController: {fileID: -2555275716982554993}
+  _rigidbody2D: {fileID: 5012313303787495238}
+  _surprisedAnimationClip: {fileID: 0}
 --- !u!114 &3789249139647151823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,5 +445,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _spriteRenderer: {fileID: 5807867288747861380}
-  _dataSO: {fileID: 11400000, guid: e87fcd685ae7af34d8aa2f6ba79604f0, type: 2}
-  _npcBase: {fileID: 1869654333662973770}
+  _dataSO: {fileID: 11400000, guid: a072a6b4292ba704da7ed61136798b29, type: 2}
+  _npcBase: {fileID: 6034325364136179390}
+--- !u!114 &-2555275716982554993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625608519349435251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce6b3c342a5628e4a8a6ae587d633c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _followableNPC: {fileID: 6034325364136179390}

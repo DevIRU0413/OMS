@@ -35,7 +35,7 @@ namespace MSG
 
         public void Init()
         {
-            _currentHP = _startHP;
+            CurrentHP = _startHP;
             OnCurrentHPChanged?.Invoke(_currentHP);
         }
     }

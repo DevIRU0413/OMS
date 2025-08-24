@@ -15,7 +15,6 @@ namespace MSG
 
         [SerializeField] private GameObject _aimObject;
         [SerializeField] private LayerMask _rivalLayer;
-        [SerializeField] private MSG_FollowController _followController;
         [SerializeField] private MSG_DialogueSO _dialogueSO;
 
         private MSG_INpcState _currentState;
@@ -32,12 +31,10 @@ namespace MSG
 
         public bool IsCompeting => _isCompeting;
         public int RivalCount => _rivalCount;
-        public MSG_FollowController FollowController => _followController;
         public float TotalHealPointPerSecond => _totalHealPointPerSecond;
         public int FollowScore => _npcData.FollowScore; // 게임 종료 시 포획되었다면 더할 점수, 배율 X
         public bool IsCaught => _isCaught; // FollowScoreTriggerBox에서 포획 되었는지 검사 후 맞다면 점수를 주기 위한 용도
         public bool IsPressed => _isPressed; // 경쟁 상태로 넘어가기 직전 눌린 상태를 확인하는 플래그 추가
-        public SpriteRenderer SpriteRenderer => _spriteRenderer; // FollowController에서 접근하기 위해 추가
 
         #endregion
 
@@ -270,25 +267,27 @@ namespace MSG
 
         public void SpawnHeart()
         {
+            Vector2 spawnPos = new(transform.position.x, transform.position.y - 1f); // 하트는 발 아래에 스폰
+
             if (_rivalCount >= _settings.XXLargeHeartDropStartRivalCount)
             {
-                PoolManager.Instance.Spawn("XXLargeHeartPool", transform.position, Quaternion.identity);
+                PoolManager.Instance.Spawn("XXLargeHeartPool", spawnPos, Quaternion.identity);
             }
             else if (_rivalCount >= _settings.XLargeHeartDropStartRivalCount)
             {
-                PoolManager.Instance.Spawn("XLargeHeartPool", transform.position, Quaternion.identity);
+                PoolManager.Instance.Spawn("XLargeHeartPool", spawnPos, Quaternion.identity);
             }
             else if (_rivalCount >= _settings.LargeHeartDropStartRivalCount)
             {
-                PoolManager.Instance.Spawn("LargeHeartPool", transform.position, Quaternion.identity);
+                PoolManager.Instance.Spawn("LargeHeartPool", spawnPos, Quaternion.identity);
             }
             else if (_rivalCount >= _settings.MediumHeartDropStartRivalCount)
             {
-                PoolManager.Instance.Spawn("MediumHeartPool", transform.position, Quaternion.identity);
+                PoolManager.Instance.Spawn("MediumHeartPool", spawnPos, Quaternion.identity);
             }
             else if (_rivalCount >= _settings.SmallHeartDropStartRivalCount)
             {
-                PoolManager.Instance.Spawn("SmallHeartPool", transform.position, Quaternion.identity);
+                PoolManager.Instance.Spawn("SmallHeartPool", spawnPos, Quaternion.identity);
             }
         }
 
@@ -429,6 +428,7 @@ namespace MSG
 
             while (true)
             {
+                _rivalCount = 0;
                 Vector2 center = transform.position;
                 Collider2D[] hits = Physics2D.OverlapBoxAll(center, _settings.DetectionSize, 0f, _rivalLayer);
 
@@ -449,6 +449,7 @@ namespace MSG
                         {
                             total += rival.NPCData.CharCatchGaugeHealValue;
                             _competingRivals.Add(rival);
+                            _rivalCount++;
                         }
                         else
                         {

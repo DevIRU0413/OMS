@@ -171,10 +171,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06db91779cd29346b17cdcd587c5a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _handsomeNPC: {fileID: 6414284079230515657, guid: 93823ab975ff88b408e2876555e04827, type: 3}
   _normalNPC: {fileID: 8217090538878939720, guid: 56a51c33e5eefd14ab67c5d29c11e332, type: 3}
   _uglyNPC: {fileID: 1663285420706329282, guid: c8ec8572989afbe41a6aa77842801a34, type: 3}
-  _rivalNPC: {fileID: 8625608519349435251, guid: 858c336518969ba479351aa97df57f5f, type: 3}
+  _rivalNPC1: {fileID: 8625608519349435251, guid: 858c336518969ba479351aa97df57f5f, type: 3}
+  _rivalNPC2: {fileID: 8625608519349435251, guid: 858c336518969ba479351aa97df57f5f, type: 3}
   _disturbNPC: {fileID: 7741721679919193187, guid: d7ecb3918c8d2f2478ffa7ebd8142948, type: 3}
   _bossNPC: {fileID: 8625608519349435251, guid: 1c76b83aedbc75743aeb6a29ed7d442e, type: 3}
 --- !u!114 &133340328 stripped
@@ -267,6 +269,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee338465f036324693c388c140bf3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &244094205 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2406581177129744858, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
+  m_PrefabInstance: {fileID: 1655841829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &244094208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 244094205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24129ba4edd1f1442b64bf26dbd424c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttons:
+  - {fileID: 2081162793}
+  - {fileID: 672128123}
+  - {fileID: 1928182652}
+  - {fileID: 411264799}
+  _buttonDisableDuration: 0.2
 --- !u!1 &380900505
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +339,56 @@ MonoBehaviour:
   _catchGaugeView: {fileID: 537589506}
   _competeGaugeView: {fileID: 1221162740}
   _hpView: {fileID: 609769193}
+--- !u!1 &398421069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 398421070}
+  - component: {fileID: 398421071}
+  m_Layer: 0
+  m_Name: NPC Restictor Spawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &398421070
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398421069}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.58992356, y: 1.028864, z: -0.06581556}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &398421071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 398421069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f707ea0516b6db43a5c0947d60ac471, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mapDatas:
+  - {fileID: 11400000, guid: 94d66420bfc4fb34a9f88bfa4c80bbc3, type: 2}
+  - {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
+  - {fileID: 11400000, guid: 3c017b7c594238f4d9831bc28928aa8d, type: 2}
+  _restrictorPrefab: {fileID: 8235049512290955337, guid: 50f3d24aa89330846b4b2698753d13e3, type: 3}
+  _parent: {fileID: 398421070}
 --- !u!1 &411264794 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7515856402620505294, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
@@ -331,6 +406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879dd5ec1444454bb51fd30522d1dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _floorButtonManager: {fileID: 244094208}
   _mapChanger: {fileID: 198631110}
   _direction: 1
 --- !u!1 &509051995
@@ -567,6 +643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879dd5ec1444454bb51fd30522d1dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _floorButtonManager: {fileID: 244094208}
   _mapChanger: {fileID: 198631110}
   _direction: 3
 --- !u!1001 &677606137
@@ -1789,6 +1866,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6278185073845340925, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 656610040}
+    - targetCorrespondingSourceObject: {fileID: 2406581177129744858, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 244094208}
     - targetCorrespondingSourceObject: {fileID: 3173298567029254553, guid: 2c41b0c7d6464854fbe4eb00688ea51f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2081162793}
@@ -2087,7 +2167,7 @@ Transform:
   m_GameObject: {fileID: 1869088396}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -0.09999001, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2193,7 +2273,7 @@ Transform:
   m_GameObject: {fileID: 1882020827}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2323,6 +2403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879dd5ec1444454bb51fd30522d1dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _floorButtonManager: {fileID: 244094208}
   _mapChanger: {fileID: 198631110}
   _direction: 0
 --- !u!1 &2081162788 stripped
@@ -2342,6 +2423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5879dd5ec1444454bb51fd30522d1dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _floorButtonManager: {fileID: 244094208}
   _mapChanger: {fileID: 198631110}
   _direction: 2
 --- !u!1001 &6473893204545839983
@@ -2408,10 +2490,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Maps
       objectReference: {fileID: 0}
-    - target: {fileID: 5611095191918094749, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
-      propertyPath: _catchableLayer.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
+    - target: {fileID: 4777832038075593321, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1869088398}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2447,7 +2529,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7631622596672627611, guid: bffbc95a21d70634698ef07ceea5d8fd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 7631622596672627611, guid: bffbc95a21d70634698ef07ceea5d8fd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2481,18 +2563,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8618079803455083994, guid: bffbc95a21d70634698ef07ceea5d8fd, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: b4ff016ba5bfeb2489c788d42ec40411, type: 2}
-    - target: {fileID: 9143976581538902674, guid: bffbc95a21d70634698ef07ceea5d8fd, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 42890466878a2bc43bd213f87c273d47, type: 3}
-    - target: {fileID: 9143976581538902674, guid: bffbc95a21d70634698ef07ceea5d8fd, type: 3}
-      propertyPath: m_SortingOrder
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2522,3 +2592,4 @@ SceneRoots:
   - {fileID: 1046758857}
   - {fileID: 1744947883}
   - {fileID: 677606137}
+  - {fileID: 398421070}

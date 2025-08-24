@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <InvincibleTime>k__BackingField: 2
   <BlinkInterval>k__BackingField: 0.5
-  <HPDecreasePerSecond>k__BackingField: 5
+  <HPDecreasePerSecond>k__BackingField: 3
   <HPDecreasePerClick>k__BackingField: 2
   <FeverTimeDuration>k__BackingField: 10
   <FeverScoreMagnifier>k__BackingField: 2
+  <FeverGaugeIncreaseMagnifier>k__BackingField: 3
   <DeathMoveSpeed>k__BackingField: 4
+  <KnockbackDistance>k__BackingField: 1.5
+  <KnockbackHeight>k__BackingField: 0.6
   DirectionAngleRanges:
   - direction: 0
     startAngle: 0

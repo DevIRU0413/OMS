@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rival
+  m_text: Rival1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -247,12 +247,12 @@ GameObject:
   - component: {fileID: 4934420987252913343}
   - component: {fileID: 5807867288747861380}
   - component: {fileID: 624544947071274292}
-  - component: {fileID: 5012313303787495238}
-  - component: {fileID: -8510711971459591016}
+  - component: {fileID: 196615957336009795}
+  - component: {fileID: 5801047711574910700}
   - component: {fileID: 1869654333662973770}
   - component: {fileID: 3789249139647151823}
   m_Layer: 10
-  m_Name: Boss NPC (Temp)
+  m_Name: Rival1 NPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -361,7 +361,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 2, y: 5}
   m_Direction: 0
---- !u!50 &5012313303787495238
+--- !u!50 &196615957336009795
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -388,7 +388,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!95 &-8510711971459591016
+--- !u!95 &5801047711574910700
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
@@ -423,11 +423,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _npcData: {fileID: 11400000, guid: e87fcd685ae7af34d8aa2f6ba79604f0, type: 2}
   _moveController: {fileID: 3789249139647151823}
-  _animator: {fileID: -8510711971459591016}
+  _animator: {fileID: 5801047711574910700}
   _collider: {fileID: 624544947071274292}
   _spriteRenderer: {fileID: 5807867288747861380}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
-  _rigidbody2D: {fileID: 5012313303787495238}
+  _rigidbody2D: {fileID: 196615957336009795}
   _surprisedAnimationClip: {fileID: 7400000, guid: 57cedeb3cacfa3742811621e2aa2164e, type: 2}
 --- !u!114 &3789249139647151823
 MonoBehaviour:

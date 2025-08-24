@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8595d25829958984ead1fcc78cbbc4b1, type: 2}
+  m_Motion: {fileID: 7400000, guid: d8ecca920aa452d4d8dcd41d6fbe3d2a, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -46,7 +46,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: efa342ee7cc4a2442a2b2fae5529a3ee, type: 2}
+  m_Motion: {fileID: 7400000, guid: 077dd61eaac83b64b80cb8a04ce4d582, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -58,7 +58,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Catchable Animator Controller
+  m_Name: Catchable Handsome Animator Controller
   serializedVersion: 5
   m_AnimatorParameters: []
   m_AnimatorLayers:
@@ -94,7 +94,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: bdc228360ef5e1a4b9f1b6165660ecee, type: 2}
+  m_Motion: {fileID: 7400000, guid: 8e5b54cc1c217da42ad474e6050b8510, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

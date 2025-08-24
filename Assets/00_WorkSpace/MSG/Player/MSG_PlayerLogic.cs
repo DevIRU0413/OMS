@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using Cinemachine;
 
+using DG.Tweening;
+
 using UnityEngine;
 
 
@@ -25,6 +27,7 @@ namespace MSG
         [SerializeField] private LayerMask _heartLayer;
         [SerializeField] private LayerMask _breadBoxLayer;
         [SerializeField] private GameObject _breadBag;
+        [SerializeField] private MSG_MapData _currentMap; // 시작 시 첫 맵은 갖고 있도록 함
 
         private float _currentHPFloat;  // 경쟁상태에서는 Update에서 체력을 감산하여 정밀 계산용 float 필드
         private bool _isWornBreadBag = false;
@@ -34,9 +37,10 @@ namespace MSG
         private Coroutine _feverCO;
         private bool _isFallen = false;
         private int _followerCount = 0; // UI에서 별도로 값을 가지고 있어서 안쓸 수도 있음
-        private MSG_MapData _currentMap;
         private bool _isFinished = false;
         private bool _isTimeOut = false;
+        private float _lastHitDirX = 1f; // 마지막 피격 방향
+
 
         public MSG_PlayerData PlayerData => _playerData;
         public MSG_PlayerSettings PlayerSettings => _playerSettings;
@@ -47,6 +51,7 @@ namespace MSG
         public bool IsFallen => _isFallen;
         public float FeverGauge => _feverGauge;
         public MSG_MapData CurrentMap => _currentMap;
+        public bool IsFinished => _isFinished;
 
         public event Action OnPlayerDamaged;
         public event Action OnPlayerFeverStarted;
@@ -68,6 +73,7 @@ namespace MSG
             if (YSJ_GameManager.Instance != null)
             {
                 YSJ_GameManager.Instance.OnChangedOver += TimeOut;
+                YSJ_GameManager.Instance.OnChangedOver += StopAnimWhenGameEnd;
             }
         }
 
@@ -76,6 +82,7 @@ namespace MSG
             if (YSJ_GameManager.Instance != null)
             {
                 YSJ_GameManager.Instance.OnChangedOver -= TimeOut;
+                YSJ_GameManager.Instance.OnChangedOver -= StopAnimWhenGameEnd;
             }
         }
 
@@ -98,6 +105,12 @@ namespace MSG
             if (((1 << collision.gameObject.layer) & _disturbNPCLayer) != 0)
             {
                 MSG_NPCProvider.TryGetDisturb(collision, out MSG_DisturbNPC npc);
+
+                // 플레이어 기준 왼쪽 혹은 오른쪽으로 밀릴지 방향 선정
+                float dir = Mathf.Sign(transform.position.x - npc.transform.position.x);
+                if (dir == 0) dir = -1f; // 만약 같으면 임의로 왼쪽
+                _lastHitDirX = dir;
+
                 TryFallDown(npc.NPCData.CharAttackDamage);
             }
 
@@ -289,6 +302,14 @@ namespace MSG
         {
             Debug.Log("무적 시간 시작");
 
+            transform.DOComplete(); // 기존 트윈 정리
+            transform.DOJump(
+                transform.position + new Vector3(_playerSettings.KnockbackDistance * _lastHitDirX, 0f, 0f),
+                _playerSettings.KnockbackHeight,    // 높이
+                1,                                  // 한 번 점프
+                _playerSettings.BlinkInterval       // DoTween 지속 시간
+            ).SetEase(Ease.OutQuad);
+
             _capsuleCollider2D.enabled = false;
 
             float elapsed = 0;
@@ -345,10 +366,13 @@ namespace MSG
 
         private IEnumerator FeverRoutine()
         {
+            YSJ_GameManager.Instance.StopBattery(); // 시간 정지
+
             _isFever = true;
             StartFeverAnimation();
             float elapsed = 0;
             _feverGauge = 0;
+            OnPlayerFeverStarted?.Invoke();
 
             while (elapsed < _playerSettings.FeverTimeDuration)
             {
@@ -361,6 +385,9 @@ namespace MSG
             EndFeverAnimation();
             _feverGauge = 100f;
             _playerData.CurrentHP = 60; // 피버타임 끝나고 체력 60
+            OnPlayerFeverEnded?.Invoke();
+
+            YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제
         }
 
         private void StartFeverAnimation()
@@ -382,6 +409,32 @@ namespace MSG
             _isTimeOut = true; // 플레이어 오른쪽으로 쭉 이동
             _virtualCamera.Follow = null; // 카메라 이동 정지
             _cameraEdgePlacer.PlaceBox(); // 점수 처리를 위한 트리거 박스 활성화
+        }
+
+        private void StopAnimWhenGameEnd()
+        {
+            _animator.Play(MSG_AnimParams.PLAYER_IDLE);
+        }
+
+        #endregion
+
+
+        #region Test Methods
+
+        [ContextMenu("TestHeal")]
+        private void TestHeal()
+        {
+            _playerData.CurrentHP = Mathf.Min(_playerData.CurrentHP + 30, MSG_PlayerData.MaxHP);
+
+            if (_playerData.CurrentHP == MSG_PlayerData.MaxHP)
+            {
+                if (_feverCO != null)
+                {
+                    StopCoroutine(_feverCO);
+                    _feverCO = null;
+                }
+                _feverCO = StartCoroutine(FeverRoutine());
+            }
         }
 
         #endregion

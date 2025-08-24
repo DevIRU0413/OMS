@@ -165,11 +165,11 @@ MonoBehaviour:
   _collider: {fileID: 4403317412794873340}
   _spriteRenderer: {fileID: 3947984423278589331}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
+  _followController: {fileID: -2097392430537649303}
   _aimObject: {fileID: 7260838405337038018}
   _rivalLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _followController: {fileID: -2097392430537649303}
   _dialogueSO: {fileID: 11400000, guid: a4edf9891179d0b4196fff9796ebf21c, type: 2}
 --- !u!114 &6760645398979423416
 MonoBehaviour:
@@ -185,7 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _spriteRenderer: {fileID: 3947984423278589331}
-  _dataSO: {fileID: 11400000, guid: 7a4cea916224dfb4b9ccf65efc77c20e, type: 2}
+  _dataSO: {fileID: 11400000, guid: d6d726efe2b485d46b95703f3e9ce7e6, type: 2}
   _npcBase: {fileID: 591620360104251437}
 --- !u!114 &-2097392430537649303
 MonoBehaviour:
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce6b3c342a5628e4a8a6ae587d633c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _catchableNPC: {fileID: 591620360104251437}
+  _followableNPC: {fileID: 591620360104251437}
 --- !u!1 &2492320999009931146
 GameObject:
   m_ObjectHideFlags: 0

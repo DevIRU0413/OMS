@@ -12,18 +12,18 @@ namespace MSG
 {
     public class MSG_RivalNPC : MSG_NPCBase
     {
-        [SerializeField] private Rigidbody2D _rigidbody2D;
+        [SerializeField] protected Rigidbody2D _rigidbody2D;
         [SerializeField] private AnimationClip _surprisedAnimationClip;
 
-        private bool _isCompeteStarted = false;
-        private bool _isCompeting = false;
+        protected bool _isCompeteStarted = false;
+        protected bool _isCompeting = false;
         private Coroutine _flyingCO;
         private Coroutine _animCO;
 
         public bool IsCompeting => _isCompeting; // 놀란 상태가 아닌 실제 경쟁 시작하였는지 판단
 
 
-        private void Start()
+        protected virtual void Start()
         {
             MSG_NPCProvider.RegisterRival(this, _collider);
         }
@@ -31,29 +31,25 @@ namespace MSG
         protected override void OnEnable()
         {
             base.OnEnable();
-
-            if (_flyingCO != null)
-            {
-                StopCoroutine(_flyingCO);
-                _flyingCO = null;
-            }
-            if (_animCO != null)
-            {
-                StopCoroutine(_animCO);
-                _animCO = null;
-            }
-
-            _isCompeteStarted = false;
-            _isCompeting = false;
+            OnEnableInitHooker();
+            OnEnableAnimHooker();
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (_isCompeteStarted) return; // 경쟁 중에는 이동 중지
             _moveController.Tick();
         }
 
-        private void OnDestroy()
+        protected virtual void OnDisable()
+        {
+            if (YSJ_GameManager.Instance != null)
+            {
+                YSJ_GameManager.Instance.OnChangedOver -= EndCompeting;
+            }
+        }
+
+        protected virtual void OnDestroy()
         {
             MSG_NPCProvider.UnregisterRival(this, _collider);
         }
@@ -84,7 +80,7 @@ namespace MSG
         #endregion
 
 
-        public void StartCompeting(Transform target)
+        public virtual void StartCompeting(Transform target)
         {
             if (!IsOnScreen()) return; // 화면 밖에 있으면 return
 
@@ -110,7 +106,7 @@ namespace MSG
             _animCO = StartCoroutine(CompeteAfterSurprising());
         }
 
-        public void EndCompeting()
+        public virtual void EndCompeting()
         {
             _isCompeteStarted = false;
 
@@ -124,7 +120,7 @@ namespace MSG
         }
 
         // 패배 후 사라져야됨
-        public void LoseAndDespawn()
+        public virtual void LoseAndDespawn()
         {
             if (_flyingCO != null)
             {
@@ -151,7 +147,14 @@ namespace MSG
             float impulse = _settings.ImpulsePower;
             _rigidbody2D.AddForce(dir * impulse, ForceMode2D.Impulse);
 
-            // 회전 필요시 넣기
+            float originalAngularDrag = _rigidbody2D.angularDrag;
+            // 시계, 반시계 랜덤
+            float sign = Random.value < 0.5f ? 1f : -1f;
+            float spin = Random.Range(_settings.MinSpinAngularVel, _settings.MaxSpinAngularVel) * sign;
+
+            // 감쇠값 적용 및 지속 회전
+            _rigidbody2D.angularDrag = _settings.TempAngularDrag;
+            _rigidbody2D.angularVelocity = spin;
 
             yield return new WaitForSeconds(_settings.DespawnTime);
 
@@ -163,7 +166,7 @@ namespace MSG
         }
 
         // 놀라는 애니메이션 직후 경쟁 실행용 메서드
-        private IEnumerator CompeteAfterSurprising()
+        protected virtual IEnumerator CompeteAfterSurprising()
         {
             StartSurprisedAnim();
             yield return new WaitForSeconds(_surprisedAnimationClip.length);
@@ -172,7 +175,7 @@ namespace MSG
         }
 
         // 자신(라이벌)이 화면 밖에 있는지 검사하는 메서드
-        private bool IsOnScreen()
+        protected virtual bool IsOnScreen()
         {
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
 
@@ -183,8 +186,32 @@ namespace MSG
             return isOnScreen;
         }
 
+        protected virtual void OnEnableInitHooker()
+        {
+            _isCompeteStarted = false;
+            _isCompeting = false;
+
+            YSJ_GameManager.Instance.OnChangedOver += EndCompeting;
+        }
+
+
+        // Boss NPC에서는 사용하지 않도록 override해서 사용할 예정
+        protected virtual void OnEnableAnimHooker()
+        {
+            if (_flyingCO != null)
+            {
+                StopCoroutine(_flyingCO);
+                _flyingCO = null;
+            }
+            if (_animCO != null)
+            {
+                StopCoroutine(_animCO);
+                _animCO = null;
+            }
+        }
+
 #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        protected virtual void OnDrawGizmosSelected()
         {
             var cam = Camera.main;
 
