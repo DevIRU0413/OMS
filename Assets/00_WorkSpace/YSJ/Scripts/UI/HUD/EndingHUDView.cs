@@ -36,20 +36,17 @@ public class EndingHUDView : YSJ_HUDBaseUI
         var catState = uiBinder.Get<TextMeshProUGUI>(EndingHUDType.EndingStateCount_TMP);
         if (so == null)
         {
-            catState.text = "-3";
+            catState.text = "-2";
             return;
         }
 
-        catState.text = "-2";
+        catState.text = "-1";
         for (int i = 0; i < so.endingBranchScores.Count; i++)
         {
-            if (so.endingBranchScores[i].ScoreCat < score)
+            if (so.endingBranchScores[i].ScoreCat <= score)
             {
                 catState.text = i.ToString();
-                return;
             }
         }
-
-        catState.text = "-1";
     }
 }
