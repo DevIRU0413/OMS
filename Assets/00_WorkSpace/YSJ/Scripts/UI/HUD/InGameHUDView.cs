@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 
+using MSG;
+
 using TMPro;
 
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class InGameHUDView : YSJ_HUDBaseUI
 {
@@ -24,20 +25,33 @@ public class InGameHUDView : YSJ_HUDBaseUI
         ChattingUI,
 
         ChattingContent,
+
+        RightUp_Button,
+        RightDown_Button,
+
+        LeftUp_Button,
+        LeftDown_Button,
     }
 
-    [SerializeField] private GameObject _chattingPrefab;
+    private const int MAP_START_STEP = 1;
+    private const int MAP_END_STEP = 3;
 
+    [SerializeField] private GameObject _chattingPrefab;
+    [SerializeField] private FadeInFadeOutSystemView fadeInOutSystemView;
     private YSJ_UIBinder<InGameHUDType> uiBinder;
+    private ReachedFloorDirection _floorDirection;
 
     private GameObject _chattingGOParent;                   // chatting parent
     private GameObject[] _chattingGOArray;                  // chatting Log Game Object Array
     private TextMeshProUGUI[] _chattingContentTMPArray;     // chatting Log TMP Array
+    private MSG_PlayerLogic _player;
 
     public override void InitBaseUI()
     {
         base.InitBaseUI();
+
         uiBinder = new(this);
+        _floorDirection = ReachedFloorDirection.None;
 
         _chattingGOParent = uiBinder.Get(InGameHUDType.ChattingContent);
         int count = YSJ_ChattingManager.Instance.MaxChattingCount;
@@ -55,6 +69,22 @@ public class InGameHUDView : YSJ_HUDBaseUI
         }
         tmps.Reverse();
         _chattingContentTMPArray = tmps.ToArray();
+
+        _player = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+
+        if (fadeInOutSystemView != null)
+        {
+            fadeInOutSystemView.InitBaseUI();
+            uiBinder.GetEvent(InGameHUDType.RightUp_Button  ).Click -= FadeInOutAction;
+            uiBinder.GetEvent(InGameHUDType.RightDown_Button).Click -= FadeInOutAction;
+            uiBinder.GetEvent(InGameHUDType.LeftUp_Button   ).Click -= FadeInOutAction;
+            uiBinder.GetEvent(InGameHUDType.LeftDown_Button ).Click -= FadeInOutAction;
+
+            uiBinder.GetEvent(InGameHUDType.RightUp_Button  ).Click += FadeInOutAction;
+            uiBinder.GetEvent(InGameHUDType.RightDown_Button).Click += FadeInOutAction;
+            uiBinder.GetEvent(InGameHUDType.LeftUp_Button   ).Click += FadeInOutAction;
+            uiBinder.GetEvent(InGameHUDType.LeftDown_Button ).Click += FadeInOutAction;
+        }
     }
 
     public void UpdateBattery(float percent)
@@ -77,9 +107,71 @@ public class InGameHUDView : YSJ_HUDBaseUI
         uiBinder.Get<Slider>(InGameHUDType.Health_Slider).value = health / 100f;
     }
 
-    public void ShowNextFloorButton(bool visible)
+    public void ShowNextFloorButton(ReachedFloorDirection direction)
     {
-        uiBinder.Get(InGameHUDType.FloorUI).SetActive(visible);
+        uiBinder.Get(InGameHUDType.FloorUI).SetActive(direction != ReachedFloorDirection.None);
+        int currentFloor = _player.CurrentMap.CurrentFloor;
+        int floorType = -1; // 0 최하층, 1 중간, 2 최상층
+        print(currentFloor);
+        if (currentFloor == MAP_START_STEP)
+        {
+            floorType = 0;
+        }
+        else if (currentFloor == MAP_END_STEP)
+        {
+            floorType = 2;
+        }
+        else
+        {
+            floorType = 1;
+        }
+
+        if (direction == ReachedFloorDirection.Right)
+        {
+            switch (floorType)
+            {
+                case 0:
+                    uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(true);
+                    uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(false);
+                    break;
+
+                case 1:
+                    uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(true);
+                    uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
+                    break;
+                default:
+                    uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(false);
+                    uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
+                    break;
+            }
+        }
+        else if (direction == ReachedFloorDirection.Left)
+        {
+            switch (floorType)
+            {
+                case 0:
+                    uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(true);
+                    uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(false);
+                    break;
+
+                case 1:
+                    uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(true);
+                    uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(true);
+                    break;
+                default:
+                    uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(false);
+                    uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(true);
+                    break;
+            }
+        }
+        else
+        {
+            uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(false);
+            uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(false);
+
+            uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(false);
+            uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(false);
+        }
     }
 
     public void UpdateChattingContext(string[] message)
@@ -105,6 +197,14 @@ public class InGameHUDView : YSJ_HUDBaseUI
             }
             else
                 tmp.text = string.Empty;
+        }
+    }
+
+    public void FadeInOutAction(PointerEventData eventData)
+    {
+        if (fadeInOutSystemView != null)
+        {
+            StartCoroutine(fadeInOutSystemView.CO_FadeInOutAction());
         }
     }
 }
