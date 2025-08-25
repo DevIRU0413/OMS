@@ -11,6 +11,7 @@ namespace MSG
         [SerializeField] private LayerMask _playerLayer;
         [SerializeField] private GameObject _arrowButton;
         [SerializeField] private Direction _direction;
+        [SerializeField] private ReachedFloorDirection _reachedFloorDirection;
 
         private MSG_PlayerLogic _playerLogic;
 
@@ -27,7 +28,7 @@ namespace MSG
             {
                 if (_playerLogic.IsFinished) return; // 게임 종료 이후 활성화 금지
 
-                YSJ_GameManager.Instance?.ReachedFloorEnd();
+                YSJ_GameManager.Instance?.ReachedFloorEnd(_reachedFloorDirection);
 
                 List<Direction> activables = DecideWhatButtonWillActive();
                 // 여기서 activables 전달해야될 듯
