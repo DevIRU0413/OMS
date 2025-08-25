@@ -131,7 +131,7 @@ public class ManagerGroup : MonoBehaviour
                 continue;
             }
 
-            GameObject go = manager.GetGameObject();
+            GameObject go = UnityUtilEx.SafeGetGameObject(manager);
             manager.Cleanup();
 #if UNITY_EDITOR
             Debug.Log($"[ManagerGroup-Cleanup]: {go.name}");
@@ -151,7 +151,9 @@ public class ManagerGroup : MonoBehaviour
         for (int i = 0; i < _registeredManagers.Count; i++)
         {
             IManager manager = _registeredManagers[i];
-            if (manager == null)                                        // 매니저 인터페이스가 없는 상태(오브젝트에 접근 불가)
+            GameObject go = UnityUtilEx.SafeGetGameObject(manager);
+
+            if (manager == null || go == null)                          // 매니저 인터페이스가 없는 상태(오브젝트에 접근 불가)
             {
                 _registeredManagers.RemoveAt(i);                        // 매니저가 없으니 Remove 사용 불가 > RemoveAt 사용
 #if UNITY_EDITOR
@@ -159,9 +161,9 @@ public class ManagerGroup : MonoBehaviour
 #endif 
                 i--;                                                    // 매니저 제거로 인한 인덱스 에러 방지위한 -1
             }
-            else if (!manager.IsDontDestroy || forceClear)
+
+            if ((go != null) && !manager.IsDontDestroy || forceClear)
             {
-                GameObject go = UnityUtilEx.SafeGetGameObject(manager); // 안전하게 게임오브젝트 확인
                 manager.Cleanup();                                      // 매니저 클린업 진행
                 _registeredManagers.Remove(manager);                    // 매니저 제거
                 i--;                                                    // 매니저 제거로 인한 인덱스 에러 방지위한 -1
