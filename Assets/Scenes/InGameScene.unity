@@ -365,7 +365,7 @@ Transform:
   m_GameObject: {fileID: 398421069}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.58992356, y: 1.028864, z: -0.06581556}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2549,10 +2549,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1037906877353778917, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
-      propertyPath: _reachedFloorDirection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1198199075722020415, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
       propertyPath: m_Camera
       value: 
@@ -2561,10 +2557,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1869088398}
-    - target: {fileID: 2996687339071698340, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
-      propertyPath: _reachedFloorDirection
-      value: 2
-      objectReference: {fileID: 0}
+    - target: {fileID: 2602988586869474565, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1869088398}
     - target: {fileID: 3061674629971171148, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
       propertyPath: m_Camera
       value: 
@@ -2609,14 +2605,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3833120954929054798, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
-      propertyPath: _reachedFloorDirection
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4361207689771890772, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
-      propertyPath: _reachedFloorDirection
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4568591314228396892, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
       propertyPath: m_Name
       value: Maps
@@ -2625,14 +2613,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1869088398}
-    - target: {fileID: 7992777047452456506, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
-      propertyPath: _reachedFloorDirection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8240228733144078291, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
-      propertyPath: _reachedFloorDirection
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
