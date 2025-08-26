@@ -22,7 +22,7 @@ MonoBehaviour:
   CharMaxCatchGauge: 100
   _currentCharCatchGauge: 0
   CharCatchGaugeHealValue: 0
-  CharWalkSpeed: 1
+  CharWalkSpeed: 3.68
   CharRunSpeed: 0
   CurrentScore: 0
   CatchScore: 0

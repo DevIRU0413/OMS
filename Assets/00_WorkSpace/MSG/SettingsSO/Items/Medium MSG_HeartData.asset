@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08af6dd2d5f011e449f0cf7312a7faeb, type: 3}
   m_Name: Medium MSG_HeartData
   m_EditorClassIdentifier: 
-  HealAmout: 40
+  HealAmout: 20

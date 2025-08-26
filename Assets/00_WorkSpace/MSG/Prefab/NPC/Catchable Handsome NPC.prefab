@@ -298,8 +298,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 42890466878a2bc43bd213f87c273d47, type: 3}
-  m_Color: {r: 0.776091, g: 1, b: 0.4481132, a: 1}
+  m_Sprite: {fileID: 21300000, guid: dc06e16cbee18d4479cc3abb07fca076, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -383,11 +383,11 @@ MonoBehaviour:
   _collider: {fileID: 3867173340869045234}
   _spriteRenderer: {fileID: 5099717313995524288}
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
+  _followController: {fileID: -9181062404082533019}
   _aimObject: {fileID: 2970427781635438031}
   _rivalLayer:
     serializedVersion: 2
     m_Bits: 1024
-  _followController: {fileID: -9181062404082533019}
   _dialogueSO: {fileID: 11400000, guid: a4edf9891179d0b4196fff9796ebf21c, type: 2}
 --- !u!114 &6101303382392020421
 MonoBehaviour:

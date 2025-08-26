@@ -21,10 +21,10 @@ MonoBehaviour:
   CurrentCharHealth: 0
   CharMaxCatchGauge: 100
   _currentCharCatchGauge: 0
-  CharCatchGaugeHealValue: 15
+  CharCatchGaugeHealValue: 65
   CharWalkSpeed: 1
   CharRunSpeed: 0
   CurrentScore: 0
   CatchScore: 0
   ClickScore: 0
-  FollowScore: 30000
+  FollowScore: 100000

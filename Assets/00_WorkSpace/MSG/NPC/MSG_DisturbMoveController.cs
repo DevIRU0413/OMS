@@ -55,6 +55,8 @@ namespace MSG
 
         public override void ReachEnd(Direction endReachedDirection)
         {
+            Debug.Log($"{gameObject.name}이 맵 경계에 부딪힘");
+
             // 경계 닿으면 반대로 이동
             _moveDirection = (_moveDirection == Vector2.left) ? Vector2.right : Vector2.left;
             _spriteRenderer.flipX = (_moveDirection == Vector2.left);
