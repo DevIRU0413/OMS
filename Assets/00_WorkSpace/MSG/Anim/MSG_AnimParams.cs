@@ -21,6 +21,7 @@ namespace MSG
         public static readonly int CATCHABLE_IDLE = Animator.StringToHash("CatchableIdle");
         public static readonly int CATCHABLE_WALK = Animator.StringToHash("CatchableWalk");
         public static readonly int CATCHABLE_CATCHING = Animator.StringToHash("CatchableCatching");
+        public static readonly int CATCHABLE_FOLLOWING = Animator.StringToHash("CatchableNPCFollowing");
 
         // -- Rival NPC
         public static readonly int RIVAL_IDLE = Animator.StringToHash("RivalIdle");
