@@ -180,7 +180,7 @@ namespace MSG
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
 
             // 뷰포트 0~1 사이에 들어오는지 확인
-            bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 1f &&
+            bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 0.85f &&
                               viewportPos.y >= 0f && viewportPos.y <= 1f;
 
             return isOnScreen;
