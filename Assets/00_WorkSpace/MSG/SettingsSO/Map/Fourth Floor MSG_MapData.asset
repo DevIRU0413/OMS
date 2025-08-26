@@ -10,29 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88d9a9e67487db642970dc8b2e910076, type: 3}
-  m_Name: Third Floor MSG_MapData
+  m_Name: Fourth Floor MSG_MapData
   m_EditorClassIdentifier: 
-  Name: 3
-  CurrentFloor: 3
+  Name: 4
+  CurrentFloor: 4
   XPos: 0
-  YPos: 40
+  YPos: 60
   HandsomeNPCSpawnCount: 3
   NormalNPCSpawnCount: 3
   UglyNPCSpawnCount: 3
   RivalNPC1SpawnCount: 3
   RivalNPC2SpawnCount: 3
   DisturbNPCSpawnCount: 0
-  BossNPCSpawnCount: 1
-  LeftUpMap: {fileID: 11400000, guid: 4ca7ae949df2e9742bc4a38ffb4f9fc5, type: 2}
-  LeftDownMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
-  RightUpMap: {fileID: 11400000, guid: 4ca7ae949df2e9742bc4a38ffb4f9fc5, type: 2}
-  RightDownMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}
+  BossNPCSpawnCount: 0
+  LeftUpMap: {fileID: 0}
+  LeftDownMap: {fileID: 11400000, guid: 3c017b7c594238f4d9831bc28928aa8d, type: 2}
+  RightUpMap: {fileID: 0}
+  RightDownMap: {fileID: 11400000, guid: 3c017b7c594238f4d9831bc28928aa8d, type: 2}
   LeftPlayerEndPoint: -22
   RightPlayerEndPoint: 20
   LeftNPCEndPoint: -16
   RightNPCEndPoint: 14
-  LeftPlayerSpawnPoint: {x: -22, y: 38}
-  RightPlayerSpawnPoint: {x: 20, y: 38}
-  TopYPos: 38
-  MiddleYPos: 37.5
-  BottomYPos: 37
+  LeftPlayerSpawnPoint: {x: -22, y: 58}
+  RightPlayerSpawnPoint: {x: 20, y: 58}
+  TopYPos: 58
+  MiddleYPos: 57.5
+  BottomYPos: 57
