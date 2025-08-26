@@ -154,6 +154,14 @@ namespace MSG
             {
                 _speed = 0f;
                 _isMoving = false;
+
+                // 눌려있으면 피격 후 강제 해제
+                if (_pressedTarget != null)
+                {
+                    _pressedTarget.OnCatchReleased();
+                    _pressedTarget = null;
+                }
+
                 return; // 플레이어가 넘어져있다면 움직임 정지
             }
             if (IsCatching)
