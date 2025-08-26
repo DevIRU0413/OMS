@@ -15,6 +15,13 @@ namespace MSG
         [SerializeField] protected Rigidbody2D _rigidbody2D;
         [SerializeField] protected AnimationClip _surprisedAnimationClip;
 
+        // === 추가: 날아갈 때 사용할 전용 스프라이트(개별 NPC별 지정) ===
+        [SerializeField] private Sprite _flyingSprite;
+
+        // 내부 캐시(원복용)
+        private Sprite _cachedSprite;
+        private bool _animatorWasEnabled;
+
         protected bool _isCompeteStarted = false;
         protected bool _isCompeting = false;
         private Coroutine _flyingCO;
@@ -136,6 +143,20 @@ namespace MSG
         {
             _moveController.StopMovement();
 
+            // === 스프라이트 교체 준비 ===
+            if (_animator != null)
+            {
+                _animatorWasEnabled = _animator.enabled;
+                _animator.enabled = false; // 애니메이터가 덮어쓰지 않도록 끔
+            }
+
+            _cachedSprite = _spriteRenderer.sprite; // 원래 스프라이트 저장
+            if (_flyingSprite != null)
+            {
+                _spriteRenderer.sprite = _flyingSprite;
+            }
+
+            // === 기존 물리 연출 ===
             _collider.enabled = false;
             _rigidbody2D.gravityScale = _settings.GravityScale;
             _rigidbody2D.constraints = RigidbodyConstraints2D.None;
@@ -148,16 +169,22 @@ namespace MSG
             _rigidbody2D.AddForce(dir * impulse, ForceMode2D.Impulse);
 
             float originalAngularDrag = _rigidbody2D.angularDrag;
-            // 시계, 반시계 랜덤
             float sign = Random.value < 0.5f ? 1f : -1f;
             float spin = Random.Range(_settings.MinSpinAngularVel, _settings.MaxSpinAngularVel) * sign;
 
-            // 감쇠값 적용 및 지속 회전
             _rigidbody2D.angularDrag = _settings.TempAngularDrag;
             _rigidbody2D.angularVelocity = spin;
 
             yield return new WaitForSeconds(_settings.DespawnTime);
 
+            // === 스프라이트 및 애니메이터 원복 ===
+            _spriteRenderer.sprite = _cachedSprite;
+            if (_animator != null)
+            {
+                _animator.enabled = _animatorWasEnabled;
+            }
+
+            // === 상태 원복 후 디스폰 ===
             _collider.enabled = true;
             _rigidbody2D.gravityScale = 0f;
             _rigidbody2D.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -179,9 +206,11 @@ namespace MSG
         {
             Vector3 viewportPos = Camera.main.WorldToViewportPoint(transform.position);
 
+            bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 1f &&
+
             // 뷰포트 0~1 사이에 들어오는지 확인
             bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 0.85f &&
-                              viewportPos.y >= 0f && viewportPos.y <= 1f;
+
 
             return isOnScreen;
         }
@@ -194,8 +223,6 @@ namespace MSG
             YSJ_GameManager.Instance.OnChangedOver += EndCompeting;
         }
 
-
-        // Boss NPC에서는 사용하지 않도록 override해서 사용할 예정
         protected virtual void OnEnableAnimHooker()
         {
             if (_flyingCO != null)
@@ -208,14 +235,22 @@ namespace MSG
                 StopCoroutine(_animCO);
                 _animCO = null;
             }
+
+            // 안전 복구
+            if (_cachedSprite != null)
+            {
+                _spriteRenderer.sprite = _cachedSprite;
+            }
+            if (_animator != null)
+            {
+                _animator.enabled = true;
+            }
         }
 
 #if UNITY_EDITOR
         protected virtual void OnDrawGizmosSelected()
         {
             var cam = Camera.main;
-
-            // Viewport 좌표
             Vector3 vp = cam.WorldToViewportPoint(transform.position);
             Handles.color = Color.white;
             Handles.Label(transform.position + Vector3.up * 0.3f, $"VP ({vp.x:F2},{vp.y:F2},{vp.z:F2})");

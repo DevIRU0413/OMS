@@ -120,6 +120,8 @@ MonoBehaviour:
     m_Bits: 8192
   _breadBag: {fileID: 7362760866169053858}
   _currentMap: {fileID: 11400000, guid: 94d66420bfc4fb34a9f88bfa4c80bbc3, type: 2}
+  _feverLeftClip: {fileID: 7400000, guid: 2a003b4271e5e3549a9c6a99f81b98bd, type: 2}
+  _feverRightClip: {fileID: 7400000, guid: 13a8c0a79827e5c4f9da2602e4ccfd67, type: 2}
 --- !u!70 &1812899691265220220
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
