@@ -430,6 +430,8 @@ MonoBehaviour:
   _followController: {fileID: 0}
   _rigidbody2D: {fileID: 196615957336009795}
   _surprisedAnimationClip: {fileID: 7400000, guid: b6c31acfa645d4c4a8c2d26acdf18b18, type: 2}
+  _flyingSprite: {fileID: 21300000, guid: 717a3b5fbabfc8e428b17cd7d26aef15, type: 3}
+  _flyingTargetRenderer: {fileID: 0}
 --- !u!114 &3789249139647151823
 MonoBehaviour:
   m_ObjectHideFlags: 0
