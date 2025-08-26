@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class YSJ_SimpleSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
-    [SerializeField, HideInInspector] protected bool isDontDestroyOnLoad = true;
+    [SerializeField] protected bool isDontDestroyOnLoad = true;
 
     public static T Instance
     {

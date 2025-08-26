@@ -2,12 +2,21 @@ using System;
 
 using UnityEngine;
 
+using static InGameHUDView;
+
 public enum GameStateType
 {
     Init,
     Playing,
     Over,
     Result,
+}
+
+public enum ReachedFloorDirection
+{
+    None,
+    Right,
+    Left,
 }
 
 public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
@@ -41,6 +50,7 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     [field: SerializeField] public int CurrentFloor { get; private set; } = 1;
     [field: SerializeField] public int EndFloor { get; private set; } = 3;
     [field: SerializeField] public bool IsFloorEndReached { get; private set; } = false;
+    [field: SerializeField] public ReachedFloorDirection ReachedFloorDirectionType { get; private set; } = ReachedFloorDirection.None;
 
     [Header("배터리 경고 임계값")]
     public float batteryWarningThreshold = 30f;
@@ -52,7 +62,7 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     public event Action<float> OnBatteryChanged;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnFollowerChanged;
-    public event Action<bool> OnChangedReachedFloorEnd;
+    public event Action<ReachedFloorDirection> OnChangedReachedFloorEnd;
 
     public event Action OnChangedPlaying;
     public event Action OnChangedOver;
@@ -109,16 +119,16 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
         CurrentFloor--;
     }
 
-    public void ReachedFloorEnd()
+    public void ReachedFloorEnd(ReachedFloorDirection direction)
     {
         IsFloorEndReached = true;
-        OnChangedReachedFloorEnd?.Invoke(IsFloorEndReached);
+        OnChangedReachedFloorEnd?.Invoke(direction);
     }
 
     public void ReachedFloorNotEnd()
     {
         IsFloorEndReached = false;
-        OnChangedReachedFloorEnd?.Invoke(IsFloorEndReached);
+        OnChangedReachedFloorEnd?.Invoke(ReachedFloorDirection.None);
     }
 
     public void GamePlay()

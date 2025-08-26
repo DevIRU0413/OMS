@@ -40,7 +40,7 @@ public class InGameHUDPresenter
         view.UpdateBattery(modelGM.BatteryPercent);
         view.UpdateScore(modelGM.Score);
         view.UpdateFollowerCount(modelGM.FollowerCount);
-        view.ShowNextFloorButton(modelGM.IsFloorEndReached);
+        view.ShowNextFloorButton(modelGM.ReachedFloorDirectionType);
     }
 
     public void Unbind()
