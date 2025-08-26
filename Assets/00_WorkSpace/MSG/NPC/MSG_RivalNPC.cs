@@ -13,12 +13,12 @@ namespace MSG
     public class MSG_RivalNPC : MSG_NPCBase
     {
         [SerializeField] protected Rigidbody2D _rigidbody2D;
-        [SerializeField] private AnimationClip _surprisedAnimationClip;
+        [SerializeField] protected AnimationClip _surprisedAnimationClip;
 
         protected bool _isCompeteStarted = false;
         protected bool _isCompeting = false;
         private Coroutine _flyingCO;
-        private Coroutine _animCO;
+        protected Coroutine _animCO;
 
         public bool IsCompeting => _isCompeting; // 놀란 상태가 아닌 실제 경쟁 시작하였는지 판단
 
