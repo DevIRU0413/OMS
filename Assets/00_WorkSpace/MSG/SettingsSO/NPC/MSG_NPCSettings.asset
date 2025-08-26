@@ -40,3 +40,6 @@ MonoBehaviour:
   SpawnTimes:
   - 60
   - 80
+  MinSpinAngularVel: 360
+  MaxSpinAngularVel: 900
+  TempAngularDrag: 0
