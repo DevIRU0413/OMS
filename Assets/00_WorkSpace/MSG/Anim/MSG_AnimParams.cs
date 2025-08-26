@@ -15,6 +15,11 @@ namespace MSG
         public static readonly int PLAYER_WALK = Animator.StringToHash("PlayerWalk");
         public static readonly int PLAYER_RUN = Animator.StringToHash("PlayerRun");
         public static readonly int PLAYER_CATCHING = Animator.StringToHash("PlayerCatching");
+        public static readonly int PLAYER_CATCHING_LEFT_UP = Animator.StringToHash("PlayerCatchingLeftUp");
+        public static readonly int PLAYER_CATCHING_LEFT_DOWN = Animator.StringToHash("PlayerCatchingLeftDown");
+        public static readonly int PLAYER_CATCHING_RIGHT_UP = Animator.StringToHash("PlayerCatchingRightUp");
+        public static readonly int PLAYER_CATCHING_RIGHT_DOWN = Animator.StringToHash("PlayerCatchingRightDown");
+
         public static readonly int PLAYER_HIT = Animator.StringToHash("PlayerHit");
 
         // -- Catchable NPC
