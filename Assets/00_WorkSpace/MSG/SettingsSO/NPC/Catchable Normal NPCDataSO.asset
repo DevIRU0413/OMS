@@ -27,4 +27,4 @@ MonoBehaviour:
   CurrentScore: 0
   CatchScore: 20
   ClickScore: 0
-  FollowScore: 1000
+  FollowScore: 3000

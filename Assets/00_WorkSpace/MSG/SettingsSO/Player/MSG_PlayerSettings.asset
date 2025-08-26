@@ -15,10 +15,10 @@ MonoBehaviour:
   <InvincibleTime>k__BackingField: 2
   <BlinkInterval>k__BackingField: 0.5
   <HPDecreasePerSecond>k__BackingField: 3
-  <HPDecreasePerClick>k__BackingField: 2
+  <HPDecreasePerClick>k__BackingField: 0.5
   <FeverTimeDuration>k__BackingField: 10
   <FeverScoreMagnifier>k__BackingField: 2
-  <FeverGaugeIncreaseMagnifier>k__BackingField: 3
+  <FeverGaugeIncreaseMagnifier>k__BackingField: 2
   <DeathMoveSpeed>k__BackingField: 4
   <KnockbackDistance>k__BackingField: 1.5
   <KnockbackHeight>k__BackingField: 0.6
