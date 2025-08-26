@@ -22,13 +22,16 @@ namespace MSG
         {
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
 
-            // 만약 X가 왼쪽
-            // 만약 Y가 위쪽
-            // 아니면 아래쪽
+            _npc.StartCaptureGauge();
+            _npc.PrintLaughDialogue();
+            _npc.StartCatchingAnim();
+            _playerLogic.RenewCatchingState(true);
 
-            // 아니면 X가 오른쪽
-            // 만약 Y가 위쪽
-            // 아니면 아래쪽
+            if (_waitForCheckRivalCO != null)
+            {
+                _npc.StopCoroutine(_waitForCheckRivalCO);
+            }
+            _waitForCheckRivalCO = _npc.StartCoroutine(WaitAndCheckRival());
 
             if (_npc.transform.position.x - _playerLogic.transform.position.x > 0) // npc가 플레이어 오른쪽에 있을 때
             {
@@ -36,11 +39,13 @@ namespace MSG
                 {
                     // 즉, 1사분면
                     _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_RIGHT_UP);
+                    Debug.Log("Play PLAYER_CATCHING_RIGHT_UP");
                 }
                 else // 아래에 있을 때
                 {
                     // 즉, 4사분면
                     _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_RIGHT_DOWN);
+                    Debug.Log("Play PLAYER_CATCHING_RIGHT_DOWN");
                 }
             }
             else // npc가 플레이어 왼쪽에 있을 때
@@ -49,11 +54,13 @@ namespace MSG
                 {
                     // 즉, 2사분면
                     _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_UP);
+                    Debug.Log("Play PLAYER_CATCHING_LEFT_UP");
                 }
                 else // 아래에 있을 때
                 {
                     // 즉, 3사분면
                     _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_DOWN);
+                    Debug.Log("Play PLAYER_CATCHING_LEFT_DOWN");
                 }
             }
 
@@ -67,16 +74,6 @@ namespace MSG
             //{
             //    _playerLogic.PlayerSpriteRenderer.flipX = false;
             //}
-
-            _npc.StartCaptureGauge();
-            _npc.PrintLaughDialogue();
-            _npc.StartCatchingAnim();
-
-            if (_waitForCheckRivalCO != null)
-            {
-                _npc.StopCoroutine(_waitForCheckRivalCO);
-            }
-            _waitForCheckRivalCO = _npc.StartCoroutine(WaitAndCheckRival());
 
             YSJ_GameManager.Instance.OnChangedOver += StopAll;
         }
