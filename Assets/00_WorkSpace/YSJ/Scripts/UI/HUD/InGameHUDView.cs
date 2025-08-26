@@ -139,6 +139,12 @@ public class InGameHUDView : YSJ_HUDBaseUI
                     uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(true);
                     uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
                     break;
+
+                case 2:
+                    uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(true);
+                    uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
+                    break;
+
                 default:
                     uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(false);
                     uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
@@ -158,6 +164,12 @@ public class InGameHUDView : YSJ_HUDBaseUI
                     uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(true);
                     uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(true);
                     break;
+
+                case 2:
+                    uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(true);
+                    uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(true);
+                    break;
+
                 default:
                     uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(false);
                     uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(true);
