@@ -20,8 +20,8 @@ MonoBehaviour:
   CharMaxHealth: 0
   CurrentCharHealth: 0
   CharMaxCatchGauge: 100
-  CurrentCharCatchGauge: 0
-  CharCatchGaugeHealValue: 10
+  _currentCharCatchGauge: 0
+  CharCatchGaugeHealValue: 20
   CharWalkSpeed: 1
   CharRunSpeed: 0
   CurrentScore: 0

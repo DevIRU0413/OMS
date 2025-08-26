@@ -17,9 +17,9 @@ MonoBehaviour:
   MapType: 2
   XPos: 0
   YPos: 40
-  HandsomeNPCSpawnCount: 3
-  NormalNPCSpawnCount: 3
-  UglyNPCSpawnCount: 3
+  HandsomeNPCSpawnCount: 2
+  NormalNPCSpawnCount: 4
+  UglyNPCSpawnCount: 1
   RivalNPC1SpawnCount: 3
   RivalNPC2SpawnCount: 3
   DisturbNPCSpawnCount: 0
@@ -32,8 +32,8 @@ MonoBehaviour:
   RightPlayerEndPoint: 20
   LeftNPCEndPoint: -16
   RightNPCEndPoint: 14
-  LeftPlayerSpawnPoint: {x: -22, y: 38}
-  RightPlayerSpawnPoint: {x: 20, y: 38}
+  LeftPlayerSpawnPoint: {x: -22, y: 37.5}
+  RightPlayerSpawnPoint: {x: 20, y: 37.5}
   TopYPos: 38
   MiddleYPos: 37.5
   BottomYPos: 37

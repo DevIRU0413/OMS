@@ -18,7 +18,7 @@ MonoBehaviour:
   XPos: 0
   YPos: 0
   HandsomeNPCSpawnCount: 1
-  NormalNPCSpawnCount: 1
+  NormalNPCSpawnCount: 2
   UglyNPCSpawnCount: 1
   RivalNPC1SpawnCount: 1
   RivalNPC2SpawnCount: 1
@@ -30,10 +30,10 @@ MonoBehaviour:
   RightDownMap: {fileID: 0}
   LeftPlayerEndPoint: -22
   RightPlayerEndPoint: 20
-  LeftNPCEndPoint: -16
-  RightNPCEndPoint: 14
-  LeftPlayerSpawnPoint: {x: -22, y: -2}
-  RightPlayerSpawnPoint: {x: 20, y: -2}
+  LeftNPCEndPoint: -13
+  RightNPCEndPoint: 10
+  LeftPlayerSpawnPoint: {x: -22, y: -2.5}
+  RightPlayerSpawnPoint: {x: 20, y: -2.5}
   TopYPos: -2
   MiddleYPos: -2.5
   BottomYPos: -3

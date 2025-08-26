@@ -26,7 +26,7 @@ MonoBehaviour:
   XXLargeHeartDropStartRivalCount: 4
   ForceMoveCount: 3
   ForcedMoveDuration: 2
-  ForcedMoveSpeedMultiplier: 2
+  ForcedMoveSpeedMultiplier: 4
   MinAngle: -45
   MaxAngle: 45
   ImpulsePower: 10
@@ -40,3 +40,6 @@ MonoBehaviour:
   SpawnTimes:
   - 60
   - 80
+  MinSpinAngularVel: 360
+  MaxSpinAngularVel: 900
+  TempAngularDrag: 0

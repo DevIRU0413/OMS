@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f499b5386158ce742af70d9781ec5ffa, type: 3}
   m_Name: MSG_PlayerData
   m_EditorClassIdentifier: 
-  _startHP: 60
-  <RunSpeed>k__BackingField: 6
+  _startHP: 40
+  <RunSpeed>k__BackingField: 5
   <WalkMoveSpeed>k__BackingField: 3
   <DebuffedMoveSpeed>k__BackingField: 0
