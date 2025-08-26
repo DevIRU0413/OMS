@@ -40,6 +40,7 @@ namespace MSG
         private bool _isFinished = false;
         private bool _isTimeOut = false;
         private float _lastHitDirX = 1f; // 마지막 피격 방향
+        private bool _isCatching = false;
 
 
         public MSG_PlayerData PlayerData => _playerData;
@@ -52,10 +53,13 @@ namespace MSG
         public float FeverGauge => _feverGauge;
         public MSG_MapData CurrentMap => _currentMap;
         public bool IsFinished => _isFinished;
+        public bool IsCatching => _isCatching;
+
 
         public event Action OnPlayerDamaged;
         public event Action OnPlayerFeverStarted;
         public event Action OnPlayerFeverEnded;
+        public event Action OnPlayerFeverAnimEnded;
         public event Action OnPlayerDied;
 
         #endregion
@@ -193,8 +197,6 @@ namespace MSG
             if (_isFinished) return; // 게임 종료 시 체력 감소 금지
             if (_isFever) return; // 피버타임이라면 체력 감소 금지
 
-            _animator.Play(MSG_AnimParams.PLAYER_HIT);
-
             _currentHPFloat = Mathf.Clamp(_currentHPFloat - amount, MSG_PlayerData.MinHP, MSG_PlayerData.MaxHP);
             int next = Mathf.CeilToInt(_currentHPFloat); // 올림 계산, 0.1도 1로 보이긴 함
 
@@ -220,6 +222,12 @@ namespace MSG
         {
             _followerCount++;
             YSJ_GameManager.Instance.AddFollower();
+        }
+
+        // 애니메이션 덮어쓰기 금지용 프로퍼티 갱신
+        public void RenewCatchingState(bool isCatching)
+        {
+            _isCatching = isCatching;
         }
 
         /// <summary>
@@ -302,6 +310,8 @@ namespace MSG
         {
             Debug.Log("무적 시간 시작");
 
+            _animator.Play(MSG_AnimParams.PLAYER_HIT);
+
             transform.DOComplete(); // 기존 트윈 정리
             transform.DOJump(
                 transform.position + new Vector3(_playerSettings.KnockbackDistance * _lastHitDirX, 0f, 0f),
@@ -366,7 +376,10 @@ namespace MSG
 
         private IEnumerator FeverRoutine()
         {
-            YSJ_GameManager.Instance.StopBattery(); // 시간 정지
+            // 시간 정지 기능 사라짐
+            //YSJ_GameManager.Instance.StopBattery(); // 시간 정지
+
+
 
             _isFever = true;
             StartFeverAnimation();
@@ -387,7 +400,7 @@ namespace MSG
             _playerData.CurrentHP = 60; // 피버타임 끝나고 체력 60
             OnPlayerFeverEnded?.Invoke();
 
-            YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제
+            //YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제
         }
 
         private void StartFeverAnimation()

@@ -14,7 +14,7 @@ namespace MSG
         public static readonly int PLAYER_IDLE = Animator.StringToHash("PlayerIdle"); // 해당 애니메이션은 LookByMouseDirection() 사용을 위해 키프레임이 없음
         public static readonly int PLAYER_WALK = Animator.StringToHash("PlayerWalk");
         public static readonly int PLAYER_RUN = Animator.StringToHash("PlayerRun");
-        public static readonly int PLAYER_CATCHING = Animator.StringToHash("PlayerCatching");
+        //public static readonly int PLAYER_CATCHING = Animator.StringToHash("PlayerCatching");
         public static readonly int PLAYER_CATCHING_LEFT_UP = Animator.StringToHash("PlayerCatchingLeftUp");
         public static readonly int PLAYER_CATCHING_LEFT_DOWN = Animator.StringToHash("PlayerCatchingLeftDown");
         public static readonly int PLAYER_CATCHING_RIGHT_UP = Animator.StringToHash("PlayerCatchingRightUp");

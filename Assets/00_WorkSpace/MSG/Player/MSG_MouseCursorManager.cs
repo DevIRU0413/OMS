@@ -113,6 +113,7 @@ namespace MSG
         private void LateUpdate()
         {
             if (_isDead) return; // 플레이어 사망 시 모든 상호작용 중단
+            if (_playerLogic.IsCatching) return; // 플레이어가 포획 중이면 바라보기 스프라이트 갱신 중단
 
             LookByMouseDirection();
         }
@@ -420,7 +421,11 @@ namespace MSG
         private bool IsForcedAnim()
         {
             int st = _animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-            return st == MSG_AnimParams.PLAYER_CATCHING || st == MSG_AnimParams.PLAYER_HIT; // 플레이어가 포획 중이거나 피격 시
+            return st == MSG_AnimParams.PLAYER_CATCHING_RIGHT_UP ||
+                st == MSG_AnimParams.PLAYER_CATCHING_RIGHT_DOWN ||
+                st == MSG_AnimParams.PLAYER_CATCHING_LEFT_UP ||
+                st == MSG_AnimParams.PLAYER_CATCHING_LEFT_DOWN ||
+                st == MSG_AnimParams.PLAYER_HIT; // 플레이어가 포획 중이거나 피격 시
         }
 
         #endregion

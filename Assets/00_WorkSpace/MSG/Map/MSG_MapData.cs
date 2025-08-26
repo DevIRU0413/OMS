@@ -11,13 +11,6 @@ namespace MSG
         RightDown,
     }
 
-    public enum MapType
-    {
-        // 일단 임시로 사용 함
-        FirstFloor,
-        SecondFloor,
-        ThirdFloor,
-    }
 
     [CreateAssetMenu(fileName = "MSG_MapData", menuName = "ScriptableObjects/MSG_MapData")]
     public class MSG_MapData : ScriptableObject
@@ -25,7 +18,6 @@ namespace MSG
         [Header("맵 설정")]
         public string Name;                       // 맵 이름
         public int CurrentFloor;                  // 현재 맵 층 수
-        public MapType MapType;                   // 맵 타입
         public float XPos;                        // 맵의 X 중심 좌표
         public float YPos;                        // 맵의 Y 중심 좌표
 
