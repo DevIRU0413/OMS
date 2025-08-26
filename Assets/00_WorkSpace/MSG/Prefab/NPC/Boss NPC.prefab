@@ -316,8 +316,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 42890466878a2bc43bd213f87c273d47, type: 3}
-  m_Color: {r: 1, g: 0.12056742, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 5c055bec474adf844ac6c4825e5977c4, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -430,7 +430,7 @@ MonoBehaviour:
   _settings: {fileID: 11400000, guid: 8a638afbe5b3aa6498264d53b4221d42, type: 2}
   _followController: {fileID: -2555275716982554993}
   _rigidbody2D: {fileID: 5012313303787495238}
-  _surprisedAnimationClip: {fileID: 0}
+  _surprisedAnimationClip: {fileID: 7400000, guid: da2d6055b50c99b4b9a2fb9db59ef736, type: 2}
 --- !u!114 &3789249139647151823
 MonoBehaviour:
   m_ObjectHideFlags: 0
