@@ -28,6 +28,7 @@ namespace MSG
         [SerializeField] private LayerMask _breadBoxLayer;
         [SerializeField] private GameObject _breadBag;
         [SerializeField] private MSG_MapData _currentMap; // 시작 시 첫 맵은 갖고 있도록 함
+        [SerializeField] private AnimationClip _hitClip; // Invincible 루틴 계산용
 
         private float _currentHPFloat;  // 경쟁상태에서는 Update에서 체력을 감산하여 정밀 계산용 float 필드
         private bool _isWornBreadBag = false;
@@ -325,7 +326,7 @@ namespace MSG
             float elapsed = 0;
             bool visible = true;
 
-            while (elapsed < _playerSettings.InvincibleTime)
+            while (elapsed < _hitClip.length)
             {
                 // 깜빡임 토글
                 visible = !visible;
