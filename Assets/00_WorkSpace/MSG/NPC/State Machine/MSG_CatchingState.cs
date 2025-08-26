@@ -12,6 +12,9 @@ namespace MSG
         private MSG_CatchableNPC _npc;
         private Coroutine _waitForCheckRivalCO;
 
+        private bool _isFallen = false; // 넘어졌을 때는 다음 번 클릭 전까지 움직임 정지용
+
+
         public MSG_CatchingState(MSG_CatchableNPC npc)
         {
             _npc = npc;
@@ -80,7 +83,13 @@ namespace MSG
 
         public void Update()
         {
-            if (_playerLogic.IsFallen) return; // 피격 시 게이지 증가 중지
+            if (_playerLogic.IsFallen)
+            {
+                _isFallen = true;
+                return; // 피격 시 게이지 증가 중지
+            }
+
+            if (_isFallen) return;
 
             if (_playerLogic.IsFever)
             {
@@ -108,6 +117,12 @@ namespace MSG
             {
                 YSJ_GameManager.Instance.OnChangedOver -= StopAll;
             }
+        }
+
+        // 피격 이후 마우스를 눌러야지 다시 게이지가 차도록 플래그 설정
+        public void OnCatchPressed()
+        {
+            _isFallen = false;
         }
 
         public void OnCatchReleased()
@@ -138,7 +153,6 @@ namespace MSG
         }
 
         #region Unused Methods
-        public void OnCatchPressed() { }
         public void OnHoverEnter() { }
         public void OnHoverExit() { }
         #endregion
