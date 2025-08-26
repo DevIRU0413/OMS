@@ -20,6 +20,13 @@ namespace MSG
         {
             Vector2 rightEdge = Camera.main.ViewportToWorldPoint(new Vector2(1f, 0.5f));
             _scoreTriggerBox.transform.position = rightEdge;
+            StartCoroutine(WaitForTurnRight());
+        }
+
+        // 오른쪽으로 다 돌지 않은 상태에서 TriggerBox에 먼저 OnTriggerEnter하는 경우가 있어 미리 집계되는 경우가 있어 기다림
+        private IEnumerator WaitForTurnRight()
+        {
+            yield return new WaitForSeconds(0.5f);
             _scoreTriggerBox.gameObject.SetActive(true);
         }
     }
