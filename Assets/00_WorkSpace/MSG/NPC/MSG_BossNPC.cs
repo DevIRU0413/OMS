@@ -50,7 +50,12 @@ namespace MSG
                 _spriteRenderer.flipX = false;
             }
 
-            StartCatchingAnim();
+            if (_animCO != null)
+            {
+                StopCoroutine(_animCO);
+                _animCO = null;
+            }
+            _animCO = StartCoroutine(CompeteAfterSurprising());
         }
 
         public override void EndCompeting()
@@ -76,6 +81,14 @@ namespace MSG
         // 날아가는 애니메이션 코루틴은 안쓸 것이기 때문에 빈 본문 사용
         protected override void OnEnableAnimHooker() { }
 
+
+        protected override IEnumerator CompeteAfterSurprising()
+        {
+            StartSurprisedAnim();
+            yield return new WaitForSeconds(_surprisedAnimationClip.length);
+            ForceStartAnim(MSG_AnimParams.BOSS_CATCHING);
+            _isCompeting = true;
+        }
 
         private void BecomeFollower()
         {

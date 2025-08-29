@@ -14,7 +14,7 @@ namespace MSG
         [SerializeField] private GameObject _cameraBound; // Cinemachine Confiner 2D를 쓸거라서 Bound 위치를 동적으로 옮기는 구조, 맵을 여러 개 추가해도 Bound를 하나만 두기 위함
         [SerializeField] private LayerMask _catchableLayer;
 
-        private HashSet<MapType> _visitedMaps = new();
+        private HashSet<MSG_MapData> _visitedMaps = new();
         private MSG_MapData _currentMap;
         private MSG_PlayerLogic _playerLogic;
         private Transform _playerTransform;
@@ -88,7 +88,7 @@ namespace MSG
             }
 
             // 방문한 적이 없다면 스폰
-            if (!_visitedMaps.Contains(_currentMap.MapType))
+            if (!_visitedMaps.Contains(_currentMap))
             {
                 SpawnNPC();
             }
@@ -101,7 +101,7 @@ namespace MSG
             StartCoroutine(CheckCatchNpcForHi());
 
             // 스폰 중복 검사용 HashSet에 Add
-            _visitedMaps.Add(_currentMap.MapType);
+            _visitedMaps.Add(_currentMap);
         }
 
 
@@ -137,7 +137,7 @@ namespace MSG
         /// <returns></returns>
         private Vector2 GetRandomSpawnPointForOther()
         {
-            float randomX = Random.Range(_currentMap.LeftNPCEndPoint, _currentMap.RightNPCEndPoint);
+            float randomX = Random.Range(_currentMap.LeftNPCEndPoint + 2, _currentMap.RightNPCEndPoint - 2); // 경계에서 스폰하지 않도록 offset
 
             float randomY;
             int randomYIndex = Random.Range(0, 2);
@@ -154,24 +154,24 @@ namespace MSG
         // 이 방식이 괜찮은지 확인 필요
         // 현재는 한 층이 Y좌표 20만큼 차이나서 이 값을 스폰포인트에 더하는데, 연동되지 않고 하드코딩 느낌이 나서 좋은 것 같지는 않음
         // 이거 쓰지 말고 차라리 MapData에 Y좌표 필드를 넣는게 좋을 듯
-        private float GetFloorHeight()
-        {
-            float hieght = 0;
-            switch (_currentMap.MapType)
-            {
-                case (MapType.FirstFloor):
-                    hieght += 0;
-                    break;
-                case (MapType.SecondFloor):
-                    hieght += 20;
-                    break;
-                case (MapType.ThirdFloor):
-                    hieght += 40;
-                    break;
-            }
+        //private float GetFloorHeight()
+        //{
+        //    float hieght = 0;
+        //    switch (_currentMap.MapType)
+        //    {
+        //        case (MapType.FirstFloor):
+        //            hieght += 0;
+        //            break;
+        //        case (MapType.SecondFloor):
+        //            hieght += 20;
+        //            break;
+        //        case (MapType.ThirdFloor):
+        //            hieght += 40;
+        //            break;
+        //    }
 
-            return hieght;
-        }
+        //    return hieght;
+        //}
 
 
         // 생각한 구조는 시작 씬에서 풀링을 해서 문제가 없어야 되지만 현재는 씬이 하나라 대기 후 NPC 스폰함
@@ -188,7 +188,7 @@ namespace MSG
             yield return new WaitUntil(() => PoolManager.Instance.HasPool("BossNPC"));
 
             PoolManager.Instance.DebugPool();
-            _visitedMaps.Add(_currentMap.MapType);
+            _visitedMaps.Add(_currentMap);
             SpawnNPC();
 
             StartCoroutine(CheckCatchNpcForHi());

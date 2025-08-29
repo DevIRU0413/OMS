@@ -17,7 +17,7 @@ namespace MSG
     [CreateAssetMenu(fileName = "MSG_PlayerSettings", menuName = "ScriptableObjects/MSG_PlayerSettings")]
     public class MSG_PlayerSettings : ScriptableObject
     {
-        [field: SerializeField] public float InvincibleTime { get; private set; }       // 무적시간
+        //[field: SerializeField] public float InvincibleTime { get; private set; }     // 무적시간 -> 애니메이션 클립 length로 대체
         [field: SerializeField] public float BlinkInterval { get; private set; }        // 깜빡임 간격, 무적시간(InvincibleTime)의 약수로 설정하는 것이 좋습니다
         [field: SerializeField] public float HPDecreasePerSecond { get; private set; }  // 경쟁이 아닌 포획 중 1초 당 HP 감소 값
         [field: SerializeField] public float HPDecreasePerClick { get; private set; }   // 경쟁일 때 포획 중 클릭 당 HP 감소 값, 주변 Rival NPC에 따라 배가 될 수 있음

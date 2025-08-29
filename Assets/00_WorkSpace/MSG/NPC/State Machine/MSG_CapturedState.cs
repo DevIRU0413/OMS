@@ -25,12 +25,13 @@ namespace MSG
             _npc.SpawnHeart();
             _npc.AddCatchScore();
             _npc.DespawnRivalWhenWin();
-            _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_IDLE); // 일반 상태로 원복하여 Sprite 원복
+            _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_FOLLOWING); // following 애니메이션으로 전환
             //_npc.StopAnim();
 
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
             _playerLogic.AddFollower();
             _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
+            _playerLogic.RenewCatchingState(false);
 
             if (_playerLogic.IsFever) // 피버타임이라면 
             {
