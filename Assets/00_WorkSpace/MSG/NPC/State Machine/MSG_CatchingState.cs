@@ -29,6 +29,7 @@ namespace MSG
             _npc.PrintLaughDialogue();
             _npc.StartCatchingAnim();
             _playerLogic.RenewCatchingState(true);
+            _playerLogic.StartCatchingSFX();
 
             if (_waitForCheckRivalCO != null)
             {
@@ -112,6 +113,7 @@ namespace MSG
         public void Exit()
         {
             _npc.StopCaptureGauge();
+            _playerLogic.TryStopCatchingSFX();
 
             if (YSJ_GameManager.Instance != null)
             {
