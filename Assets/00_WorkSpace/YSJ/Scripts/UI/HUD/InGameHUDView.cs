@@ -34,7 +34,7 @@ public class InGameHUDView : YSJ_HUDBaseUI
     }
 
     private const int MAP_START_STEP = 1;
-    private const int MAP_END_STEP = 3;
+    private const int MAP_END_STEP = 4;
 
     [SerializeField] private GameObject _chattingPrefab;
     [SerializeField] private FadeInFadeOutSystemView fadeInOutSystemView;
@@ -140,11 +140,6 @@ public class InGameHUDView : YSJ_HUDBaseUI
                     uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
                     break;
 
-                case 2:
-                    uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(true);
-                    uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
-                    break;
-
                 default:
                     uiBinder.Get(InGameHUDType.RightUp_Button).SetActive(false);
                     uiBinder.Get(InGameHUDType.RightDown_Button).SetActive(true);
@@ -161,11 +156,6 @@ public class InGameHUDView : YSJ_HUDBaseUI
                     break;
 
                 case 1:
-                    uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(true);
-                    uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(true);
-                    break;
-
-                case 2:
                     uiBinder.Get(InGameHUDType.LeftUp_Button).SetActive(true);
                     uiBinder.Get(InGameHUDType.LeftDown_Button).SetActive(true);
                     break;
