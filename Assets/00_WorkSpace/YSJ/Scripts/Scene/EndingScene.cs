@@ -4,7 +4,7 @@ namespace Scripts.Scene
 {
     public class EndingScene : SceneBase
     {
-        public override SceneID SceneID => SceneID.EndingScene;
+        public override SceneID SceneID => SceneID.SecretEndingScene;
 
         [SerializeField] private EndingHUDView _endingHUDView;
 
