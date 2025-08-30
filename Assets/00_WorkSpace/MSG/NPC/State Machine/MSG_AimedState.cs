@@ -30,6 +30,7 @@ namespace MSG
         {
             _npc.ShowAimUI(true);
             _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_IDLE);
+            _npc.SetActiveEffect(false);
         }
 
         public void Update()

@@ -22,6 +22,7 @@ namespace MSG
             _npc.PlayFailEffect();
             _npc.DisableInteraction();
             _npc.StopAnim();
+            _npc.SetActiveEffect(false);
 
             _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
             _playerLogic.RenewCatchingState(false);

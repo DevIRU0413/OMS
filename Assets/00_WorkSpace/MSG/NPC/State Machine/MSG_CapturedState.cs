@@ -26,6 +26,7 @@ namespace MSG
             _npc.AddCatchScore();
             _npc.DespawnRivalWhenWin();
             _npc.ForceStartAnim(MSG_AnimParams.CATCHABLE_FOLLOWING); // following 애니메이션으로 전환
+            _npc.SetActiveEffect(false);
             //_npc.StopAnim();
 
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
