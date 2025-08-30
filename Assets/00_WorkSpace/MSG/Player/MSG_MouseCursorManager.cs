@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -132,7 +133,7 @@ namespace MSG
         {
             _isDead = true;
 
-            
+
             _spriteRenderer.flipX = false; // 종료 시 플레이어가 항상 오른쪽을 바라보게
             if (_moveDir < 0f)
             {
@@ -151,7 +152,7 @@ namespace MSG
         private void MoveByMousePos()
         {
             // Early Return 하지 않아야 될 듯 좀 지저분함. if문 안의 조건을 만족한다면 _speed = 0f으로 덮어쓰는게 나을 듯?
-            if (EventSystem.current.IsPointerOverGameObject()) return;
+            //if (CheckIsMouseOnUI()) return;
 
             if (_playerLogic.IsFallen)
             {
@@ -237,7 +238,7 @@ namespace MSG
         private void CheckHoverTarget()
         {
             if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 타겟 찾기 정지
-            if (EventSystem.current.IsPointerOverGameObject()) return; // UI위에 있으면 return
+            //if (CheckIsMouseOnUI()) return; // UI위에 있으면 return
 
 
             if (IsCatching) // 포획 중이라면 현재 포획 중인 타겟으로 강제 고정 후 바로 return
@@ -297,7 +298,7 @@ namespace MSG
         private void HandleClick()
         {
             if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 클릭 상호작용 정지
-            if (EventSystem.current.IsPointerOverGameObject()) return;
+            //if (CheckIsMouseOnUI()) return;
 
             // 마우스 버튼 다운
             if (Input.GetMouseButtonDown(0))
@@ -417,16 +418,36 @@ namespace MSG
 
             if (_speed < _playerData.RunSpeed)
             {
-                if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_WALK))
+                if (_moveDir < 0) // 왼쪽이면
                 {
-                    _animator.Play(MSG_AnimParams.PLAYER_WALK);
+                    if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_WALK_LEFT))
+                    {
+                        _animator.Play(MSG_AnimParams.PLAYER_WALK_LEFT);
+                    }
+                }
+                else
+                {
+                    if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_WALK_RIGHT))
+                    {
+                        _animator.Play(MSG_AnimParams.PLAYER_WALK_RIGHT);
+                    }
                 }
             }
             else
             {
-                if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_RUN))
+                if (_moveDir < 0) // 왼쪽이면
                 {
-                    _animator.Play(MSG_AnimParams.PLAYER_RUN);
+                    if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_RUN_LEFT))
+                    {
+                        _animator.Play(MSG_AnimParams.PLAYER_RUN_LEFT);
+                    }
+                }
+                else
+                {
+                    if (!(_animator.GetCurrentAnimatorStateInfo(0).shortNameHash == MSG_AnimParams.PLAYER_RUN_RIGHT))
+                    {
+                        _animator.Play(MSG_AnimParams.PLAYER_RUN_RIGHT);
+                    }
                 }
             }
         }
@@ -441,6 +462,25 @@ namespace MSG
                 st == MSG_AnimParams.PLAYER_CATCHING_LEFT_DOWN ||
                 st == MSG_AnimParams.PLAYER_HIT; // 플레이어가 포획 중이거나 피격 시
         }
+
+        //private bool CheckIsMouseOnUI()
+        //{
+        //    bool isOnUI = EventSystem.current.IsPointerOverGameObject();
+
+        //    if (isOnUI)
+        //    {
+                
+
+        //        // 마우스가 UI에 올라가 있을 때는 멈춰있으니까 IDLE이 자연스러움
+        //        int st = _animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+        //        if (st != MSG_AnimParams.PLAYER_IDLE)
+        //        {
+        //            _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
+        //        }
+        //    }
+
+        //    return isOnUI;
+        //}
 
         #endregion
     }
