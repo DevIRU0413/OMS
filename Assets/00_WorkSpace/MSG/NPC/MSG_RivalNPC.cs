@@ -14,6 +14,7 @@ namespace MSG
     {
         [SerializeField] protected Rigidbody2D _rigidbody2D;
         [SerializeField] protected AnimationClip _surprisedAnimationClip;
+        [SerializeField] protected GameObject _fightEffectObj;
 
         // === 추가: 날아갈 때 사용할 전용 스프라이트(개별 NPC별 지정) ===
         [SerializeField] private Sprite _flyingSprite;
@@ -124,6 +125,7 @@ namespace MSG
             }
 
             ForceStartAnim(MSG_AnimParams.RIVAL_IDLE);
+            SetActiveFightObj(false);
         }
 
         // 패배 후 사라져야됨
@@ -198,6 +200,7 @@ namespace MSG
             StartSurprisedAnim();
             yield return new WaitForSeconds(_surprisedAnimationClip.length);
             ForceStartAnim(MSG_AnimParams.RIVAL_CATCHING);
+            SetActiveFightObj(true);
             _isCompeting = true;
         }
 
@@ -242,6 +245,11 @@ namespace MSG
             {
                 _animator.enabled = true;
             }
+        }
+
+        protected void SetActiveFightObj(bool active)
+        {
+            _fightEffectObj.SetActive(active);
         }
 
 #if UNITY_EDITOR
