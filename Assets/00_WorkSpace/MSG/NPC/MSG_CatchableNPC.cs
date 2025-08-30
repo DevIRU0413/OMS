@@ -16,6 +16,7 @@ namespace MSG
         [SerializeField] private GameObject _aimObject;
         [SerializeField] private LayerMask _rivalLayer;
         [SerializeField] private MSG_DialogueSO _dialogueSO;
+        [SerializeField] private MSG_NPCNameSO _npcNameSO;
 
         private MSG_INpcState _currentState;
         private bool _isCompeting;
@@ -343,9 +344,11 @@ namespace MSG
 
         public void PrintHiDialogue()
         {
-            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.HiDialogue.Count);
-            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.HiDialogue[randomIndex]);
-            Debug.Log($"{_dialogueSO.HiDialogue[randomIndex]}");
+            int dialogueIndex = UnityEngine.Random.Range(0, _dialogueSO.HiDialogue.Count);
+            int nameIndex = UnityEngine.Random.Range(0, _npcNameSO.NameList.Count);
+
+            YSJ_ChattingManager.Instance.AddChattingMessage($"{_npcNameSO.NameList[nameIndex]}: {_dialogueSO.HiDialogue[dialogueIndex]}");
+            Debug.Log($"{_dialogueSO.HiDialogue[dialogueIndex]}");
             // UI에 전달하는 메서드
         }
 
@@ -354,9 +357,11 @@ namespace MSG
         /// </summary>
         public void PrintLaughDialogue()
         {
-            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.LaughDialogue.Count);
-            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.LaughDialogue[randomIndex]);
-            Debug.Log($"{_dialogueSO.LaughDialogue[randomIndex]}");
+            int dialogueIndex = UnityEngine.Random.Range(0, _dialogueSO.LaughDialogue.Count);
+            int nameIndex = UnityEngine.Random.Range(0, _npcNameSO.NameList.Count);
+
+            YSJ_ChattingManager.Instance.AddChattingMessage($"{_npcNameSO.NameList[nameIndex]}: {_dialogueSO.LaughDialogue[dialogueIndex]}");
+            Debug.Log($"{_dialogueSO.LaughDialogue[dialogueIndex]}");
         }
 
         /// <summary>
@@ -364,9 +369,11 @@ namespace MSG
         /// </summary>
         public void PrintFollowDialogue()
         {
-            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.FollowDialogue.Count);
-            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.FollowDialogue[randomIndex]);
-            Debug.Log($"{_dialogueSO.FollowDialogue[randomIndex]}");
+            int dialogueIndex = UnityEngine.Random.Range(0, _dialogueSO.FollowDialogue.Count);
+            int nameIndex = UnityEngine.Random.Range(0, _npcNameSO.NameList.Count);
+
+            YSJ_ChattingManager.Instance.AddChattingMessage($"{_npcNameSO.NameList[nameIndex]}: {_dialogueSO.FollowDialogue[dialogueIndex]}");
+            Debug.Log($"{_dialogueSO.FollowDialogue[dialogueIndex]}");
         }
 
         /// <summary>
@@ -374,9 +381,11 @@ namespace MSG
         /// </summary>
         public void PrintSuperChatDialogue()
         {
-            int randomIndex = UnityEngine.Random.Range(0, _dialogueSO.SuperChatDialogue.Count);
-            YSJ_ChattingManager.Instance.AddChattingMessage(_dialogueSO.SuperChatDialogue[randomIndex]);
-            Debug.Log($"{_dialogueSO.SuperChatDialogue[randomIndex]}");
+            int dialogueIndex = UnityEngine.Random.Range(0, _dialogueSO.SuperChatDialogue.Count);
+            int nameIndex = UnityEngine.Random.Range(0, _npcNameSO.NameList.Count);
+
+            YSJ_ChattingManager.Instance.AddChattingMessage($"{_npcNameSO.NameList[nameIndex]}: {_dialogueSO.SuperChatDialogue[dialogueIndex]}");
+            Debug.Log($"{_dialogueSO.SuperChatDialogue[dialogueIndex]}");
         }
 
         #endregion
