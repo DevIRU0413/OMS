@@ -21,10 +21,11 @@ namespace MSG
         {
             _npc.PlayFailEffect();
             _npc.DisableInteraction();
+            _npc.StopAnim();
 
             _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
             _playerLogic.RenewCatchingState(false);
-            _npc.StopAnim();
+            _playerLogic.SetActiveFightEffectByNPC(false);
 
             Debug.Log("포획 실패 Enter");
         }

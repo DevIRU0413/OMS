@@ -61,7 +61,7 @@ namespace MSG
         public override void EndCompeting()
         {
             _isCompeteStarted = false;
-
+            SetActiveFightObj(false);
             StartIdleAnim();
         }
 
@@ -87,6 +87,7 @@ namespace MSG
             StartSurprisedAnim();
             yield return new WaitForSeconds(_surprisedAnimationClip.length);
             ForceStartAnim(MSG_AnimParams.BOSS_CATCHING);
+            SetActiveFightObj(true);
             _isCompeting = true;
         }
 

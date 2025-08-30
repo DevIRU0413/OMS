@@ -12,8 +12,11 @@ namespace MSG
     {
         // -- 플레이어
         public static readonly int PLAYER_IDLE = Animator.StringToHash("PlayerIdle"); // 해당 애니메이션은 LookByMouseDirection() 사용을 위해 키프레임이 없음
-        public static readonly int PLAYER_WALK = Animator.StringToHash("PlayerWalk");
-        public static readonly int PLAYER_RUN = Animator.StringToHash("PlayerRun");
+        public static readonly int PLAYER_WALK_LEFT = Animator.StringToHash("PlayerWalkLeft");
+        public static readonly int PLAYER_WALK_RIGHT = Animator.StringToHash("PlayerWalkRight");
+        public static readonly int PLAYER_RUN_LEFT = Animator.StringToHash("PlayerRunLeft");
+        public static readonly int PLAYER_RUN_RIGHT = Animator.StringToHash("PlayerRunRight");
+
         //public static readonly int PLAYER_CATCHING = Animator.StringToHash("PlayerCatching");
         public static readonly int PLAYER_CATCHING_LEFT_UP = Animator.StringToHash("PlayerCatchingLeftUp");
         public static readonly int PLAYER_CATCHING_LEFT_DOWN = Animator.StringToHash("PlayerCatchingLeftDown");
@@ -45,5 +48,8 @@ namespace MSG
         public static readonly int BOSS_CATCHING = Animator.StringToHash("BossCatching");
         public static readonly int BOSS_SURPRISED = Animator.StringToHash("BossSurprised"); // 없을 수도?
         public static readonly int BOSS_FOLLOWING = Animator.StringToHash("BossFollowing");
+
+        // -- Fight Effect
+        public static readonly int FIGHT_EFFECT = Animator.StringToHash("FightEffect"); // 오브젝트가 단순히 활성화 및 상시 실행이라면 안쓸 수도 있음
     }
 }

@@ -18,6 +18,7 @@ namespace MSG
         public void Enter()
         {
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+            _playerLogic.SetActiveFightEffectByNPC(true);
 
             _npc.StartCompete();
             _npc.StopMovement(true);
@@ -66,6 +67,8 @@ namespace MSG
             }
 
             _npc.AddClickScore();
+
+            // YSJ_AudioManager.Instance.PlaySfx(MSG_AudioDict.Get(MSG_AudioClipKey.ClickNPC)); // 교체 중
         }
 
         private void StopAll()
