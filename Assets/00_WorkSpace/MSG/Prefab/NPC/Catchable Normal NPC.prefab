@@ -407,6 +407,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _dialogueSO: {fileID: 11400000, guid: a4edf9891179d0b4196fff9796ebf21c, type: 2}
+  _npcNameSO: {fileID: 11400000, guid: 0c69927462f9c5245a2fd9ed2d6d5b19, type: 2}
 --- !u!114 &3693123644553436864
 MonoBehaviour:
   m_ObjectHideFlags: 0
