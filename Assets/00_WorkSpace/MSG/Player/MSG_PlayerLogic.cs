@@ -51,7 +51,7 @@ namespace MSG
         private DateTime _canStopTime; // 해당 시간보다 더 지나있으면 정지 요청 금지
         private bool _isFeverAnimating = false;
         private bool _isFightEffecting = false;
-
+        private MSG_DisturbNPC _hitDisturbNPC; // 가장 최근 부딪힌 NPC만 빨라지게 하기 위해 캐싱해둠
 
         public MSG_PlayerData PlayerData => _playerData;
         public MSG_PlayerSettings PlayerSettings => _playerSettings;
@@ -67,7 +67,7 @@ namespace MSG
         public bool IsFeverAnimating => _isFeverAnimating;
 
 
-        public event Action OnPlayerDamaged;
+        public event Action<MSG_DisturbNPC> OnPlayerDamaged;
         public event Action OnPlayerFeverStarted;
         public event Action OnPlayerFeverEnded;
         public event Action OnPlayerFeverAnimEnded;
@@ -123,6 +123,7 @@ namespace MSG
             if (((1 << collision.gameObject.layer) & _disturbNPCLayer) != 0)
             {
                 MSG_NPCProvider.TryGetDisturb(collision, out MSG_DisturbNPC npc);
+                _hitDisturbNPC = npc;
 
                 // 플레이어 기준 왼쪽 혹은 오른쪽으로 밀릴지 방향 선정
                 float dir = Mathf.Sign(transform.position.x - npc.transform.position.x);
@@ -226,7 +227,7 @@ namespace MSG
                 _playerData.CurrentHP = next;
             }
 
-            OnPlayerDamaged?.Invoke(); // 충돌 시에만 호출
+            OnPlayerDamaged?.Invoke(_hitDisturbNPC); // 충돌 시에만 호출
 
             if (next <= MSG_PlayerData.MinHP)
             {
