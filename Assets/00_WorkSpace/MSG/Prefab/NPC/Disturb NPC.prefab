@@ -356,3 +356,4 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 8296899141641502412}
   _dataSO: {fileID: 11400000, guid: 0657efd6a84e867458b5b21c0f8e05c2, type: 2}
   _npcBase: {fileID: 1314128779077439795}
+  _me: {fileID: 1314128779077439795}
