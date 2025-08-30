@@ -28,8 +28,6 @@ namespace MSG
             _npc.StartCaptureGauge();
             _npc.PrintLaughDialogue();
             _npc.StartCatchingAnim();
-            _npc.SetActiveEffect(true);
-
             _playerLogic.RenewCatchingState(true);
             _playerLogic.StartCatchingSFX();
 

@@ -17,7 +17,6 @@ namespace MSG
         [SerializeField] private LayerMask _rivalLayer;
         [SerializeField] private MSG_DialogueSO _dialogueSO;
         [SerializeField] private MSG_NPCNameSO _npcNameSO;
-        [SerializeField] private GameObject _catchEffectObj;
 
         private MSG_INpcState _currentState;
         private bool _isCompeting;
@@ -387,11 +386,6 @@ namespace MSG
 
             YSJ_ChattingManager.Instance.AddChattingMessage($"{_npcNameSO.NameList[nameIndex]}: {_dialogueSO.SuperChatDialogue[dialogueIndex]}");
             Debug.Log($"{_dialogueSO.SuperChatDialogue[dialogueIndex]}");
-        }
-
-        public void SetActiveEffect(bool active)
-        {
-            _catchEffectObj.SetActive(active);
         }
 
         #endregion
