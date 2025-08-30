@@ -19,7 +19,8 @@ namespace MSG
         public static readonly int PLAYER_CATCHING_LEFT_DOWN = Animator.StringToHash("PlayerCatchingLeftDown");
         public static readonly int PLAYER_CATCHING_RIGHT_UP = Animator.StringToHash("PlayerCatchingRightUp");
         public static readonly int PLAYER_CATCHING_RIGHT_DOWN = Animator.StringToHash("PlayerCatchingRightDown");
-
+        public static readonly int PLAYER_FEVER_LEFT = Animator.StringToHash("PlayerFeverLeft");
+        public static readonly int PLAYER_FEVER_RIGHT = Animator.StringToHash("PlayerFeverRight");
         public static readonly int PLAYER_HIT = Animator.StringToHash("PlayerHit");
 
         // -- Catchable NPC
