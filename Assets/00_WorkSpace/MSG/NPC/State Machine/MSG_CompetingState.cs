@@ -18,6 +18,7 @@ namespace MSG
         public void Enter()
         {
             _playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
+            _playerLogic.SetActiveFightEffectByNPC(true);
 
             _npc.StartCompete();
             _npc.StopMovement(true);
