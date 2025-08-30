@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 namespace MSG
@@ -103,10 +103,10 @@ namespace MSG
         private void Update()
         {
             if (_isDead) return; // 플레이어 사망 시 모든 상호작용 중단
+            if (_playerLogic.IsFeverAnimating) return; // 플레이어 피버 변신 중에는 상호작용 중단
 
             CheckHoverTarget();
             MoveByMousePos();
-
             HandleClick();
         }
 
@@ -114,6 +114,7 @@ namespace MSG
         {
             if (_isDead) return; // 플레이어 사망 시 모든 상호작용 중단
             if (_playerLogic.IsCatching) return; // 플레이어가 포획 중이면 바라보기 스프라이트 갱신 중단
+            if (_playerLogic.IsFeverAnimating) return; // 플레이어 피버 변신 중에는 상호작용 중단
 
             LookByMouseDirection();
         }
@@ -150,6 +151,8 @@ namespace MSG
         private void MoveByMousePos()
         {
             // Early Return 하지 않아야 될 듯 좀 지저분함. if문 안의 조건을 만족한다면 _speed = 0f으로 덮어쓰는게 나을 듯?
+            if (EventSystem.current.IsPointerOverGameObject()) return;
+
             if (_playerLogic.IsFallen)
             {
                 _speed = 0f;
@@ -234,6 +237,8 @@ namespace MSG
         private void CheckHoverTarget()
         {
             if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 타겟 찾기 정지
+            if (EventSystem.current.IsPointerOverGameObject()) return; // UI위에 있으면 return
+
 
             if (IsCatching) // 포획 중이라면 현재 포획 중인 타겟으로 강제 고정 후 바로 return
             {
@@ -292,6 +297,7 @@ namespace MSG
         private void HandleClick()
         {
             if (_playerLogic.IsFallen) return; // 플레이어가 넘어졌다면 클릭 상호작용 정지
+            if (EventSystem.current.IsPointerOverGameObject()) return;
 
             // 마우스 버튼 다운
             if (Input.GetMouseButtonDown(0))
