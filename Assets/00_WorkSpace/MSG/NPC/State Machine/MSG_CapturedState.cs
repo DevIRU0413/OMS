@@ -32,6 +32,7 @@ namespace MSG
             _playerLogic.AddFollower();
             _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_IDLE);
             _playerLogic.RenewCatchingState(false);
+            _playerLogic.SetActiveFightEffectByNPC(false);
 
             if (_playerLogic.IsFever) // 피버타임이라면 
             {

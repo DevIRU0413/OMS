@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 
@@ -7,6 +8,7 @@ namespace MSG
 {
     public class MSG_DisturbMoveController : MSG_NPCMoveController
     {
+        [SerializeField] private MSG_DisturbNPC _me; // 자기 자신의 DisturbNPC
         // 강제 이동 관련
         private MSG_PlayerLogic _playerLogic;
         private bool _isForcedMove;
@@ -79,12 +81,15 @@ namespace MSG
 
         // 플레이어와 피격 시 무한 피격을 막기 위해 강제 이동
         // 요구 사항은 바라보는 방향으로 쭉 가는 것
-        private void MoveWhenTriggered()
+        private void MoveWhenTriggered(MSG_DisturbNPC disturb)
         {
-            _forcedDir = _spriteRenderer.flipX ? Vector2.left : Vector2.right; // 현재 NPC가 바라보는 방향 설정
+            if (_me == disturb) // 플레이어를 공격한 NPC가 나일 때만 빨라지게
+            {
+                _forcedDir = _spriteRenderer.flipX ? Vector2.left : Vector2.right; // 현재 NPC가 바라보는 방향 설정
 
-            _isForcedMove = true;
-            _forcedMoveEndTime = Time.time + _settings.ForcedMoveDuration;
+                _isForcedMove = true;
+                _forcedMoveEndTime = Time.time + _settings.ForcedMoveDuration;
+            }
         }
 
         private void SetSpawnSettings()
