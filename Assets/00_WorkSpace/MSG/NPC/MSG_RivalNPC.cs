@@ -112,6 +112,8 @@ namespace MSG
                 _animCO = null;
             }
             _animCO = StartCoroutine(CompeteAfterSurprising());
+
+            YSJ_AudioManager.Instance.PlaySfx(MSG_AudioDict.Get(MSG_AudioClipKey.RivalCompete));
         }
 
         public virtual void EndCompeting()

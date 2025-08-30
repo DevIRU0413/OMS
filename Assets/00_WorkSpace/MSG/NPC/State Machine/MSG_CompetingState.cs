@@ -67,6 +67,8 @@ namespace MSG
             }
 
             _npc.AddClickScore();
+
+            // YSJ_AudioManager.Instance.PlaySfx(MSG_AudioDict.Get(MSG_AudioClipKey.ClickNPC)); // 교체 중
         }
 
         private void StopAll()
