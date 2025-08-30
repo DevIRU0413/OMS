@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 
 using UnityEngine;
@@ -64,6 +64,17 @@ public class YSJ_AudioManager : YSJ_SimpleSingleton<YSJ_AudioManager>, IManager
         }
     }
 
+    public AudioSource PlaySfxWithReturn(AudioClip clip)
+    {
+        var source = m_sfxSources.FirstOrDefault(s => !s.isPlaying);
+        if (source != null && clip != null)
+        {
+            source.clip = clip;
+            source.Play();
+        }
+        return source;
+    }
+
     public void StopBgm()
     {
         m_bgmSource.Stop();
@@ -73,6 +84,14 @@ public class YSJ_AudioManager : YSJ_SimpleSingleton<YSJ_AudioManager>, IManager
     {
         foreach (var sfx in m_sfxSources)
             sfx.Stop();
+    }
+
+    public void StopWithTarget(AudioSource source)
+    {
+        foreach (var s in m_sfxSources)
+        {
+            if (s == source) s.Stop();
+        }
     }
 
     public void SetBgmVolume(float volume)
