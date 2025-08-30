@@ -141,6 +141,7 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     {
         StateType = GameStateType.Over;
         OnChangedOver?.Invoke();
+        YSJ_AudioManager.Instance.PlaySfx(MSG.MSG_AudioDict.Get(MSG_AudioClipKey.TimeEnd));
     }
 
     public void GameResult()

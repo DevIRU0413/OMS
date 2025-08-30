@@ -35,6 +35,8 @@ namespace MSG
         {
             yield return _wait;
 
+            YSJ_AudioManager.Instance.PlaySfx(MSG_AudioDict.Get(MSG_AudioClipKey.Score));
+
             _scoreUIs[_currentIndex].gameObject.SetActive(true);
             _scoreUIs[_currentIndex].PlayUI(score);
 

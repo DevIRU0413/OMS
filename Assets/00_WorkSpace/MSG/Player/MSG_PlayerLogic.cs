@@ -7,6 +7,7 @@ using Cinemachine;
 using DG.Tweening;
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 namespace MSG
@@ -29,6 +30,8 @@ namespace MSG
         [SerializeField] private GameObject _breadBag;
         [SerializeField] private MSG_MapData _currentMap; // 시작 시 첫 맵은 갖고 있도록 함
         [SerializeField] private AnimationClip _hitClip; // Invincible 루틴 계산용
+        [SerializeField] private AnimationClip _feverLeftClip; // 피버타임 시작 애니메이션 중 조작 중지 계산용
+        [SerializeField] private AnimationClip _feverRightClip;
 
         private float _currentHPFloat;  // 경쟁상태에서는 Update에서 체력을 감산하여 정밀 계산용 float 필드
         private bool _isWornBreadBag = false;
@@ -36,12 +39,16 @@ namespace MSG
         private bool _isFever = false;
         private float _feverGauge;      // 피버타임 게이지용 필드
         private Coroutine _feverCO;
+        private Coroutine _feverAnimCO; // 피버타임 시작 애니메이션 용
         private bool _isFallen = false;
         private int _followerCount = 0; // UI에서 별도로 값을 가지고 있어서 안쓸 수도 있음
         private bool _isFinished = false;
         private bool _isTimeOut = false;
         private float _lastHitDirX = 1f; // 마지막 피격 방향
         private bool _isCatching = false;
+        private AudioSource _catchingSource;
+        private DateTime _canStopTime; // 해당 시간보다 더 지나있으면 정지 요청 금지
+        private bool _isFeverAnimating = false;
 
 
         public MSG_PlayerData PlayerData => _playerData;
@@ -55,6 +62,7 @@ namespace MSG
         public MSG_MapData CurrentMap => _currentMap;
         public bool IsFinished => _isFinished;
         public bool IsCatching => _isCatching;
+        public bool IsFeverAnimating => _isFeverAnimating;
 
 
         public event Action OnPlayerDamaged;
@@ -100,6 +108,9 @@ namespace MSG
 
         private void Update()
         {
+#if UNITY_EDITOR
+            if (Keyboard.current.hKey.wasPressedThisFrame) TestHeal();
+#endif
             if (!_isTimeOut) return; // 타임아웃으로 끝나지 않았으면 return
 
             transform.Translate(Vector2.right * Time.deltaTime * PlayerSettings.DeathMoveSpeed);
@@ -158,6 +169,13 @@ namespace MSG
                     _feverCO = null;
                 }
                 _feverCO = StartCoroutine(FeverRoutine());
+
+                if (_feverAnimCO != null)
+                {
+                    StopCoroutine(_feverAnimCO);
+                    _feverAnimCO = null;
+                }
+                _feverAnimCO = StartCoroutine(FeverAnimRoutine());
             }
         }
 
@@ -231,6 +249,28 @@ namespace MSG
             _isCatching = isCatching;
         }
 
+        public void StartCatchingSFX()
+        {
+            _catchingSource = YSJ_AudioManager.Instance.PlaySfxWithReturn(MSG_AudioDict.Get(MSG_AudioClipKey.Catching));
+            _canStopTime = DateTime.Now;
+            if (_catchingSource.clip != null)
+            {
+                _canStopTime.AddSeconds(_catchingSource.clip.length);
+            }
+            else
+            {
+                Debug.LogWarning("_catchingSource.clip 이 null");
+            }
+        }
+
+        public void TryStopCatchingSFX()
+        {
+            if (_canStopTime < DateTime.Now)
+            {
+                YSJ_AudioManager.Instance.StopWithTarget(_catchingSource);
+            }
+        }
+
         /// <summary>
         /// Die와 다르게 체력은 있으나 시간이 없어 끝날 때 호출.
         /// TimeOut에서는 FollowScore를 계산해야 하며, Die에서는 FollowScore 점수 계산 없이 즉시 배드엔딩
@@ -275,6 +315,8 @@ namespace MSG
         {
             if (_isFinished) return; // 게임 종료 시 피격 감소 금지
             // if (_isFever) return; // 피버타임이라면 피격 금지 -> 아님 스턴은 되는데 데미지만 무효
+
+            YSJ_AudioManager.Instance.PlaySfx(MSG_AudioDict.Get(MSG_AudioClipKey.Fall));
 
             // 1. 빵 봉투 착용 중이라면
             if (_isWornBreadBag)
@@ -379,11 +421,10 @@ namespace MSG
         {
             // 시간 정지 기능 사라짐
             //YSJ_GameManager.Instance.StopBattery(); // 시간 정지
-
-
-
             _isFever = true;
             StartFeverAnimation();
+            YSJ_AudioManager.Instance.PlaySfx(MSG_AudioDict.Get(MSG_AudioClipKey.Fever));
+
             float elapsed = 0;
             _feverGauge = 0;
             OnPlayerFeverStarted?.Invoke();
@@ -404,14 +445,42 @@ namespace MSG
             //YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제
         }
 
+        private IEnumerator FeverAnimRoutine()
+        {
+            _isFeverAnimating = true;
+
+            yield return null;
+
+            _spriteRenderer.flipX = false;
+
+            YSJ_GameManager.Instance.StopBattery(); // 시간 잠시 중지
+
+            Vector2 mousePos = Input.mousePosition;
+            Vector2 playerPos = Camera.main.WorldToScreenPoint(transform.position);
+
+            if (mousePos.x >= playerPos.x) // 마우스가 플레이어 기준 오른쪽일 때
+            {
+                _animator.Play(MSG_AnimParams.PLAYER_FEVER_RIGHT);
+                yield return new WaitForSeconds(_feverRightClip.length);
+            }
+            else // 왼쪽일 때
+            {
+                _animator.Play(MSG_AnimParams.PLAYER_FEVER_LEFT);
+                yield return new WaitForSeconds(_feverLeftClip.length);
+            }
+
+            _isFeverAnimating = false;
+            YSJ_GameManager.Instance.StartBattery(); // 시간 재생
+        }
+
         private void StartFeverAnimation()
         {
-            Debug.Log("피버타임 애니메이션 시작");
+
         }
 
         private void EndFeverAnimation()
         {
-            Debug.Log("피버타임 애니메이션 끝");
+
         }
 
         /// <summary>
@@ -438,6 +507,8 @@ namespace MSG
         [ContextMenu("TestHeal")]
         private void TestHeal()
         {
+            if (_isFever) return;
+
             _playerData.CurrentHP = Mathf.Min(_playerData.CurrentHP + 30, MSG_PlayerData.MaxHP);
 
             if (_playerData.CurrentHP == MSG_PlayerData.MaxHP)
@@ -448,6 +519,13 @@ namespace MSG
                     _feverCO = null;
                 }
                 _feverCO = StartCoroutine(FeverRoutine());
+
+                if (_feverAnimCO != null)
+                {
+                    StopCoroutine(_feverAnimCO);
+                    _feverAnimCO = null;
+                }
+                _feverAnimCO = StartCoroutine(FeverAnimRoutine());
             }
         }
 

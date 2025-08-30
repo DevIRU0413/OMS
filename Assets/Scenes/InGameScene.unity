@@ -127,6 +127,50 @@ PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 2553038564718576890, guid: d25e7743c0a6255419acf8fb48c6c9a8, type: 3}
   m_PrefabInstance: {fileID: 6473893204545839983}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &82166221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 82166223}
+  - component: {fileID: 82166222}
+  m_Layer: 0
+  m_Name: Audio Clip Loader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &82166222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82166221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64cb7b32131084748a8a0f92e420b315, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &82166223
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82166221}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.374784, y: 0.7392179, z: -0.06416297}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &101166458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2712,3 +2756,4 @@ SceneRoots:
   - {fileID: 1744947883}
   - {fileID: 677606137}
   - {fileID: 398421070}
+  - {fileID: 82166223}
