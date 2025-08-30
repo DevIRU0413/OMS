@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fight Effect Animation
+  m_Name: Player Running Left Animation
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -29,7 +29,7 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 0.6666666
+        time: 0.5833333
         value: {x: 0.5, y: 0.5, z: 1}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -46,11 +46,23 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: 32d0410f7426e8e47aa882ef167322b6, type: 3}
+      value: {fileID: 21300000, guid: 90a303b0f3710294b8ff2dc7090b1d7a, type: 3}
+    - time: 0.06666667
+      value: {fileID: 21300000, guid: 0ee7a875d99d7524fbd4d3f7ff7756e6, type: 3}
+    - time: 0.15
+      value: {fileID: 21300000, guid: 14c3608f1272b8746ac0cd8de1b66fdf, type: 3}
+    - time: 0.21666667
+      value: {fileID: 21300000, guid: 6fe88c0e34e3eae45b32e50ae42e8701, type: 3}
     - time: 0.3
-      value: {fileID: 21300000, guid: 04cb5e3f8c4506b488ffac08d0e1e1e8, type: 3}
-    - time: 0.65
-      value: {fileID: 21300000, guid: 32d0410f7426e8e47aa882ef167322b6, type: 3}
+      value: {fileID: 21300000, guid: 2b839ebb598afc54685c42061903e423, type: 3}
+    - time: 0.38333333
+      value: {fileID: 21300000, guid: 21e6c50cb5e50f0409a0cd1e8bb5a344, type: 3}
+    - time: 0.45
+      value: {fileID: 21300000, guid: d4902a5f973221d429e279501b496ce9, type: 3}
+    - time: 0.53333336
+      value: {fileID: 21300000, guid: 866ba9450e5073f408ffcaf3164ad1fb, type: 3}
+    - time: 0.56666666
+      value: {fileID: 21300000, guid: 866ba9450e5073f408ffcaf3164ad1fb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -82,15 +94,21 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 32d0410f7426e8e47aa882ef167322b6, type: 3}
-    - {fileID: 21300000, guid: 04cb5e3f8c4506b488ffac08d0e1e1e8, type: 3}
-    - {fileID: 21300000, guid: 32d0410f7426e8e47aa882ef167322b6, type: 3}
+    - {fileID: 21300000, guid: 90a303b0f3710294b8ff2dc7090b1d7a, type: 3}
+    - {fileID: 21300000, guid: 0ee7a875d99d7524fbd4d3f7ff7756e6, type: 3}
+    - {fileID: 21300000, guid: 14c3608f1272b8746ac0cd8de1b66fdf, type: 3}
+    - {fileID: 21300000, guid: 6fe88c0e34e3eae45b32e50ae42e8701, type: 3}
+    - {fileID: 21300000, guid: 2b839ebb598afc54685c42061903e423, type: 3}
+    - {fileID: 21300000, guid: 21e6c50cb5e50f0409a0cd1e8bb5a344, type: 3}
+    - {fileID: 21300000, guid: d4902a5f973221d429e279501b496ce9, type: 3}
+    - {fileID: 21300000, guid: 866ba9450e5073f408ffcaf3164ad1fb, type: 3}
+    - {fileID: 21300000, guid: 866ba9450e5073f408ffcaf3164ad1fb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.6666666
+    m_StopTime: 0.5833333
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -120,7 +138,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6666666
+        time: 0.5833333
         value: 0.5
         inSlope: 0
         outSlope: 0
@@ -150,7 +168,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6666666
+        time: 0.5833333
         value: 0.5
         inSlope: 0
         outSlope: 0
@@ -180,7 +198,7 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.6666666
+        time: 0.5833333
         value: 1
         inSlope: 0
         outSlope: 0
