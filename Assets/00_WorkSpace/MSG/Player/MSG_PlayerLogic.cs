@@ -32,6 +32,7 @@ namespace MSG
         [SerializeField] private AnimationClip _hitClip; // Invincible 루틴 계산용
         [SerializeField] private AnimationClip _feverLeftClip; // 피버타임 시작 애니메이션 중 조작 중지 계산용
         [SerializeField] private AnimationClip _feverRightClip;
+        [SerializeField] private GameObject _fightEffectObj; // 경쟁 중 싸움 이펙트 활성화할 오브젝트
 
         private float _currentHPFloat;  // 경쟁상태에서는 Update에서 체력을 감산하여 정밀 계산용 float 필드
         private bool _isWornBreadBag = false;
@@ -49,6 +50,7 @@ namespace MSG
         private AudioSource _catchingSource;
         private DateTime _canStopTime; // 해당 시간보다 더 지나있으면 정지 요청 금지
         private bool _isFeverAnimating = false;
+        private bool _isFightEffecting = false;
 
 
         public MSG_PlayerData PlayerData => _playerData;
@@ -291,6 +293,18 @@ namespace MSG
             MoveRightWhenTimeOut();
         }
 
+        // 경쟁 중 뒤에 싸움 이펙트 활성화용
+        public void SetActiveFightEffectByNPC(bool active)
+        {
+            _isFightEffecting = active;
+            _fightEffectObj.SetActive(active);
+        }
+
+        private void SetActiveFightEffectByFallen(bool active)
+        {
+            _fightEffectObj.SetActive(active);
+        }
+
         #endregion
 
 
@@ -353,6 +367,7 @@ namespace MSG
         {
             Debug.Log("무적 시간 시작");
 
+            SetActiveFightEffectByFallen(false);
             _animator.Play(MSG_AnimParams.PLAYER_HIT);
 
             transform.DOComplete(); // 기존 트윈 정리
@@ -393,6 +408,8 @@ namespace MSG
             _isFallen = false;
 
             _animator.Play(MSG_AnimParams.PLAYER_IDLE);
+
+            if (_isFightEffecting) SetActiveFightEffectByFallen(true);
 
             Debug.Log("무적 시간 끝");
         }
