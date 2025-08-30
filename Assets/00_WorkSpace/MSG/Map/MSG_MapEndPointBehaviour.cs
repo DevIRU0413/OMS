@@ -14,7 +14,12 @@ namespace MSG
         [SerializeField] private ReachedFloorDirection _reachedFloorDirection;
 
         private MSG_PlayerLogic _playerLogic;
+        private BoxCollider2D _boxCollider;
 
+        private void Awake()
+        {
+            _boxCollider = GetComponent<BoxCollider2D>();
+        }
 
         private void Start()
         {
@@ -28,7 +33,7 @@ namespace MSG
             {
                 if (_playerLogic.IsFinished) return; // 게임 종료 이후 활성화 금지
 
-                YSJ_GameManager.Instance?.ReachedFloorEnd(_reachedFloorDirection);
+                StartCoroutine(LateDeliver()); // OnTriggerExit이랑 같은 프레임에 호출되는 것을 막기 위해 1프레임 지연 전달
 
                 List<Direction> activables = DecideWhatButtonWillActive();
                 // 여기서 activables 전달해야될 듯
@@ -70,13 +75,20 @@ namespace MSG
                 {
                     activableButtons.Add(Direction.RightUp);
                 }
-                if (_playerLogic.CurrentMap.RightUpMap != null)
+                if (_playerLogic.CurrentMap.RightDownMap != null)
                 {
                     activableButtons.Add(Direction.RightDown);
                 }
             }
 
             return activableButtons;
+        }
+
+
+        private IEnumerator LateDeliver()
+        {
+            yield return null;
+            YSJ_GameManager.Instance?.ReachedFloorEnd(_reachedFloorDirection);
         }
     }
 }
