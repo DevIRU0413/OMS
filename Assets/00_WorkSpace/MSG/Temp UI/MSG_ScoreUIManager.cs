@@ -7,16 +7,13 @@ namespace MSG
 {
     public class MSG_ScoreUIManager : MonoBehaviour
     {
-        [SerializeField] private float _waitSec = 1f;
         [SerializeField] private MSG_ScoreUI[] _scoreUIs;
-        private WaitForSeconds _wait;
         private int _currentIndex = 0;
 
 
         private void OnEnable()
         {
             _currentIndex = 0;
-            _wait = new WaitForSeconds(_waitSec);
         }
 
         private void OnDisable()
@@ -25,15 +22,15 @@ namespace MSG
         }
 
 
-        public void ShowScore(int score)
+        public void ShowScore(int score, float waitSecond)
         {
-            StartCoroutine(WaitForShowScoreUI(score));
+            StartCoroutine(WaitForShowScoreUI(score, waitSecond));
         }
 
         // 점수 UI가 1초 늦게 뜨면 좋을 것 같다고 하여 기다림
-        private IEnumerator WaitForShowScoreUI(int score)
+        private IEnumerator WaitForShowScoreUI(int score, float waitSecond)
         {
-            yield return _wait;
+            yield return new WaitForSeconds(waitSecond);
 
             YSJ_AudioManager.Instance.PlaySfx(MSG_AudioDict.Get(MSG_AudioClipKey.Score));
 
