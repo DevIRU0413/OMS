@@ -307,7 +307,7 @@ namespace MSG
                     Vector3 viewportPos = Camera.main.WorldToViewportPoint(rival.transform.position);
 
                     // 뷰포트 0~1 사이에 들어오는지 확인
-                    bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 1f &&
+                    bool isOnScreen = viewportPos.x >= 0f && viewportPos.x <= 0.85f &&
                                       viewportPos.y >= 0f && viewportPos.y <= 1f;
 
                     if (!isOnScreen) continue;
@@ -450,19 +450,25 @@ namespace MSG
                 {
                     if (MSG_NPCProvider.TryGetRival(col, out var rival))
                     {
-                        // 근처 라이벌이면 무조건 경쟁 시작 시도 (라이벌 내부에서 중복 방지)
-                        rival.StartCompeting(transform);
+                        // 뷰포트에 들어왔는지 검증
+                        Vector3 viewportPos = Camera.main.WorldToViewportPoint(rival.transform.position);
 
-                        // 놀람이 끝나 실제 경쟁 상태가 된 라이벌만 압박에 포함
-                        if (rival.IsCompeting)
+                        if (viewportPos.x >= 0f && viewportPos.x <= 0.85f && viewportPos.y >= 0f && viewportPos.y <= 1f)
                         {
-                            total += rival.NPCData.CharCatchGaugeHealValue;
-                            _competingRivals.Add(rival);
-                            _rivalCount++;
-                        }
-                        else
-                        {
-                            _surprisedRivals.Add(rival);
+                            // 근처 라이벌이면 무조건 경쟁 시작 시도 (라이벌 내부에서 중복 방지)
+                            rival.StartCompeting(transform);
+
+                            // 놀람이 끝나 실제 경쟁 상태가 된 라이벌만 압박에 포함
+                            if (rival.IsCompeting)
+                            {
+                                total += rival.NPCData.CharCatchGaugeHealValue;
+                                _competingRivals.Add(rival);
+                                _rivalCount++;
+                            }
+                            else
+                            {
+                                _surprisedRivals.Add(rival);
+                            }
                         }
                     }
                 }
