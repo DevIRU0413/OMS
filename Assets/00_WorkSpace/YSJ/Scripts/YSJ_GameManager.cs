@@ -148,7 +148,7 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     {
         StateType = GameStateType.Result;
         OnChangedResult?.Invoke();
-        YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.EndingScene.ToString());
+        YSJ_SystemManager.Instance.LoadSceneWithPreActions(GetResultEndingSceneID().ToString());
     }
 
     // 피버 타임 중 시간 정지 시작
@@ -161,5 +161,28 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     public void StartBattery()
     {
         isTimeStopped = false;
+    }
+
+    // 점수에 알맞는 씬으로 이동
+    public SceneID GetResultEndingSceneID()
+    {
+        if(endCatSO == null)
+        {
+            Debug.Log("엔딩 컷 SO가 비어있습니다.");
+           return SceneID.EndingScene;
+        }
+
+        SceneID selectedID = SceneID.EndingScene;
+        var scoreCat = endCatSO.endingBranchScores;
+        for (int i = 0; i < scoreCat.Count; i++)
+        {
+            if (Score > scoreCat[i].ScoreCat)
+                continue;
+
+            selectedID = scoreCat[i].SceneID;
+            break;
+        }
+
+        return selectedID;
     }
 }
