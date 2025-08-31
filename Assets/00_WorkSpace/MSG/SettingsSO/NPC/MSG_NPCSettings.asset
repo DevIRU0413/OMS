@@ -17,7 +17,7 @@ MonoBehaviour:
   MinDuration: 1
   MaxDuration: 3
   MoveProbability: 0.5
-  CaptureGaugeIncreasePerSecond: 40
+  CaptureGaugeIncreasePerSecond: 60
   CaptureGaugeIncreasePerClick: 10
   SmallHeartDropStartRivalCount: 0
   MediumHeartDropStartRivalCount: 1
@@ -25,8 +25,8 @@ MonoBehaviour:
   XLargeHeartDropStartRivalCount: 3
   XXLargeHeartDropStartRivalCount: 4
   ForceMoveCount: 3
-  ForcedMoveDuration: 2
-  ForcedMoveSpeedMultiplier: 4
+  ForcedMoveDuration: 1
+  ForcedMoveSpeedMultiplier: 3
   MinAngle: -45
   MaxAngle: 45
   ImpulsePower: 10

@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 2
   CurrentFloor: 2
-  MapType: 1
   XPos: 0
   YPos: 20
   HandsomeNPCSpawnCount: 2
   NormalNPCSpawnCount: 4
-  UglyNPCSpawnCount: 3
+  UglyNPCSpawnCount: 2
   RivalNPC1SpawnCount: 2
   RivalNPC2SpawnCount: 2
   DisturbNPCSpawnCount: 0

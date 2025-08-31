@@ -17,10 +17,10 @@ MonoBehaviour:
   XPos: 0
   YPos: 60
   HandsomeNPCSpawnCount: 3
-  NormalNPCSpawnCount: 3
-  UglyNPCSpawnCount: 3
-  RivalNPC1SpawnCount: 3
-  RivalNPC2SpawnCount: 3
+  NormalNPCSpawnCount: 4
+  UglyNPCSpawnCount: 2
+  RivalNPC1SpawnCount: 2
+  RivalNPC2SpawnCount: 2
   DisturbNPCSpawnCount: 0
   BossNPCSpawnCount: 0
   LeftUpMap: {fileID: 0}
