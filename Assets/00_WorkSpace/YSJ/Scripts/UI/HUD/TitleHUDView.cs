@@ -31,10 +31,12 @@ public class TitleHUDView : YSJ_HUDBaseUI
 
     private void OnClickStart(PointerEventData data)
     {
+        _currentState = TitleState.TutorialOpened;
+
         switch (_currentState)
         {
             case TitleState.Initial:
-                _binder.Get(TitleEnum.Tutorial_Panel).SetActive(true);
+                _binder.Get(TitleEnum.Tutorial_Panel)?.SetActive(true);
                 _currentState = TitleState.TutorialOpened;
                 break;
 
