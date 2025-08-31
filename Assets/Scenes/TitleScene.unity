@@ -297,7 +297,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -356,8 +356,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 178793739}
     m_Modifications:
     - target: {fileID: 75508144070613308, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 75508144070613308, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 75508144070613308, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 440
+      value: -1446
       objectReference: {fileID: 0}
     - target: {fileID: 75508144070613308, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
       propertyPath: m_SizeDelta.y
@@ -377,7 +385,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 75508144070613308, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -6
+      value: -5.999878
       objectReference: {fileID: 0}
     - target: {fileID: 75508144070613308, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -433,11 +441,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4502714747063335763, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753319031314879679, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753319031314879679, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753319031314879679, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4753319031314879679, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4753319031314879679, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 600
+      value: -1320
       objectReference: {fileID: 0}
     - target: {fileID: 4753319031314879679, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
       propertyPath: m_SizeDelta.y
@@ -576,7 +600,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4502714747063335763, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
@@ -875,17 +900,6 @@ MonoBehaviour:
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
   m_ScrollDeltaPerTick: 6
---- !u!114 &1623819196143536284 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 80714364119662709, guid: 735fdfc9a75509540b4725ed01d32f60, type: 3}
-  m_PrefabInstance: {fileID: 278624291}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63ee62018fcc3854b85f7035cfdc8b51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &3039871645011179519
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -899,13 +913,17 @@ PrefabInstance:
       value: TitleSceneBase
       objectReference: {fileID: 0}
     - target: {fileID: 4200004222668328887, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
+      propertyPath: _bgm
+      value: 
+      objectReference: {fileID: 8300000, guid: e33a5f8e14c3ac8469ecd03f97407a37, type: 3}
+    - target: {fileID: 4200004222668328887, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
       propertyPath: titleHUDView
       value: 
       objectReference: {fileID: 1102889735}
     - target: {fileID: 4200004222668328887, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
       propertyPath: tutorialPanelView
       value: 
-      objectReference: {fileID: 1623819196143536284}
+      objectReference: {fileID: 0}
     - target: {fileID: 4200004222668328887, guid: e8d958ee21fab1345bf82a10b3d97a98, type: 3}
       propertyPath: _managersInOrder.Array.size
       value: 1
