@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d11d1f9cebfa4545ad8fa1df73c54d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _npcData: {fileID: 11400000, guid: 7a4cea916224dfb4b9ccf65efc77c20e, type: 2}
+  _npcData: {fileID: 11400000, guid: cc777a4d9df349c448eda21466294d99, type: 2}
   _moveController: {fileID: 3693123644553436864}
   _animator: {fileID: 854166531032894798}
   _collider: {fileID: 8837550141760391753}
