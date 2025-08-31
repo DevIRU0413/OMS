@@ -7,6 +7,8 @@ public static class MSG_AudioClipKey
     // ----- BGM -----
     public const string Tutorial = "Tutorial";
     public const string InGame = "InGame";
+    public const string TrueEnding = "TrueEnding";
+    public const string NormalEnding = "NormalEnding";
     public const string BadEnding = "BadEnding";
 
 
