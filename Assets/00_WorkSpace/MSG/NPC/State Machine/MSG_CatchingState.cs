@@ -30,6 +30,7 @@ namespace MSG
             _npc.StartCatchingAnim();
             _playerLogic.RenewCatchingState(true);
             _playerLogic.StartCatchingSFX();
+            _playerLogic.TryStartCatchAnimationByDirection(_npc.transform);
 
             if (_waitForCheckRivalCO != null)
             {
@@ -37,36 +38,6 @@ namespace MSG
             }
             _waitForCheckRivalCO = _npc.StartCoroutine(WaitAndCheckRival());
 
-            if (_npc.transform.position.x - _playerLogic.transform.position.x > 0) // npc가 플레이어 오른쪽에 있을 때
-            {
-                if (_npc.transform.position.y - _playerLogic.transform.position.y > 0) // npc가 플레이어 위에 있을 때
-                {
-                    // 즉, 1사분면
-                    _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_RIGHT_UP);
-                    Debug.Log("Play PLAYER_CATCHING_RIGHT_UP");
-                }
-                else // 아래에 있을 때
-                {
-                    // 즉, 4사분면
-                    _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_RIGHT_DOWN);
-                    Debug.Log("Play PLAYER_CATCHING_RIGHT_DOWN");
-                }
-            }
-            else // npc가 플레이어 왼쪽에 있을 때
-            {
-                if (_npc.transform.position.y - _playerLogic.transform.position.y > 0) // npc가 플레이어 위에 있을 때
-                {
-                    // 즉, 2사분면
-                    _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_UP);
-                    Debug.Log("Play PLAYER_CATCHING_LEFT_UP");
-                }
-                else // 아래에 있을 때
-                {
-                    // 즉, 3사분면
-                    _playerLogic.Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_DOWN);
-                    Debug.Log("Play PLAYER_CATCHING_LEFT_DOWN");
-                }
-            }
 
             // 그럼 회전은 필요 없음
             // 포획 중 플레이어 스프라이트 회전

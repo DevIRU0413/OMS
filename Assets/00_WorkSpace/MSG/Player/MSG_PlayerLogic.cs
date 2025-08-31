@@ -307,6 +307,52 @@ namespace MSG
             _fightEffectObj.SetActive(active);
         }
 
+        public void TryStartCatchAnimationByDirection(Transform npc)
+        {
+            if (npc.transform.position.x - transform.position.x > 0) // npc가 플레이어 오른쪽에 있을 때
+            {
+                if (npc.transform.position.y - transform.position.y > 0) // npc가 플레이어 위에 있을 때
+                {
+                    // 즉, 1사분면
+                    if (MSG_AnimParams.PLAYER_CATCHING_RIGHT_UP != Animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+                    {
+                        Animator.Play(MSG_AnimParams.PLAYER_CATCHING_RIGHT_UP);
+                        Debug.Log("Play PLAYER_CATCHING_RIGHT_UP");
+                    }
+                }
+                else // 아래에 있을 때
+                {
+                    // 즉, 4사분면
+                    if (MSG_AnimParams.PLAYER_CATCHING_RIGHT_DOWN != Animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+                    {
+                        Animator.Play(MSG_AnimParams.PLAYER_CATCHING_RIGHT_DOWN);
+                        Debug.Log("Play PLAYER_CATCHING_RIGHT_DOWN");
+                    }
+                }
+            }
+            else // npc가 플레이어 왼쪽에 있을 때
+            {
+                if (npc.transform.position.y - transform.position.y > 0) // npc가 플레이어 위에 있을 때
+                {
+                    // 즉, 2사분면
+                    if (MSG_AnimParams.PLAYER_CATCHING_LEFT_UP != Animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+                    {
+                        Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_UP);
+                        Debug.Log("Play PLAYER_CATCHING_LEFT_UP");
+                    }
+                }
+                else // 아래에 있을 때
+                {
+                    // 즉, 3사분면
+                    if (MSG_AnimParams.PLAYER_CATCHING_LEFT_UP != Animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+                    {
+                        Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_UP);
+                        Debug.Log("Play PLAYER_CATCHING_LEFT_DOWN");
+                    }
+                }
+            }
+        }
+
         #endregion
 
 
@@ -458,7 +504,7 @@ namespace MSG
             _isFever = false;
             EndFeverAnimation();
             _feverGauge = 100f;
-            _playerData.CurrentHP = 60; // 피버타임 끝나고 체력 60
+            _playerData.CurrentHP = _playerData.AfterFeverHP; // 피버타임 끝나고 돌아올 체력 대입
             OnPlayerFeverEnded?.Invoke();
 
             //YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제

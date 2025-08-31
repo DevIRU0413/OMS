@@ -55,6 +55,7 @@ namespace MSG
         public void OnCatchPressed() 
         {
             _playerLogic.TakeDamage(_playerLogic.PlayerSettings.HPDecreasePerClick * _npc.RivalCount); // 클릭 당 체력 감소 * 라이벌 수 만큼 플레이어 체력 감소
+            _playerLogic.TryStartCatchAnimationByDirection(_npc.transform); // 피격 후 애니메이션이 재생되고 있지 않을 수도 있어서 다시 재생
 
             if (_playerLogic.IsFever)
             {

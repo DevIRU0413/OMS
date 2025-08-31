@@ -27,6 +27,7 @@ namespace MSG
                 YSJ_GameManager.Instance.ChangeHealth(_currentHP);
             }
         }
+        [field: SerializeField] public int AfterFeverHP { get; private set; }         // 피버가 끝난 후 복귀할 체력
         [field: SerializeField] public float RunSpeed { get; private set; }             // 달리기 속도
         [field: SerializeField] public float WalkMoveSpeed { get; private set; }        // 걷기 속도
         [field: SerializeField] public float DebuffedMoveSpeed { get; private set; }    // 피격 시 속도

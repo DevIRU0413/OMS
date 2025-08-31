@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MSG_PlayerData
   m_EditorClassIdentifier: 
   _startHP: 40
-  <RunSpeed>k__BackingField: 5
+  <AfterFeverHP>k__BackingField: 20
+  <RunSpeed>k__BackingField: 7
   <WalkMoveSpeed>k__BackingField: 3
   <DebuffedMoveSpeed>k__BackingField: 0

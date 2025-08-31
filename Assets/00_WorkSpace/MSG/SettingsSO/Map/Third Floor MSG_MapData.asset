@@ -16,8 +16,8 @@ MonoBehaviour:
   CurrentFloor: 3
   XPos: 0
   YPos: 40
-  HandsomeNPCSpawnCount: 2
-  NormalNPCSpawnCount: 4
+  HandsomeNPCSpawnCount: 4
+  NormalNPCSpawnCount: 3
   UglyNPCSpawnCount: 1
   RivalNPC1SpawnCount: 3
   RivalNPC2SpawnCount: 3
