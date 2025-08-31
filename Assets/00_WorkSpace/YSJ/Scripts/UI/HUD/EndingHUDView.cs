@@ -1,7 +1,7 @@
 using TMPro;
 
+using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class EndingHUDView : YSJ_HUDBaseUI
 {
@@ -9,6 +9,7 @@ public class EndingHUDView : YSJ_HUDBaseUI
     {
         ToPlayTitle_Button,
         TotalSocre_TMP,
+        TotalSocreBG_TMP,
         EndingStateCount_TMP,
     }
 
@@ -19,16 +20,26 @@ public class EndingHUDView : YSJ_HUDBaseUI
         base.InitBaseUI();
         uiBinder = new(this);
 
+        Debug.Log("EndUI 초기화");
         uiBinder.GetEvent(EndingHUDType.ToPlayTitle_Button).Click += (PointerEventData eventData) =>
         {
             YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.TitleScene.ToString());
+            Debug.Log("타이틀로 이동");
         };
     }
 
     public void UpdateTotalScore(int score)
     {
+        string scoreString = score.ToString();
+
         var scoreTMP = uiBinder.Get<TextMeshProUGUI>(EndingHUDType.TotalSocre_TMP);
-        scoreTMP.text = score.ToString();
+        if (scoreTMP != null)
+            scoreTMP.text = scoreString;
+
+
+        var scoreBgTMP = uiBinder.Get<TextMeshProUGUI>(EndingHUDType.TotalSocreBG_TMP);
+        if (scoreBgTMP != null)
+            scoreBgTMP.text = scoreString;
     }
 
     public void UpdateEndingState(EndingBranchScoreCatData so, int score)
@@ -39,6 +50,8 @@ public class EndingHUDView : YSJ_HUDBaseUI
             catState.text = "-2";
             return;
         }
+
+        if (catState == null) return;
 
         catState.text = "-1";
         for (int i = 0; i < so.endingBranchScores.Count; i++)
