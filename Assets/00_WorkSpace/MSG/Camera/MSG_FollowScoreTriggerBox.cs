@@ -12,6 +12,8 @@ namespace MSG
     /// </summary>
     public class MSG_FollowScoreTriggerBox : MonoBehaviour
     {
+        [SerializeField] private float _waitSeconds = 1f;
+
         [SerializeField] private MSG_ScoreUIManager _scoreUIManager;
         [SerializeField] private LayerMask _catchNpcLayer;
         [SerializeField] private LayerMask _bossNpcLayer;
@@ -43,7 +45,7 @@ namespace MSG
 
                 int score = catchNPC.NPCData.FollowScore;
                 YSJ_GameManager.Instance.AddScore(score);
-                _scoreUIManager.ShowScore(score);
+                _scoreUIManager.ShowScore(score, _waitSeconds);
                 _npcCount++;
 
                 if (MSG_FollowManager.Instance.CapturedList.Count <= _npcCount) // 모든 NPC가 다 들어왔으면
@@ -51,7 +53,7 @@ namespace MSG
                     MSG_PlayerLogic playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
                     Debug.Log("[MSG_FollowScoreTriggerBox]: 팔로우 점수 계산 끝");
 
-                    YSJ_GameManager.Instance.GameResult(); // 팔로워 다 지나가면 점수 패널 호출
+                    StartCoroutine(WaitForCallResult()); // 팔로워 다 지나가면 점수 패널 호출
                 }
             }
 
@@ -65,7 +67,7 @@ namespace MSG
 
                 int score = bossNPC.NPCData.FollowScore;
                 YSJ_GameManager.Instance.AddScore(score);
-                _scoreUIManager.ShowScore(score);
+                _scoreUIManager.ShowScore(score, _waitSeconds);
                 _npcCount++;
 
                 if (MSG_FollowManager.Instance.CapturedList.Count <= _npcCount) // 모든 NPC가 다 들어왔으면
@@ -73,7 +75,7 @@ namespace MSG
                     MSG_PlayerLogic playerLogic = MSG_PlayerReferenceProvider.Instance.GetPlayerLogic();
                     Debug.Log("[MSG_FollowScoreTriggerBox]: 팔로우 점수 계산 끝");
 
-                    YSJ_GameManager.Instance.GameResult(); // 팔로워 다 지나가면 점수 패널 호출
+                    StartCoroutine(WaitForCallResult()); // 팔로워 다 지나가면 점수 패널 호출
                 }
             }
 
@@ -81,9 +83,15 @@ namespace MSG
             {
                 if (MSG_FollowManager.Instance.CapturedList.Count == 0) // 포획한 NPC가 없으면
                 {
-                    YSJ_GameManager.Instance.GameResult(); // 즉시 점수 패널 호출
+                    StartCoroutine(WaitForCallResult()); // 즉시 점수 패널 호출
                 }
             }
+        }
+
+        private IEnumerator WaitForCallResult()
+        {
+            yield return new WaitForSeconds(_waitSeconds);
+            YSJ_GameManager.Instance.GameResult();
         }
     }
 }

@@ -2,6 +2,8 @@ using System;
 
 using UnityEngine;
 
+using static InGameHUDView;
+
 public enum GameStateType
 {
     Init,
@@ -146,8 +148,7 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     {
         StateType = GameStateType.Result;
         OnChangedResult?.Invoke();
-
-        YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.SecretEndingScene.ToString());
+        YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.EndingScene.ToString());
     }
 
     // 피버 타임 중 시간 정지 시작
@@ -160,24 +161,5 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     public void StartBattery()
     {
         isTimeStopped = false;
-    }
-
-
-    private SceneID GetResultEndingScene()
-    {
-
-        if (endCatSO == null)
-        {
-            Debug.Log("EndCatSO is NULL > Direct Chage TitleScene");
-            return SceneID.TitleScene;
-        }
-
-        var endCat = endCatSO.endingBranchScores;
-        for (int i = 0; i < endCat.Count; i++)
-        {
-            // if (endCat[i].ScoreCat)
-        }
-
-        return SceneID.TitleScene;
     }
 }

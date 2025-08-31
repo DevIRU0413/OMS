@@ -160,6 +160,7 @@ namespace MSG
         public void Heal(int amount)
         {
             if (_isFever) return; // 피버타임이라면 힐 금지
+            if (_isFinished) return; // 끝났으면 힐 금지
 
             _currentHPFloat = Mathf.Min(_currentHPFloat + amount, MSG_PlayerData.MaxHP); // Float 계산용 내부 체력에도 가산
             _playerData.CurrentHP = Mathf.Min(_playerData.CurrentHP + amount, MSG_PlayerData.MaxHP);
