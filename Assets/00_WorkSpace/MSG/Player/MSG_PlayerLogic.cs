@@ -504,7 +504,7 @@ namespace MSG
             _isFever = false;
             EndFeverAnimation();
             _feverGauge = 100f;
-            _playerData.CurrentHP = 60; // 피버타임 끝나고 체력 60
+            _playerData.CurrentHP = _playerData.AfterFeverHP; // 피버타임 끝나고 돌아올 체력 대입
             OnPlayerFeverEnded?.Invoke();
 
             //YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제
