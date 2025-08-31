@@ -14,7 +14,12 @@ namespace Scripts.Scene
         {
             base.Initialize();
             titleHUDView.InitBaseUI();
-            tutorialPanelView.InitBaseUI();
+            tutorialPanelView?.InitBaseUI();
+
+            var GM = ManagerGroup.Instance.GetManager<YSJ_GameManager>();
+
+            if (GM != null)
+                Destroy(GM.gameObject);
         }
     }
 }
