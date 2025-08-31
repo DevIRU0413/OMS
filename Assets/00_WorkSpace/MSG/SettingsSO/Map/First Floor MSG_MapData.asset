@@ -14,14 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: 1
   CurrentFloor: 1
-  MapType: 0
   XPos: 0
   YPos: 0
-  HandsomeNPCSpawnCount: 1
+  HandsomeNPCSpawnCount: 2
   NormalNPCSpawnCount: 2
   UglyNPCSpawnCount: 1
   RivalNPC1SpawnCount: 1
-  RivalNPC2SpawnCount: 1
+  RivalNPC2SpawnCount: 2
   DisturbNPCSpawnCount: 0
   BossNPCSpawnCount: 0
   LeftUpMap: {fileID: 11400000, guid: ca4f4a46e42c8b34699548e9d25cc2ec, type: 2}

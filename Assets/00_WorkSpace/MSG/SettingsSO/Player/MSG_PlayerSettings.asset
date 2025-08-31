@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dd926cdf7fc28745bfff2c3c91246a3, type: 3}
   m_Name: MSG_PlayerSettings
   m_EditorClassIdentifier: 
-  <InvincibleTime>k__BackingField: 2
   <BlinkInterval>k__BackingField: 0.5
-  <HPDecreasePerSecond>k__BackingField: 3
-  <HPDecreasePerClick>k__BackingField: 0.5
+  <HPDecreasePerSecond>k__BackingField: 4
+  <HPDecreasePerClick>k__BackingField: 0.1
   <FeverTimeDuration>k__BackingField: 10
   <FeverScoreMagnifier>k__BackingField: 2
   <FeverGaugeIncreaseMagnifier>k__BackingField: 2
