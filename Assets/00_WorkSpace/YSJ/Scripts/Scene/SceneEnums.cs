@@ -4,4 +4,7 @@ public enum SceneID
     TitleScene,
     InGameScene,
     EndingScene,
+    BadEndingScene,
+    HappyEndingScene,
+    SecretEndingScene,
 }
