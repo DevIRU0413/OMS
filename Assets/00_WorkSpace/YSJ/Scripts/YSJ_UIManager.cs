@@ -94,7 +94,12 @@ public class YSJ_UIManager : YSJ_SimpleSingleton<YSJ_UIManager>, IManager
         }
 
         // Canvas에 필요한 컴포넌트들 추가
-        go.GetOrAddComponent<CanvasScaler>();
+        var scaler = go.GetOrAddComponent<CanvasScaler>();
+        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+        scaler.referenceResolution = new Vector2(1920.0f, 1080.0f);
+        scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
+        scaler.matchWidthOrHeight = 0.0f;
+
         go.GetOrAddComponent<GraphicRaycaster>();
 
         // 내부 UI 매핑 리스트 초기화
