@@ -60,9 +60,7 @@ namespace MSG
             if (((1 << collision.gameObject.layer) & _bossNpcLayer.value) != 0)
             {
                 if (!MSG_NPCProvider.TryGetRival(collision, out MSG_RivalNPC rivalNPC)) return; // Catchable NPC가 아니면 return
-
-                MSG_BossNPC bossNPC = rivalNPC as MSG_BossNPC;
-
+                if (rivalNPC is not MSG_BossNPC bossNPC) return; // 보스가 아니면 return
                 if (!bossNPC.IsCaught) return; // 해당 보스 NPC가 포획되지 않았으면 return
 
                 int score = bossNPC.NPCData.FollowScore;
