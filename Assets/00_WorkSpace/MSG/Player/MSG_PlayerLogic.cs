@@ -344,9 +344,9 @@ namespace MSG
                 else // 아래에 있을 때
                 {
                     // 즉, 3사분면
-                    if (MSG_AnimParams.PLAYER_CATCHING_LEFT_UP != Animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
+                    if (MSG_AnimParams.PLAYER_CATCHING_LEFT_DOWN != Animator.GetCurrentAnimatorStateInfo(0).shortNameHash)
                     {
-                        Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_UP);
+                        Animator.Play(MSG_AnimParams.PLAYER_CATCHING_LEFT_DOWN);
                         Debug.Log("Play PLAYER_CATCHING_LEFT_DOWN");
                     }
                 }
@@ -505,6 +505,7 @@ namespace MSG
             EndFeverAnimation();
             _feverGauge = 100f;
             _playerData.CurrentHP = _playerData.AfterFeverHP; // 피버타임 끝나고 돌아올 체력 대입
+            _currentHPFloat = _playerData.AfterFeverHP;       // 소수점 저장용 체력에도 대입
             OnPlayerFeverEnded?.Invoke();
 
             //YSJ_GameManager.Instance.StartBattery(); // 시간 정지 해제
