@@ -1,5 +1,7 @@
 using System;
 
+using MSG;
+
 using UnityEngine;
 
 using static InGameHUDView;
@@ -173,14 +175,20 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
         }
 
         SceneID selectedID = SceneID.EndingScene;
+        MSG_PlayerReferenceProvider pProvider = MSG_PlayerReferenceProvider.Instance;
+        if (pProvider.GetPlayerLogic()?.PlayerData.CurrentHP <= 0)
+        {
+            selectedID = SceneID.BadEndingScene;
+            return selectedID;
+        }
+
         var scoreCat = endCatSO.endingBranchScores;
         for (int i = 0; i < scoreCat.Count; i++)
         {
-            if (Score > scoreCat[i].ScoreCat)
-                continue;
-
-            selectedID = scoreCat[i].SceneID;
-            break;
+            if (Score >= scoreCat[i].ScoreCat)
+            {
+                selectedID = scoreCat[i].SceneID;
+            }
         }
 
         return selectedID;
