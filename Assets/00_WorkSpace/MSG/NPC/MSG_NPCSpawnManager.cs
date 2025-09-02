@@ -57,12 +57,12 @@ public class MSG_NPCSpawnManager : MonoBehaviour
 
     private void CreateNPCPool()
     {
-        PoolManager.Instance.CreatePool("HandsomeNPC", _handsomeNPC);
-        PoolManager.Instance.CreatePool("NormalNPC", _normalNPC);
-        PoolManager.Instance.CreatePool("UglyNPC", _uglyNPC);
-        PoolManager.Instance.CreatePool("RivalNPC1", _rivalNPC1);
-        PoolManager.Instance.CreatePool("RivalNPC2", _rivalNPC2);
-        PoolManager.Instance.CreatePool("DisturbNPC", _disturbNPC);
+        PoolManager.Instance.CreatePool("HandsomeNPC", _handsomeNPC, 20);
+        PoolManager.Instance.CreatePool("NormalNPC", _normalNPC, 20);
+        PoolManager.Instance.CreatePool("UglyNPC", _uglyNPC, 20);
+        PoolManager.Instance.CreatePool("RivalNPC1", _rivalNPC1, 20);
+        PoolManager.Instance.CreatePool("RivalNPC2", _rivalNPC2, 20);
+        PoolManager.Instance.CreatePool("DisturbNPC", _disturbNPC, 5);
         PoolManager.Instance.CreatePool("BossNPC", _bossNPC, 1);
     }
 
