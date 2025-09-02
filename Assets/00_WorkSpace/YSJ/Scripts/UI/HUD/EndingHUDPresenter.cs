@@ -12,6 +12,7 @@ public class EndingHUDPresenter
 
         this.view.UpdateTotalScore(this.modelGM.Score);
         this.view.UpdateEndingState(this.modelGM.endCatSO, this.modelGM.Score);
+        this.view.UpdateChattingContext(YSJ_ChattingManager.Instance?.GetChattingMessages());
         this.view.Open();
     }
 }

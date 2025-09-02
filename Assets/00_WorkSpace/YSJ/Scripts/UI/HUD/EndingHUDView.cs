@@ -55,6 +55,8 @@ public class EndingHUDView : YSJ_HUDBaseUI
         }
         tmps.Reverse();
         _chattingContentTMPArray = tmps.ToArray();
+
+        UpdateChattingContext(YSJ_ChattingManager.Instance.GetChattingMessages());
     }
 
     public void UpdateTotalScore(int score)
