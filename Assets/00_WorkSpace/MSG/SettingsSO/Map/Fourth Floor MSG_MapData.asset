@@ -31,8 +31,8 @@ MonoBehaviour:
   RightPlayerEndPoint: 20
   LeftNPCEndPoint: -16
   RightNPCEndPoint: 14
-  LeftPlayerSpawnPoint: {x: -22, y: 58}
-  RightPlayerSpawnPoint: {x: 20, y: 58}
+  LeftPlayerSpawnPoint: {x: -22, y: 57.5}
+  RightPlayerSpawnPoint: {x: 20, y: 57.5}
   TopYPos: 58
   MiddleYPos: 57.5
   BottomYPos: 57
