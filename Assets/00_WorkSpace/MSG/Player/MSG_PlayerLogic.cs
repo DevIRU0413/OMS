@@ -562,7 +562,8 @@ namespace MSG
 
         private void StopAnimWhenGameEnd()
         {
-            _animator.Play(MSG_AnimParams.PLAYER_IDLE);
+            _animator.Play(MSG_AnimParams.PLAYER_LAUGH);
+            _spriteRenderer.flipX = true;
         }
 
         #endregion
