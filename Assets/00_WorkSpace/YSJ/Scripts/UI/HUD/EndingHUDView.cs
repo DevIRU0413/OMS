@@ -1,11 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
+
+using MSG;
 
 using TMPro;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
-
-using static InGameHUDView;
 
 public class EndingHUDView : YSJ_HUDBaseUI
 {
@@ -22,7 +23,15 @@ public class EndingHUDView : YSJ_HUDBaseUI
 
     private YSJ_UIBinder<EndingHUDType> uiBinder;
 
+    [SerializeField] private int _chatCount = 10;
+    [SerializeField, Min(0.1f)] private float _chatUpdateMinDelay = 1.0f;
+    [SerializeField, Range(0.1f, 100.0f)] private float _chatUpdateMaxDelay = 1.0f;
+
+    [SerializeField] private MSG_NPCNameSO _npcNameSO;
+    [SerializeField] private MSG_DialogueSO _dialogueSO;
+
     private GameObject _chattingGOParent;                   // chatting parent
+
     private GameObject[] _chattingGOArray;                  // chatting Log Game Object Array
     private TextMeshProUGUI[] _chattingContentTMPArray;     // chatting Log TMP Array
 
@@ -38,11 +47,15 @@ public class EndingHUDView : YSJ_HUDBaseUI
             Debug.Log("타이틀로 이동");
         };
 
+        InitChatting();
+    }
 
+    private void InitChatting()
+    {
         _chattingGOParent = uiBinder.Get(EndingHUDType.ChattingContent);
-        int count = YSJ_ChattingManager.Instance.MaxChattingCount;
+        int count = _chatCount;
 
-        if (_chattingPrefab == null || count == 0) return;
+        if (_chattingGOParent == null || _chattingPrefab == null || count == 0) return;
 
         _chattingGOArray = new GameObject[count];
         _chattingContentTMPArray = new TextMeshProUGUI[count];
@@ -56,8 +69,45 @@ public class EndingHUDView : YSJ_HUDBaseUI
         tmps.Reverse();
         _chattingContentTMPArray = tmps.ToArray();
 
-        UpdateChattingContext(YSJ_ChattingManager.Instance.GetChattingMessages());
+        YSJ_ChattingManager.Instance.Cleanup();
+
+        StartCoroutine(CO_Chatting());
     }
+
+    private IEnumerator CO_Chatting()
+    {
+        float delayTime = _chatUpdateMaxDelay;
+
+        while (true)
+        {
+            yield return null;
+
+            delayTime -= Time.deltaTime;
+
+            // 시간 기다렸다가 출력
+            if (0 >= delayTime)
+            {
+                // 출력 업데이트
+                int dialogueIndex   = Random.Range(0, _dialogueSO.HiDialogue.Count);
+                int nameIndex       = Random.Range(0, _npcNameSO.NameList.Count);
+                YSJ_ChattingManager.Instance.AddChattingMessage($"{_npcNameSO.NameList[nameIndex]}: {_dialogueSO.HiDialogue[dialogueIndex]}");
+                UpdateChattingContext(YSJ_ChattingManager.Instance?.GetChattingMessages());
+
+                Debug.Log($"{_dialogueSO.HiDialogue[dialogueIndex]}");
+
+                // 출력 업데이트 시간 초기화
+                if (_chatUpdateMinDelay < _chatUpdateMaxDelay)
+                {
+                    delayTime = Random.Range(_chatUpdateMinDelay, _chatUpdateMaxDelay);
+                    continue;
+                }
+
+                delayTime = _chatUpdateMinDelay;
+            }
+            continue;
+        }
+    }
+
 
     public void UpdateTotalScore(int score)
     {
@@ -76,6 +126,8 @@ public class EndingHUDView : YSJ_HUDBaseUI
     public void UpdateEndingState(EndingBranchScoreCatData so, int score)
     {
         var catState = uiBinder.Get<TextMeshProUGUI>(EndingHUDType.EndingStateCount_TMP);
+
+        if (catState == null) return;
         if (so == null)
         {
             catState.text = "-2";
@@ -105,8 +157,8 @@ public class EndingHUDView : YSJ_HUDBaseUI
             return;
         }
 
-        int count = YSJ_ChattingManager.Instance.MaxChattingCount;
-        for (int i = 0; i < count; i++)
+        YSJ_ChattingManager.Instance.MaxChattingCount = _chatCount;
+        for (int i = 0; i < _chatCount; i++)
         {
             var tmp = _chattingContentTMPArray[i];
             if (tmp != null &&

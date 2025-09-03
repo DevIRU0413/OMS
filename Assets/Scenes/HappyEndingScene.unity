@@ -1153,6 +1153,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ending_HUD
       objectReference: {fileID: 0}
+    - target: {fileID: 3107547995583983849, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: _npcNameSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 0c69927462f9c5245a2fd9ed2d6d5b19, type: 2}
+    - target: {fileID: 3107547995583983849, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: _dialogueSO
+      value: 
+      objectReference: {fileID: 11400000, guid: a4edf9891179d0b4196fff9796ebf21c, type: 2}
+    - target: {fileID: 3107547995583983849, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: _chatUpdateMaxDelay
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3948874707257058448, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1252,6 +1264,26 @@ PrefabInstance:
     - target: {fileID: 5975376740733838157, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6276357783478523817, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: m_Vertical
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372584485689360815, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: m_Spacing
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372584485689360815, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: m_ChildScaleHeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372584485689360815, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: m_ChildControlHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6372584485689360815, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
+      propertyPath: m_ChildForceExpandHeight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6491623355944708960, guid: de43fb31bd3a2154c8fd9e822cf475f4, type: 3}
       propertyPath: m_AnchorMax.y

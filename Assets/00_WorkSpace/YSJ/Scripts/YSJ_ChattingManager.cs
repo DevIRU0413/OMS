@@ -19,17 +19,18 @@ public class YSJ_ChattingManager : YSJ_SimpleSingleton<YSJ_ChattingManager>, IMa
 
     public bool IsChattingEnabled => _isChattingEnabled;
     public bool IsDontDestroy => isDontDestroyOnLoad;
-    public int MaxChattingCount => _maxChattingCount;
+    public int MaxChattingCount { get => _maxChattingCount; set => _maxChattingCount = value; }
 
     #region IManager
-    public void Initialize() => SetChattingEnabled();
+    public void Initialize() => SetupChattingEnabled();
     public void Cleanup() => ClearChattingMessages();
 
     public GameObject GetGameObject() => this.gameObject;
 
     #endregion
 
-    private void SetChattingEnabled()
+
+    private void SetupChattingEnabled()
     {
         if (_isChattingEnabled)
         {
@@ -47,10 +48,13 @@ public class YSJ_ChattingManager : YSJ_SimpleSingleton<YSJ_ChattingManager>, IMa
         _chattingMessages?.Clear();
     }
 
+
     public void AddChattingMessage(string message)
     {
         if (_isChattingEnabled)
         {
+            if (_chattingMessages == null)
+                SetupChattingEnabled();
             _chattingMessages?.Enqueue(message);
             if (_chattingMessages.Count == _maxChattingCount)
             {
