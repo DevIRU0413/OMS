@@ -16,6 +16,7 @@ namespace MSG
         public static readonly int PLAYER_WALK_RIGHT = Animator.StringToHash("PlayerWalkRight");
         public static readonly int PLAYER_RUN_LEFT = Animator.StringToHash("PlayerRunLeft");
         public static readonly int PLAYER_RUN_RIGHT = Animator.StringToHash("PlayerRunRight");
+        public static readonly int PLAYER_LAUGH = Animator.StringToHash("PlayerLaugh");
 
         //public static readonly int PLAYER_CATCHING = Animator.StringToHash("PlayerCatching");
         public static readonly int PLAYER_CATCHING_LEFT_UP = Animator.StringToHash("PlayerCatchingLeftUp");
