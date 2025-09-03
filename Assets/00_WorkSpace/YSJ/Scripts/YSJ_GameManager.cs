@@ -150,6 +150,7 @@ public class YSJ_GameManager : YSJ_SimpleSingleton<YSJ_GameManager>, IManager
     {
         StateType = GameStateType.Result;
         OnChangedResult?.Invoke();
+        Destroy(YSJ_ChattingManager.Instance.gameObject);
         YSJ_SystemManager.Instance.LoadSceneWithPreActions(GetResultEndingSceneID().ToString());
     }
 

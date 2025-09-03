@@ -8,9 +8,6 @@ public class YSJ_ChattingManager : YSJ_SimpleSingleton<YSJ_ChattingManager>, IMa
 {
     [SerializeField] private bool _isChattingEnabled = true;
 
-    [SerializeField] private float _chattingUpdateMinTime = 1.0f;
-    [SerializeField] private float _chattingUpdateMaxTime = 2.0f;
-
     [SerializeField, Range(1, 30)] private int _maxChattingCount = 10;
 
     private Queue<string> _chattingMessages;

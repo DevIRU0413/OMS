@@ -44,6 +44,8 @@ public class EndingHUDView : YSJ_HUDBaseUI
         uiBinder.GetEvent(EndingHUDType.ToPlayTitle_Button).Click += (PointerEventData eventData) =>
         {
             YSJ_SystemManager.Instance.LoadSceneWithPreActions(SceneID.TitleScene.ToString());
+            Destroy(YSJ_ChattingManager.Instance.gameObject);
+            Destroy(YSJ_GameManager.Instance.gameObject);
             Debug.Log("타이틀로 이동");
         };
 
